@@ -3,8 +3,5 @@
 
 namespace config
 {
-	extern Vector2 res;
 	extern Vector2 gamespace;
-
-	void setGamespaceFromRes();
 }

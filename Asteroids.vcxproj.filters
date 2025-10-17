@@ -19,7 +19,7 @@
     <Filter Include="Config">
       <UniqueIdentifier>{37921d4c-1e93-4747-a774-168440061908}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Draw">
+    <Filter Include="Render">
       <UniqueIdentifier>{95db7a45-4497-4826-acd0-2dfda1bdf740}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -30,16 +30,22 @@
     <ClCompile Include="src\config.cpp">
       <Filter>Config</Filter>
     </ClCompile>
-    <ClCompile Include="src\draw.cpp">
-      <Filter>Draw</Filter>
+    <ClCompile Include="src\render.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h">
       <Filter>Config</Filter>
     </ClInclude>
-    <ClInclude Include="src\draw.h">
-      <Filter>Draw</Filter>
+    <ClInclude Include="src\render.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu.h">
+      <Filter>Archivos de origen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
