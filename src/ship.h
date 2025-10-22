@@ -19,7 +19,7 @@ namespace ship
 	void unload(Ship& ship);
 
 	void accelerate(Ship& ship, Vector2 direction);
-	//void decelerate(Ship& ship, Vector2 direction);
 	void move(Ship& ship);
 
+	void draw(Ship ship);
 }

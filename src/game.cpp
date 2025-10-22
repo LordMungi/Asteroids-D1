@@ -1,30 +1,32 @@
 #include "game.h"
+
 #include <cmath>
 #include <iostream>
-#include "render.h"
+
 #include "ship.h"
+#include "bullet.h"
 
 namespace game
 {
 	struct Game
 	{
 		ship::Ship ship;
+		bullet::Bullet bullets[bullet::maxBullets];
 	};
 
+	static Game init();
 	static void update(Game& game);
 	static void draw(Game game);
 	static void unload(Game& game);
 
 	static Vector2 getShipDirection(Vector2 position);
-	static float getShipRotation(Vector2 pos);
+	static float getShipRotation(Vector2 direction);
 
 	void run()
 	{
 		render::startWindow();
 
-		Game game;
-
-		game.ship = ship::init();
+		Game game = init();
 
 		while (!WindowShouldClose())
 		{
@@ -36,14 +38,44 @@ namespace game
 		render::closeWindow();
 	}
 
+	static Game init()
+	{
+		Game game;
+		game.ship = ship::init();
+
+		for (int i = 0; i < bullet::maxBullets; i++)
+		{
+			game.bullets[i] = bullet::init();
+		}
+
+		return game;
+	}
+
 	static void update(Game& game)
 	{
-		game.ship.rotation = getShipRotation(game.ship.position);
-		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+		Vector2 direction = getShipDirection(game.ship.position);
+
+		game.ship.rotation = getShipRotation(direction);
+		
+		if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+			ship::accelerate(game.ship, direction);
+
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
-			ship::accelerate(game.ship, getShipDirection(game.ship.position));
+			for (int i = 0; i < bullet::maxBullets; i++)
+			{
+				if (!game.bullets[i].isActive)
+				{
+					bullet::create(game.bullets[i], game.ship.position, direction);
+					break;
+				}
+			}
 		}
+
 		ship::move(game.ship);
+
+		for (int i = 0; i < bullet::maxBullets; i++)
+			bullet::move(game.bullets[i]);
 
 		// Return from the other side if leaving screen
 		if (game.ship.position.x - game.ship.size / 2 > config::gamespace.x) 
@@ -60,7 +92,13 @@ namespace game
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		render::sprite(game.ship.sprite, game.ship.position, { game.ship.size, game.ship.size }, game.ship.rotation);
+		ship::draw(game.ship);
+
+		for (int i = 0; i < bullet::maxBullets; i++)
+		{
+			if (game.bullets[i].isActive)
+				bullet::draw(game.bullets[i]);
+		}
 		EndDrawing();
 
 	}
@@ -87,10 +125,8 @@ namespace game
 
 		return direction;
 	}
-	static float getShipRotation(Vector2 position)
+	static float getShipRotation(Vector2 direction)
 	{
-		Vector2 direction = getShipDirection(position);
-
 		float rotation = atan(direction.y / direction.x) * (180 / PI);
 
 		if (direction.x < 0) rotation += 180;

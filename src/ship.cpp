@@ -32,4 +32,10 @@ namespace ship
 		ship.position.x += ship.velocity.x * GetFrameTime();
 		ship.position.y += ship.velocity.y * GetFrameTime();
 	}
+
+	void draw(Ship ship)
+	{
+		render::sprite(ship.sprite, ship.position, { ship.size, ship.size }, ship.rotation);
+	}
+
 }

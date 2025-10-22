@@ -5,8 +5,6 @@ namespace render
 	static Vector2 res = { 1024, 768 };
 
 	static void setGamespaceFromRes();
-	static void loadTextures();
-	static void unloadTextures();
 
 	namespace tex
 	{
@@ -29,7 +27,7 @@ namespace render
 		Vector2 resPos = getResFromGamespace(pos);
 		Vector2 resSize = getResFromGamespace(size);
 
-		DrawRectangle(static_cast<int>(resPos.x), static_cast<int>(resPos.y), static_cast<int>(resSize.x), static_cast<int>(resSize.y), color);
+		DrawRectangle(static_cast<int>(resPos.x - resSize.x / 2), static_cast<int>(resPos.y - resSize.y / 2), static_cast<int>(resSize.x), static_cast<int>(resSize.y), color);
 	}
 
 	void sprite(Texture2D texture, Vector2 pos, Vector2 size, float rotation)
