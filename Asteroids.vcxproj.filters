@@ -36,6 +36,12 @@
     <ClCompile Include="src\menu.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\game.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ship.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h">
@@ -45,6 +51,12 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="src\menu.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ship.h">
       <Filter>Archivos de origen</Filter>
     </ClInclude>
   </ItemGroup>

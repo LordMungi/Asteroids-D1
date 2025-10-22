@@ -1,7 +1,7 @@
 #include "render.h"
-#include "menu.h"
+#include "game.h"
 
 int main()
 {
-	menu::run();
+	game::run();
 }
