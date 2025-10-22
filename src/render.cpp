@@ -6,6 +6,7 @@ namespace render
 
 	static void setGamespaceFromRes();
 	static void loadTextures();
+	static void unloadTextures();
 
 	namespace tex
 	{
@@ -16,7 +17,6 @@ namespace render
 	{
 		InitWindow(static_cast<int>(res.x), static_cast<int>(res.y), "Asteroids");
 		setGamespaceFromRes();
-		loadTextures();
 	}
 
 	void closeWindow()
@@ -32,10 +32,8 @@ namespace render
 		DrawRectangle(static_cast<int>(resPos.x), static_cast<int>(resPos.y), static_cast<int>(resSize.x), static_cast<int>(resSize.y), color);
 	}
 
-	void sprite(Vector2 pos, Vector2 size, float rotation)
+	void sprite(Texture2D texture, Vector2 pos, Vector2 size, float rotation)
 	{
-		Texture2D texture = tex::ship;
-
 		Vector2 resPos = getResFromGamespace(pos);
 		Vector2 resSize = getResFromGamespace(size);
 
@@ -56,12 +54,6 @@ namespace render
 		origin.y = resSize.y / 2;
 
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
-	}
-
-
-	static void loadTextures()
-	{
-		tex::ship = LoadTexture("resources/ship.png");
 	}
 
 	static void setGamespaceFromRes()

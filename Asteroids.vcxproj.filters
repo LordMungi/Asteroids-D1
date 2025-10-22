@@ -22,6 +22,15 @@
     <Filter Include="Render">
       <UniqueIdentifier>{95db7a45-4497-4826-acd0-2dfda1bdf740}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{a880d9b1-035e-404f-b4ae-59fe3f08f1d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Ship">
+      <UniqueIdentifier>{b8d469b1-4165-45ea-b231-daade168a174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Bullet">
+      <UniqueIdentifier>{3eb8248f-4c66-44e1-bfc2-18582d276ffb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -37,10 +46,13 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\ship.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Game\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bullet.cpp">
+      <Filter>Game\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,10 +66,13 @@
       <Filter>Archivos de origen</Filter>
     </ClInclude>
     <ClInclude Include="src\game.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\ship.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Game\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bullet.h">
+      <Filter>Game\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
