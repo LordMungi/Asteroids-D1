@@ -19,11 +19,16 @@ namespace coll
 		if (isColliding)
 		{
 			// Corrección
-			float angle = atan(distance.y / distance.x);
+			float angle = atan(distance.y / distance.x) * (180/PI);
+			if (distance.x < 0)
+				angle += 180;
+			else if (distance.y < 0)
+				angle += 360;
+
 			distVector = circle1.radius + circle2.radius;
 
-			circle1.position.x = circle2.position.x + (distVector * cos(angle));
-			circle1.position.y = circle2.position.y + (distVector * sin(angle));
+			circle1.position.x = circle2.position.x + (distVector * cos(angle * (PI/180)));
+			circle1.position.y = circle2.position.y + (distVector * sin(angle * (PI/180)));
 		}
 
 		return isColliding;
