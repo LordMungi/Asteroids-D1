@@ -1,5 +1,6 @@
 #include "asteroid.h"
 #include <iostream>
+#include "random.h"
 
 namespace asteroid
 {
@@ -19,12 +20,12 @@ namespace asteroid
 	{
 		asteroid.shape.position = position;
 
-		asteroid.velocity.x = (rand() % 20000 - 10000) / 10000.0f;
+		asteroid.velocity.x = random::floatRange(-1, 1);
 		asteroid.velocity.y = sqrt(1 - asteroid.velocity.x * asteroid.velocity.x);
-		if (rand() % 2)
+		if (random::coinFlip())
 			asteroid.velocity.y *= -1;
 
-		switch (rand() % 3 + 1)
+		switch (random::intRange(1, 3))
 		{
 		case 1:
 			asteroid.shape.radius = static_cast<float>(Size::Small);

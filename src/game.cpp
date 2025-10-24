@@ -60,7 +60,7 @@ namespace game
 			game.asteroids[i] = asteroid::init();
 		}
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			asteroid::create(game.asteroids[i], { 50, 50 });
 		}

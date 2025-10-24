@@ -40,6 +40,9 @@
     <Filter Include="Utilities\Shapes">
       <UniqueIdentifier>{3f90d510-92d5-42f0-8b5b-6ac61d57276c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Random">
+      <UniqueIdentifier>{b7e5bd35-69b7-4017-8b1e-6b528e0fea59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="src\collision.cpp">
       <Filter>Utilities\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="src\random.cpp">
+      <Filter>Utilities\Random</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h">
@@ -97,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="src\shapes.h">
       <Filter>Utilities\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\random.h">
+      <Filter>Utilities\Random</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

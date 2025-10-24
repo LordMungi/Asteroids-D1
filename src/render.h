@@ -11,7 +11,6 @@ namespace render
 	void sprite(Texture2D texture, shape::Rectangle rectangle, float rotation);
 	void sprite(Texture2D texture, shape::Circle circle, float rotation);
 
-
 	Vector2 getResPointFromGamespace(Vector2 gsPoint);
 	float getResValueFromGamespace(float value);
 }

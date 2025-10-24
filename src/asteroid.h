@@ -18,7 +18,7 @@ namespace asteroid
 	};
 
 	const int maxAsteroids = 30;
-	const int speed = 0;
+	const int speed = 10;
 
 	Asteroid init();
 
