@@ -34,7 +34,7 @@ namespace bullet
 
 	void draw(Bullet bullet)
 	{
-		render::circle(bullet.shape.position, bullet.shape.radius, WHITE);
+		render::circle(bullet.shape, WHITE);
 	}
 
 }

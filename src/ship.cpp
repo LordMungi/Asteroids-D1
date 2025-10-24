@@ -10,7 +10,7 @@ namespace ship
 
 		ship.sprite = LoadTexture("resources/ship.png");
 		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
-		ship.shape.radius = 5;
+		ship.shape.radius = 3;
 		ship.velocity = { 0, 0 };
 		ship.rotation = 0;
 		
@@ -36,8 +36,8 @@ namespace ship
 
 	void draw(Ship ship)
 	{
-		render::circle(ship.shape.position, ship.shape.radius, WHITE);
-		render::sprite(ship.sprite, ship.shape.position, { ship.shape.radius, ship.shape.radius}, ship.rotation);
+		render::circle(ship.shape, WHITE);
+		render::sprite(ship.sprite, ship.shape, ship.rotation);
 	}
 
 }

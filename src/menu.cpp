@@ -26,13 +26,15 @@ namespace menu
 		ClearBackground(BLACK);
 		Vector2 optionSize = { 50, 10 };
 		Vector2 optionPos = { middle.x - optionSize.x / 2, middle.y - optionSize.y / 2 };
-		float optionSpace = 5;
 
+		/*
+		float optionSpace = 5;
 		render::rectangle(optionPos, optionSize, WHITE);
 		optionPos.y += optionSize.y + optionSpace;
 		render::rectangle(optionPos, optionSize, WHITE);
 		optionPos.y += optionSize.y + optionSpace;
 		render::rectangle(optionPos, optionSize, WHITE);
+		*/
 		EndDrawing();
 	}
 }

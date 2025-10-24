@@ -64,6 +64,6 @@ namespace asteroid
 
 	void draw(Asteroid asteroid)
 	{
-		render::circle(asteroid.shape.position, static_cast<float>(asteroid.shape.radius), WHITE);
+		render::circle(asteroid.shape, WHITE);
 	}
 }

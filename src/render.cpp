@@ -23,26 +23,26 @@ namespace render
 		CloseWindow();
 	}
 
-	void rectangle(Vector2 pos, Vector2 size, Color color)
+	void rectangle(shape::Rectangle rectangle, Color color)
 	{
-		Vector2 resPos = getResPointFromGamespace(pos);
-		Vector2 resSize = getResPointFromGamespace(size);
+		Vector2 resPos = getResPointFromGamespace(rectangle.position);
+		Vector2 resSize = getResPointFromGamespace(rectangle.size);
 
 		DrawRectangle(static_cast<int>(resPos.x - resSize.x / 2), static_cast<int>(resPos.y - resSize.y / 2), static_cast<int>(resSize.x), static_cast<int>(resSize.y), color);
 	}
 
-	void circle(Vector2 pos, float radius, Color color)
+	void circle(shape::Circle circle, Color color)
 	{
-		Vector2 resPos = getResPointFromGamespace(pos);
-		float resRadius = getResValueFromGamespace(radius);
+		Vector2 resPos = getResPointFromGamespace(circle.position);
+		float resRadius = getResValueFromGamespace(circle.radius);
 
 		DrawCircle(static_cast<int>(resPos.x), static_cast<int>(resPos.y), resRadius, color);
 	}
 
-	void sprite(Texture2D texture, Vector2 pos, Vector2 size, float rotation)
+	void sprite(Texture2D texture, shape::Rectangle rectangle, float rotation)
 	{
-		Vector2 resPos = getResPointFromGamespace(pos);
-		Vector2 resSize = getResPointFromGamespace(size);
+		Vector2 resPos = getResPointFromGamespace(rectangle.position);
+		Vector2 resSize = getResPointFromGamespace(rectangle.size);
 
 		Rectangle source;
 		source.x = 0;
@@ -59,6 +59,30 @@ namespace render
 		Vector2 origin;
 		origin.x = resSize.x / 2;
 		origin.y = resSize.y / 2;
+
+		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
+	}
+
+	void sprite(Texture2D texture, shape::Circle circle, float rotation)
+	{
+		Vector2 resPos = getResPointFromGamespace(circle.position);
+		float resRadius = getResValueFromGamespace(circle.radius);
+
+		Rectangle source;
+		source.x = 0;
+		source.y = 0;
+		source.width = static_cast<float>(texture.width);
+		source.height = static_cast<float>(texture.height);
+
+		Rectangle dest;
+		dest.x = resPos.x;
+		dest.y = resPos.y;
+		dest.width = resRadius * 2;
+		dest.height = resRadius * 2;
+
+		Vector2 origin;
+		origin.x = resRadius;
+		origin.y = resRadius;
 
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 	}
