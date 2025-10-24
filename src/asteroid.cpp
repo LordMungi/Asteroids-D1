@@ -38,6 +38,7 @@ namespace asteroid
 			break;
 		}
 
+		asteroid.speed = random::intRange(minSpeed, maxSpeed);
 		asteroid.isActive = true;
 	}
 
@@ -50,6 +51,7 @@ namespace asteroid
 			asteroid.velocity.y *= -1;
 
 		asteroid.shape.radius = static_cast<float>(size);
+		asteroid.speed = random::intRange(minSpeed, maxSpeed);
 		asteroid.isActive = true;
 	}
 
@@ -58,13 +60,14 @@ namespace asteroid
 		asteroid.shape.position = { 0, 0 };
 		asteroid.shape.radius = static_cast<float>(Size::Small);
 		asteroid.velocity = { 0, 0 };
+		asteroid.speed = 0;
 		asteroid.isActive = false;
 	}
 
 	void move(Asteroid& asteroid)
 	{
-		asteroid.shape.position.x += asteroid.velocity.x * speed * GetFrameTime();
-		asteroid.shape.position.y += asteroid.velocity.y * speed * GetFrameTime();
+		asteroid.shape.position.x += asteroid.velocity.x * asteroid.speed * GetFrameTime();
+		asteroid.shape.position.y += asteroid.velocity.y * asteroid.speed * GetFrameTime();
 	}
 
 	void draw(Asteroid asteroid)

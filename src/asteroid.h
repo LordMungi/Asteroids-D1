@@ -14,11 +14,13 @@ namespace asteroid
 	{
 		shape::Circle shape;
 		Vector2 velocity;
+		int speed;
 		bool isActive;
 	};
 
 	const int maxAsteroids = 30;
-	const int speed = 30;
+	const int minSpeed = 10;
+	const int maxSpeed = 30;
 
 	Asteroid init();
 
