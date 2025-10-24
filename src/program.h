@@ -1,6 +1,6 @@
 #pragma once
 
-namespace menu
+namespace program
 {
 	void run();
 }

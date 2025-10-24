@@ -1,7 +1,6 @@
-#include "render.h"
-#include "game.h"
+#include "program.h"
 
 int main()
 {
-	game::run();
+	program::run();
 }

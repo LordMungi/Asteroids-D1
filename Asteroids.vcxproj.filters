@@ -54,9 +54,6 @@
     <ClCompile Include="src\render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="src\menu.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -75,6 +72,9 @@
     <ClCompile Include="src\random.cpp">
       <Filter>Utilities\Random</Filter>
     </ClCompile>
+    <ClCompile Include="src\program.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h">
@@ -82,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="src\render.h">
       <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="src\menu.h">
-      <Filter>Archivos de origen</Filter>
     </ClInclude>
     <ClInclude Include="src\game.h">
       <Filter>Game</Filter>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="src\random.h">
       <Filter>Utilities\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="src\program.h">
+      <Filter>Archivos de origen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

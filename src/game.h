@@ -2,5 +2,8 @@
 
 namespace game
 {
-	void run();
+	void init();
+	void update();
+	void draw();
+	void unload();
 }

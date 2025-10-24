@@ -12,98 +12,70 @@
 
 namespace game
 {
-	struct Game
-	{
-		ship::Ship ship;
-		bullet::Bullet bullets[bullet::maxBullets];
-		asteroid::Asteroid asteroids[asteroid::maxAsteroids];
-	};
-
-	static Game init();
-	static void update(Game& game);
-	static void draw(Game game);
-	static void unload(Game& game);
+	
+	ship::Ship ship;
+	bullet::Bullet bullets[bullet::maxBullets];
+	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 
 	static Vector2 getShipDirection(Vector2 position);
 	static float getShipRotation(Vector2 direction);
 
-	void run()
+	void init()
 	{
-		render::startWindow();
-
-		Game game = init();
-
-		while (!WindowShouldClose())
-		{
-			update(game);
-			draw(game);
-		}
-
-		unload(game);
-		render::closeWindow();
-	}
-
-	static Game init()
-	{
-		srand(static_cast<int>(time(0)));
-
-		Game game;
-		game.ship = ship::init();
+		ship = ship::init();
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
-			game.bullets[i] = bullet::init();
+			bullets[i] = bullet::init();
 		}
 
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			game.asteroids[i] = asteroid::init();
+			asteroids[i] = asteroid::init();
 		}
 
 		for (int i = 0; i < 10; i++)
 		{
-			asteroid::create(game.asteroids[i], { 50, 50 });
+			asteroid::create(asteroids[i], { 50, 50 });
 		}
-
-		return game;
 	}
 
-	static void update(Game& game)
+	void update()
 	{
-		Vector2 direction = getShipDirection(game.ship.shape.position);
+		Vector2 direction = getShipDirection(ship.shape.position);
 
-		game.ship.rotation = getShipRotation(direction);
+		ship.rotation = getShipRotation(direction);
 		
 		if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-			ship::accelerate(game.ship, direction);
+			ship::accelerate(ship, direction);
 
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
 			for (int i = 0; i < bullet::maxBullets; i++)
 			{
-				if (!game.bullets[i].isActive)
+				if (!bullets[i].isActive)
 				{
-					bullet::create(game.bullets[i], game.ship.shape.position, direction);
+					bullet::create(bullets[i], ship.shape.position, direction);
 					break;
 				}
 			}
 		}
 
-		ship::move(game.ship);
+		ship::move(ship);
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
-			if (game.bullets[i].isActive)
+			if (bullets[i].isActive)
 			{
-				bullet::move(game.bullets[i]);
+				bullet::move(bullets[i]);
 				for (int j = 0; j < asteroid::maxAsteroids; j++)
 				{
-					if (game.asteroids[j].isActive)
+					if (asteroids[j].isActive)
 					{
-						if (coll::circleCircle(game.bullets[i].shape, game.asteroids[j].shape))
+						if (coll::circleCircle(bullets[i].shape, asteroids[j].shape))
 						{
-							bullet::destroy(game.bullets[i]);
-							asteroid::destroy(game.asteroids[j]);
+							bullet::destroy(bullets[i]);
+							asteroid::destroy(asteroids[j]);
 						}
 					}
 				}
@@ -115,48 +87,48 @@ namespace game
 
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			if (game.asteroids[i].isActive)
+			if (asteroids[i].isActive)
 			{
-				asteroid::move(game.asteroids[i]);
-				if (coll::circleCircle(game.ship.shape, game.asteroids[i].shape))
-				coll::correctCircleCircle(game.ship.shape, game.asteroids[i].shape);
+				asteroid::move(asteroids[i]);
+				if (coll::circleCircle(ship.shape, asteroids[i].shape))
+				coll::correctCircleCircle(ship.shape, asteroids[i].shape);
 			}
 		}
 
 		// Return from the other side if leaving screen
-		if (game.ship.shape.position.x - game.ship.shape.radius / 2 > config::gamespace.x) 
-			game.ship.shape.position.x = 0 - game.ship.shape.radius /2;
-		if (game.ship.shape.position.y - game.ship.shape.radius / 2 > config::gamespace.y)
-			game.ship.shape.position.y = 0 - game.ship.shape.radius / 2;
-		if (game.ship.shape.position.x + game.ship.shape.radius / 2 < 0)
-			game.ship.shape.position.x = config::gamespace.x + game.ship.shape.radius / 2;
-		if (game.ship.shape.position.y + game.ship.shape.radius / 2 < 0)
-			game.ship.shape.position.y = config::gamespace.y + game.ship.shape.radius / 2;
+		if (ship.shape.position.x - ship.shape.radius / 2 > config::gamespace.x) 
+			ship.shape.position.x = 0 - ship.shape.radius /2;
+		if (ship.shape.position.y - ship.shape.radius / 2 > config::gamespace.y)
+			ship.shape.position.y = 0 - ship.shape.radius / 2;
+		if (ship.shape.position.x + ship.shape.radius / 2 < 0)
+			ship.shape.position.x = config::gamespace.x + ship.shape.radius / 2;
+		if (ship.shape.position.y + ship.shape.radius / 2 < 0)
+			ship.shape.position.y = config::gamespace.y + ship.shape.radius / 2;
 	}
 
-	static void draw(Game game)
+	void draw()
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
-			if (game.bullets[i].isActive)
-				bullet::draw(game.bullets[i]);
+			if (bullets[i].isActive)
+				bullet::draw(bullets[i]);
 		}
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			if (game.asteroids[i].isActive)
-				asteroid::draw(game.asteroids[i]);
+			if (asteroids[i].isActive)
+				asteroid::draw(asteroids[i]);
 		}
-		ship::draw(game.ship);
+		ship::draw(ship);
 
 		EndDrawing();
 	}
 
-	static void unload(Game& game)
+	void unload()
 	{
-		ship::unload(game.ship);
+		ship::unload(ship);
 	}
 
 	static Vector2 getShipDirection(Vector2 position)
