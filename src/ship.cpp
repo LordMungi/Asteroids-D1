@@ -36,6 +36,7 @@ namespace ship
 
 	void draw(Ship ship)
 	{
+		render::circle(ship.shape.position, ship.shape.radius, WHITE);
 		render::sprite(ship.sprite, ship.shape.position, { ship.shape.radius, ship.shape.radius}, ship.rotation);
 	}
 

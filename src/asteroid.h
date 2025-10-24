@@ -5,9 +5,9 @@ namespace asteroid
 {
 	enum class Size
 	{
-		Small = 10,
-		Medium = 20,
-		Large = 30
+		Small = 2,
+		Medium = 5,
+		Large = 10
 	};
 
 	struct Asteroid
@@ -18,7 +18,7 @@ namespace asteroid
 	};
 
 	const int maxAsteroids = 30;
-	const int speed = 50;
+	const int speed = 0;
 
 	Asteroid init();
 

@@ -1,12 +1,14 @@
 #include "game.h"
 
-#include <cmath>
 #include <iostream>
+#include <cmath>
+#include <ctime>
 
 #include "config.h"
 #include "ship.h"
 #include "bullet.h"
 #include "asteroid.h"
+#include "collision.h"
 
 namespace game
 {
@@ -43,6 +45,8 @@ namespace game
 
 	static Game init()
 	{
+		srand(static_cast<int>(time(0)));
+
 		Game game;
 		game.ship = ship::init();
 
@@ -54,6 +58,11 @@ namespace game
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
 			game.asteroids[i] = asteroid::init();
+		}
+
+		for (int i = 0; i < 1; i++)
+		{
+			asteroid::create(game.asteroids[i], { 50, 50 });
 		}
 
 		return game;
@@ -83,7 +92,35 @@ namespace game
 		ship::move(game.ship);
 
 		for (int i = 0; i < bullet::maxBullets; i++)
-			bullet::move(game.bullets[i]);
+		{
+			if (game.bullets[i].isActive)
+			{
+				bullet::move(game.bullets[i]);
+				for (int j = 0; j < asteroid::maxAsteroids; j++)
+				{
+					if (game.asteroids[j].isActive)
+					{
+						if (coll::circleCircle(game.bullets[i].shape, game.asteroids[j].shape))
+						{
+							bullet::destroy(game.bullets[i]);
+							asteroid::destroy(game.asteroids[j]);
+						}
+					}
+				}
+
+			}
+
+
+		}
+
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (game.asteroids[i].isActive)
+			{
+				asteroid::move(game.asteroids[i]);
+				coll::circleCircle(game.ship.shape, game.asteroids[i].shape);
+			}
+		}
 
 		// Return from the other side if leaving screen
 		if (game.ship.shape.position.x - game.ship.shape.radius / 2 > config::gamespace.x) 
@@ -105,6 +142,11 @@ namespace game
 		{
 			if (game.bullets[i].isActive)
 				bullet::draw(game.bullets[i]);
+		}
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (game.asteroids[i].isActive)
+				asteroid::draw(game.asteroids[i]);
 		}
 		ship::draw(game.ship);
 

@@ -19,8 +19,10 @@ namespace asteroid
 	{
 		asteroid.shape.position = position;
 
-		asteroid.velocity.x = (rand() % 10000) / 10000.0f;
+		asteroid.velocity.x = (rand() % 20000 - 10000) / 10000.0f;
 		asteroid.velocity.y = sqrt(1 - asteroid.velocity.x * asteroid.velocity.x);
+		if (rand() % 2)
+			asteroid.velocity.y *= -1;
 
 		switch (rand() % 3 + 1)
 		{
