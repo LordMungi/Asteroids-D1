@@ -22,6 +22,7 @@ namespace game
 	static void updateBullets();
 	static void updateAsteroids();
 
+	static void divideAsteroid(asteroid::Asteroid& asteroid);
 	static Vector2 getShipDirection();
 	static float getShipRotation(Vector2 direction);
 	static Vector2 getAsteroidStartPos();
@@ -41,7 +42,7 @@ namespace game
 			asteroids[i] = asteroid::init();
 		}
 
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
@@ -125,7 +126,10 @@ namespace game
 						if (coll::circleCircle(bullets[i].shape, asteroids[j].shape))
 						{
 							bullet::destroy(bullets[i]);
-							asteroid::destroy(asteroids[j]);
+							if (asteroids[j].shape.radius != static_cast<int>(asteroid::Size::Small))
+								divideAsteroid(asteroids[j]);
+							else
+								asteroid::destroy(asteroids[j]);
 						}
 					}
 				}
@@ -156,6 +160,34 @@ namespace game
 		}
 	}
 
+	static void divideAsteroid(asteroid::Asteroid& asteroid)
+	{
+		const int maxNewAsteroids = 3;
+		int asteroidsCreated = 0;
+
+		asteroid::Size newSize = asteroid::Size::Small;
+
+		switch (static_cast<int>(asteroid.shape.radius))
+		{
+		case static_cast<int>(asteroid::Size::Medium):
+			newSize = asteroid::Size::Small;
+			break;
+		case static_cast<int>(asteroid::Size::Large):
+			newSize = asteroid::Size::Medium;
+			break;
+		}
+
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (!asteroids[i].isActive && asteroidsCreated < maxNewAsteroids)
+			{
+				asteroid::create(asteroids[i], asteroid.shape.position, newSize);
+				asteroidsCreated++;
+			}
+		}
+
+		asteroid::destroy(asteroid);
+	}
 
 	static Vector2 getShipDirection()
 	{

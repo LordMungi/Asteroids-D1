@@ -41,11 +41,15 @@ namespace asteroid
 		asteroid.isActive = true;
 	}
 
-	void create(Asteroid& asteroid, Vector2 position, Vector2 direction, Size size)
+	void create(Asteroid& asteroid, Vector2 position, Size size)
 	{
 		asteroid.shape.position = position;
+		asteroid.velocity.x = random::floatRange(-1, 1);
+		asteroid.velocity.y = sqrt(1 - asteroid.velocity.x * asteroid.velocity.x);
+		if (random::coinFlip())
+			asteroid.velocity.y *= -1;
+
 		asteroid.shape.radius = static_cast<float>(size);
-		asteroid.velocity = direction;
 		asteroid.isActive = true;
 	}
 

@@ -23,7 +23,7 @@ namespace asteroid
 	Asteroid init();
 
 	void create(Asteroid& asteroid, Vector2 position);
-	void create(Asteroid& asteroid, Vector2 position, Vector2 direction, Size size);
+	void create(Asteroid& asteroid, Vector2 position, Size size);
 	void destroy(Asteroid& asteroid);
 
 	void move(Asteroid& asteroid);
