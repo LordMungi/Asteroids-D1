@@ -88,6 +88,9 @@ namespace game
 					}
 				}
 
+				if (GetTime() - bullets[i].activeTimer > bullet::activeCooldown)
+					bullet::destroy(bullets[i]);
+
 			}
 		}
 

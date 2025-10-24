@@ -8,10 +8,12 @@ namespace bullet
 		shape::Circle shape;
 		Vector2 velocity;
 		bool isActive;
+		double activeTimer;
 	};
 
 	const int maxBullets = 100;
-	const int speed = 100;
+	const int speed = 120;
+	const int activeCooldown = 1;
 
 	Bullet init();
 	

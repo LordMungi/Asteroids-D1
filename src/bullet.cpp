@@ -17,6 +17,7 @@ namespace bullet
 		bullet.isActive = true;
 		bullet.shape.position = position;
 		bullet.velocity = direction;
+		bullet.activeTimer = GetTime();
 	}
 
 	void destroy(Bullet& bullet)
