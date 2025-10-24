@@ -21,6 +21,7 @@ namespace game
 	static Vector2 getShipDirection(Vector2 position);
 	static float getShipRotation(Vector2 direction);
 	static Vector2 getAsteroidStartPos();
+	static void returnFromOtherSide(shape::Circle& circle);
 
 	void init()
 	{
@@ -64,12 +65,14 @@ namespace game
 		}
 
 		ship::move(ship);
+		returnFromOtherSide(ship.shape);
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
 			if (bullets[i].isActive)
 			{
 				bullet::move(bullets[i]);
+				returnFromOtherSide(bullets[i].shape);
 				for (int j = 0; j < asteroid::maxAsteroids; j++)
 				{
 					if (asteroids[j].isActive)
@@ -83,8 +86,6 @@ namespace game
 				}
 
 			}
-
-
 		}
 
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
@@ -92,20 +93,11 @@ namespace game
 			if (asteroids[i].isActive)
 			{
 				asteroid::move(asteroids[i]);
+				returnFromOtherSide(asteroids[i].shape);
 				if (coll::circleCircle(ship.shape, asteroids[i].shape))
 				coll::correctCircleCircle(ship.shape, asteroids[i].shape);
 			}
 		}
-
-		// Return from the other side if leaving screen
-		if (ship.shape.position.x - ship.shape.radius / 2 > config::gamespace.x) 
-			ship.shape.position.x = 0 - ship.shape.radius /2;
-		if (ship.shape.position.y - ship.shape.radius / 2 > config::gamespace.y)
-			ship.shape.position.y = 0 - ship.shape.radius / 2;
-		if (ship.shape.position.x + ship.shape.radius / 2 < 0)
-			ship.shape.position.x = config::gamespace.x + ship.shape.radius / 2;
-		if (ship.shape.position.y + ship.shape.radius / 2 < 0)
-			ship.shape.position.y = config::gamespace.y + ship.shape.radius / 2;
 	}
 
 	void draw()
@@ -159,8 +151,7 @@ namespace game
 
 		return rotation;
 	}
-
-	
+		
 	static Vector2 getAsteroidStartPos()
 	{
 		shape::Circle newAsteroid;
@@ -188,4 +179,15 @@ namespace game
 		return newAsteroid.position;
 	}	
 	
+	static void returnFromOtherSide(shape::Circle& circle)
+	{
+		if (circle.position.x - circle.radius > config::gamespace.x)
+			circle.position.x = 0 - circle.radius;
+		if (circle.position.y - circle.radius > config::gamespace.y)
+			circle.position.y = 0 - circle.radius;
+		if (circle.position.x + circle.radius < 0)
+			circle.position.x = config::gamespace.x + circle.radius;
+		if (circle.position.y + circle.radius < 0)
+			circle.position.y = config::gamespace.y + circle.radius;
+	}
 }
