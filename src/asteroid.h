@@ -7,7 +7,7 @@ namespace asteroid
 	{
 		Small = 2,
 		Medium = 5,
-		Large = 10
+		Large = 8
 	};
 
 	struct Asteroid
@@ -18,7 +18,7 @@ namespace asteroid
 	};
 
 	const int maxAsteroids = 30;
-	const int speed = 10;
+	const int speed = 30;
 
 	Asteroid init();
 

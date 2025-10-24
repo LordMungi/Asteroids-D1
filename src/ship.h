@@ -11,8 +11,8 @@ namespace ship
 		float rotation;
 	};
 
-	const int acceleration = 20;
-	const int maxSpeed = 100;
+	const int acceleration = 60;
+	const int maxSpeed = 200;
 
 	Ship init();
 	void unload(Ship& ship);
