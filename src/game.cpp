@@ -118,7 +118,8 @@ namespace game
 			if (game.asteroids[i].isActive)
 			{
 				asteroid::move(game.asteroids[i]);
-				coll::circleCircle(game.ship.shape, game.asteroids[i].shape);
+				if (coll::circleCircle(game.ship.shape, game.asteroids[i].shape))
+				coll::correctCircleCircle(game.ship.shape, game.asteroids[i].shape);
 			}
 		}
 
