@@ -5,7 +5,8 @@ namespace bullet
 	Bullet init()
 	{
 		Bullet bullet;
-		bullet.position = { 0, 0 };
+		bullet.shape.position = { 0, 0 };
+		bullet.shape.radius = 0.5f;
 		bullet.velocity = { 0, 0 };
 		bullet.isActive = false;
 		return bullet;
@@ -14,26 +15,26 @@ namespace bullet
 	void create(Bullet& bullet, Vector2 position, Vector2 direction)
 	{
 		bullet.isActive = true;
-		bullet.position = position;
+		bullet.shape.position = position;
 		bullet.velocity = direction;
 	}
 
 	void destroy(Bullet& bullet)
 	{
 		bullet.isActive = false;
-		bullet.position = { 0, 0 };
+		bullet.shape.position = { 0, 0 };
 		bullet.velocity = { 0, 0 };
 	}
 
 	void move(Bullet& bullet)
 	{
-		bullet.position.x += bullet.velocity.x * speed * GetFrameTime();
-		bullet.position.y += bullet.velocity.y * speed * GetFrameTime();
+		bullet.shape.position.x += bullet.velocity.x * speed * GetFrameTime();
+		bullet.shape.position.y += bullet.velocity.y * speed * GetFrameTime();
 	}
 
 	void draw(Bullet bullet)
 	{
-		render::circle(bullet.position, size, WHITE);
+		render::circle(bullet.shape.position, bullet.shape.radius, WHITE);
 	}
 
 }

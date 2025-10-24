@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\asteroid.cpp" />
     <ClCompile Include="src\bullet.cpp" />
+    <ClCompile Include="src\collision.cpp" />
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\render.cpp" />
@@ -31,10 +32,12 @@
   <ItemGroup>
     <ClInclude Include="src\asteroid.h" />
     <ClInclude Include="src\bullet.h" />
+    <ClInclude Include="src\collision.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\render.h" />
     <ClInclude Include="src\menu.h" />
+    <ClInclude Include="src\shapes.h" />
     <ClInclude Include="src\ship.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

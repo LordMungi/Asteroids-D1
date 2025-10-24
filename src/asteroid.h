@@ -12,9 +12,8 @@ namespace asteroid
 
 	struct Asteroid
 	{
-		Vector2 position;
+		shape::Circle shape;
 		Vector2 velocity;
-		Size size;
 		bool isActive;
 	};
 

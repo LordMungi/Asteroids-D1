@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "render.h"
+#include "config.h"
 
 namespace menu
 {

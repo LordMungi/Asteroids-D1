@@ -3,8 +3,10 @@
 #include <cmath>
 #include <iostream>
 
+#include "config.h"
 #include "ship.h"
 #include "bullet.h"
+#include "asteroid.h"
 
 namespace game
 {
@@ -12,6 +14,7 @@ namespace game
 	{
 		ship::Ship ship;
 		bullet::Bullet bullets[bullet::maxBullets];
+		asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 	};
 
 	static Game init();
@@ -48,12 +51,17 @@ namespace game
 			game.bullets[i] = bullet::init();
 		}
 
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			game.asteroids[i] = asteroid::init();
+		}
+
 		return game;
 	}
 
 	static void update(Game& game)
 	{
-		Vector2 direction = getShipDirection(game.ship.position);
+		Vector2 direction = getShipDirection(game.ship.shape.position);
 
 		game.ship.rotation = getShipRotation(direction);
 		
@@ -66,7 +74,7 @@ namespace game
 			{
 				if (!game.bullets[i].isActive)
 				{
-					bullet::create(game.bullets[i], game.ship.position, direction);
+					bullet::create(game.bullets[i], game.ship.shape.position, direction);
 					break;
 				}
 			}
@@ -78,14 +86,14 @@ namespace game
 			bullet::move(game.bullets[i]);
 
 		// Return from the other side if leaving screen
-		if (game.ship.position.x - game.ship.size / 2 > config::gamespace.x) 
-			game.ship.position.x = 0 - game.ship.size/2;
-		if (game.ship.position.y - game.ship.size / 2 > config::gamespace.y)
-			game.ship.position.y = 0 - game.ship.size / 2;
-		if (game.ship.position.x + game.ship.size / 2 < 0)
-			game.ship.position.x = config::gamespace.x + game.ship.size / 2;
-		if (game.ship.position.y + game.ship.size / 2 < 0)
-			game.ship.position.y = config::gamespace.y + game.ship.size / 2;
+		if (game.ship.shape.position.x - game.ship.shape.radius / 2 > config::gamespace.x) 
+			game.ship.shape.position.x = 0 - game.ship.shape.radius /2;
+		if (game.ship.shape.position.y - game.ship.shape.radius / 2 > config::gamespace.y)
+			game.ship.shape.position.y = 0 - game.ship.shape.radius / 2;
+		if (game.ship.shape.position.x + game.ship.shape.radius / 2 < 0)
+			game.ship.shape.position.x = config::gamespace.x + game.ship.shape.radius / 2;
+		if (game.ship.shape.position.y + game.ship.shape.radius / 2 < 0)
+			game.ship.shape.position.y = config::gamespace.y + game.ship.shape.radius / 2;
 	}
 
 	static void draw(Game game)
@@ -134,5 +142,16 @@ namespace game
 
 		return rotation;
 	}
-	
+
+	/*
+	static Vector2 getAsteroidStartPos(Game game)
+	{
+		Vector2 startPosition;
+		do
+		{
+			startPosition.x = static_cast<float>(rand() % static_cast<int>(config::gamespace.x));
+			startPosition.y = static_cast<float>(rand() % static_cast<int>(config::gamespace.y));
+		} while (true);
+	}	
+	*/
 }

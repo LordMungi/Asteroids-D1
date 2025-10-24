@@ -7,16 +7,17 @@ namespace asteroid
 	{
 		Asteroid asteroid;
 
-		asteroid.position = { 0, 0 };
+		asteroid.shape.position = { 0, 0 };
+		asteroid.shape.radius = static_cast<float>(Size::Small);
 		asteroid.velocity = { 0, 0 };
-		asteroid.size = Size::Small;
+		asteroid.isActive = false;
 
 		return asteroid;
 	}
 
 	void create(Asteroid& asteroid, Vector2 position)
 	{
-		asteroid.position = position;
+		asteroid.shape.position = position;
 
 		asteroid.velocity.x = (rand() % 10000) / 10000.0f;
 		asteroid.velocity.y = sqrt(1 - asteroid.velocity.x * asteroid.velocity.x);
@@ -24,13 +25,13 @@ namespace asteroid
 		switch (rand() % 3 + 1)
 		{
 		case 1:
-			asteroid.size = Size::Small;
+			asteroid.shape.radius = static_cast<float>(Size::Small);
 			break;
 		case 2:
-			asteroid.size = Size::Medium;
+			asteroid.shape.radius = static_cast<float>(Size::Medium);
 			break;
 		case 3:
-			asteroid.size = Size::Large;
+			asteroid.shape.radius = static_cast<float>(Size::Large);
 			break;
 		}
 
@@ -39,28 +40,28 @@ namespace asteroid
 
 	void create(Asteroid& asteroid, Vector2 position, Vector2 direction, Size size)
 	{
-		asteroid.position = position;
+		asteroid.shape.position = position;
+		asteroid.shape.radius = static_cast<float>(size);
 		asteroid.velocity = direction;
-		asteroid.size = size;
 		asteroid.isActive = true;
 	}
 
 	void destroy(Asteroid& asteroid)
 	{
-		asteroid.position = { 0, 0 };
+		asteroid.shape.position = { 0, 0 };
+		asteroid.shape.radius = static_cast<float>(Size::Small);
 		asteroid.velocity = { 0, 0 };
-		asteroid.size = Size::Small;
 		asteroid.isActive = false;
 	}
 
 	void move(Asteroid& asteroid)
 	{
-		asteroid.position.x += asteroid.velocity.x * speed * GetFrameTime();
-		asteroid.position.y += asteroid.velocity.y * speed * GetFrameTime();
+		asteroid.shape.position.x += asteroid.velocity.x * speed * GetFrameTime();
+		asteroid.shape.position.y += asteroid.velocity.y * speed * GetFrameTime();
 	}
 
 	void draw(Asteroid asteroid)
 	{
-		render::circle(asteroid.position, static_cast<float>(asteroid.size), WHITE);
+		render::circle(asteroid.shape.position, static_cast<float>(asteroid.shape.radius), WHITE);
 	}
 }

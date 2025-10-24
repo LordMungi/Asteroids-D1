@@ -1,4 +1,5 @@
 #include "render.h"
+#include "config.h"
 
 namespace render
 {

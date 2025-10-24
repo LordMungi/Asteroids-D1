@@ -34,6 +34,12 @@
     <Filter Include="Game\Asteroid">
       <UniqueIdentifier>{5a71dfc5-5fa2-4f34-8b23-ca97ce6c643e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Collision">
+      <UniqueIdentifier>{fb967052-3d45-4a5e-b0c6-d3dd23d4f400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Shapes">
+      <UniqueIdentifier>{3f90d510-92d5-42f0-8b5b-6ac61d57276c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -60,6 +66,9 @@
     <ClCompile Include="src\asteroid.cpp">
       <Filter>Game\Asteroid</Filter>
     </ClCompile>
+    <ClCompile Include="src\collision.cpp">
+      <Filter>Utilities\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h">
@@ -82,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="src\asteroid.h">
       <Filter>Game\Asteroid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision.h">
+      <Filter>Utilities\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shapes.h">
+      <Filter>Utilities\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

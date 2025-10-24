@@ -1,5 +1,6 @@
 #include "ship.h"
 #include <cmath>
+#include "config.h"
 
 namespace ship
 {
@@ -8,10 +9,10 @@ namespace ship
 		Ship ship;
 
 		ship.sprite = LoadTexture("resources/ship.png");
-		ship.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		ship.shape.radius = 5;
 		ship.velocity = { 0, 0 };
 		ship.rotation = 0;
-		ship.size = 5;
 		
 		return ship;
 	}
@@ -29,13 +30,13 @@ namespace ship
 
 	void move(Ship& ship)
 	{
-		ship.position.x += ship.velocity.x * GetFrameTime();
-		ship.position.y += ship.velocity.y * GetFrameTime();
+		ship.shape.position.x += ship.velocity.x * GetFrameTime();
+		ship.shape.position.y += ship.velocity.y * GetFrameTime();
 	}
 
 	void draw(Ship ship)
 	{
-		render::sprite(ship.sprite, ship.position, { ship.size, ship.size }, ship.rotation);
+		render::sprite(ship.sprite, ship.shape.position, { ship.shape.radius, ship.shape.radius}, ship.rotation);
 	}
 
 }

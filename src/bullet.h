@@ -5,14 +5,13 @@ namespace bullet
 {
 	struct Bullet
 	{
-		Vector2 position;
+		shape::Circle shape;
 		Vector2 velocity;
 		bool isActive;
 	};
 
 	const int maxBullets = 100;
 	const int speed = 100;
-	const float size = 0.5;
 
 	Bullet init();
 	

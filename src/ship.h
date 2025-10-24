@@ -5,11 +5,10 @@ namespace ship
 {
 	struct Ship
 	{
+		shape::Circle shape;
 		Texture2D sprite;
-		Vector2 position;
 		Vector2 velocity;
 		float rotation;
-		float size;
 	};
 
 	const int acceleration = 20;
