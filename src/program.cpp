@@ -54,10 +54,6 @@ namespace program
 		case program::Scenes::Game:
 			game::update();
 			break;
-		case program::Scenes::Null:
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -70,10 +66,6 @@ namespace program
 		case program::Scenes::Game:
 			game::draw();
 			break;
-		case program::Scenes::Null:
-			break;
-		default:
-			break;
 		}
 	}
 	
@@ -85,10 +77,6 @@ namespace program
 			break;
 		case program::Scenes::Game:
 			game::init();
-			break;
-		case program::Scenes::Null:
-			break;
-		default:
 			break;
 		}
 

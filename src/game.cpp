@@ -9,6 +9,7 @@
 #include "bullet.h"
 #include "asteroid.h"
 #include "collision.h"
+#include "random.h"
 
 namespace game
 {
@@ -19,6 +20,7 @@ namespace game
 
 	static Vector2 getShipDirection(Vector2 position);
 	static float getShipRotation(Vector2 direction);
+	static Vector2 getAsteroidStartPos();
 
 	void init()
 	{
@@ -36,7 +38,7 @@ namespace game
 
 		for (int i = 0; i < 10; i++)
 		{
-			asteroid::create(asteroids[i], { 50, 50 });
+			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
 	}
 
@@ -158,15 +160,32 @@ namespace game
 		return rotation;
 	}
 
-	/*
-	static Vector2 getAsteroidStartPos(Game game)
+	
+	static Vector2 getAsteroidStartPos()
 	{
-		Vector2 startPosition;
+		shape::Circle newAsteroid;
+		newAsteroid.radius = static_cast<float>(asteroid::Size::Large);
+		bool isColliding;
+
 		do
 		{
-			startPosition.x = static_cast<float>(rand() % static_cast<int>(config::gamespace.x));
-			startPosition.y = static_cast<float>(rand() % static_cast<int>(config::gamespace.y));
-		} while (true);
+			isColliding = false;
+
+			newAsteroid.position.x = static_cast<float>(random::intRange(0, static_cast<int>(config::gamespace.x)));
+			newAsteroid.position.y = static_cast<float>(random::intRange(0, static_cast<int>(config::gamespace.y)));
+			
+			if (coll::circleCircle(newAsteroid, ship.shape))
+				isColliding = true;
+			
+			
+			for (int i = 0; i < asteroid::maxAsteroids; i++)
+			{
+				if (asteroids[i].isActive && coll::circleCircle(newAsteroid, asteroids[i].shape))
+					isColliding = true;
+			}
+			
+		} while (isColliding);
+		return newAsteroid.position;
 	}	
-	*/
+	
 }
