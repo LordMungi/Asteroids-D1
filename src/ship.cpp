@@ -13,6 +13,8 @@ namespace ship
 		ship.shape.radius = 2;
 		ship.velocity = { 0, 0 };
 		ship.rotation = 0;
+		ship.immunityTimer = 0;
+		ship.deathTimer = 0;
 		
 		return ship;
 	}
@@ -33,6 +35,22 @@ namespace ship
 		ship.shape.position.x += ship.velocity.x * GetFrameTime();
 		ship.shape.position.y += ship.velocity.y * GetFrameTime();
 	}
+
+	void spawn(Ship& ship)
+	{
+		ship.isAlive = true;
+		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		ship.velocity = { 0, 0 };
+		ship.immunityTimer = GetTime();
+	}
+
+	void die(Ship& ship)
+	{
+		ship.isAlive = false;
+		ship.velocity = { 0, 0 };
+		ship.deathTimer = GetTime();
+	}
+	
 
 	void draw(Ship ship)
 	{
