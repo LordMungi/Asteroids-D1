@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\asteroid.cpp" />
     <ClCompile Include="src\bullet.cpp" />
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\ship.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\asteroid.h" />
     <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\game.h" />

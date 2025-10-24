@@ -33,7 +33,7 @@ namespace bullet
 
 	void draw(Bullet bullet)
 	{
-		render::rectangle(bullet.position, { size, size }, WHITE);
+		render::circle(bullet.position, size, WHITE);
 	}
 
 }

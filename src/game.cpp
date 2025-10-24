@@ -92,15 +92,15 @@ namespace game
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
-		ship::draw(game.ship);
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
 			if (game.bullets[i].isActive)
 				bullet::draw(game.bullets[i]);
 		}
-		EndDrawing();
+		ship::draw(game.ship);
 
+		EndDrawing();
 	}
 
 	static void unload(Game& game)
@@ -113,7 +113,7 @@ namespace game
 		Vector2 direction;
 
 		Vector2 mousePosition = GetMousePosition();
-		position = render::getResFromGamespace(position);
+		position = render::getResPointFromGamespace(position);
 
 		direction.x = mousePosition.x - position.x;
 		direction.y = mousePosition.y - position.y;

@@ -24,16 +24,24 @@ namespace render
 
 	void rectangle(Vector2 pos, Vector2 size, Color color)
 	{
-		Vector2 resPos = getResFromGamespace(pos);
-		Vector2 resSize = getResFromGamespace(size);
+		Vector2 resPos = getResPointFromGamespace(pos);
+		Vector2 resSize = getResPointFromGamespace(size);
 
 		DrawRectangle(static_cast<int>(resPos.x - resSize.x / 2), static_cast<int>(resPos.y - resSize.y / 2), static_cast<int>(resSize.x), static_cast<int>(resSize.y), color);
 	}
 
+	void circle(Vector2 pos, float radius, Color color)
+	{
+		Vector2 resPos = getResPointFromGamespace(pos);
+		float resRadius = getResValueFromGamespace(radius);
+
+		DrawCircle(static_cast<int>(resPos.x), static_cast<int>(resPos.y), resRadius, color);
+	}
+
 	void sprite(Texture2D texture, Vector2 pos, Vector2 size, float rotation)
 	{
-		Vector2 resPos = getResFromGamespace(pos);
-		Vector2 resSize = getResFromGamespace(size);
+		Vector2 resPos = getResPointFromGamespace(pos);
+		Vector2 resSize = getResPointFromGamespace(size);
 
 		Rectangle source;
 		source.x = 0;
@@ -59,11 +67,18 @@ namespace render
 		config::gamespace.y = 100;
 		config::gamespace.x = res.x * config::gamespace.y / res.y;
 	}
-	Vector2 getResFromGamespace(Vector2 gsPoint)
+
+
+	Vector2 getResPointFromGamespace(Vector2 gsPoint)
 	{
 		Vector2 resPoint;
 		resPoint.x = gsPoint.x * res.x / config::gamespace.x;
 		resPoint.y = gsPoint.y * res.y / config::gamespace.y;
 		return resPoint;
 	}
+	float getResValueFromGamespace(float value)
+	{
+		return value * res.y / config::gamespace.y;
+	}
+
 }

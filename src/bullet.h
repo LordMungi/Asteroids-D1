@@ -12,7 +12,7 @@ namespace bullet
 
 	const int maxBullets = 100;
 	const int speed = 100;
-	const int size = 2;
+	const float size = 0.5;
 
 	Bullet init();
 	
