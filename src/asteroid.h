@@ -6,8 +6,8 @@ namespace asteroid
 	enum class Size
 	{
 		Small = 2,
-		Medium = 5,
-		Large = 8
+		Medium = 4,
+		Large = 6
 	};
 
 	struct Asteroid

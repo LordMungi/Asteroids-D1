@@ -18,6 +18,10 @@ namespace game
 	bullet::Bullet bullets[bullet::maxBullets];
 	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 
+	static void updateShip();
+	static void updateBullets();
+	static void updateAsteroids();
+
 	static Vector2 getShipDirection();
 	static float getShipRotation(Vector2 direction);
 	static Vector2 getAsteroidStartPos();
@@ -37,7 +41,7 @@ namespace game
 			asteroids[i] = asteroid::init();
 		}
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 20; i++)
 		{
 			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
@@ -45,73 +49,9 @@ namespace game
 
 	void update()
 	{
-		Vector2 direction = getShipDirection();
-
-		if (ship.isAlive)
-		{
-			ship.rotation = getShipRotation(direction);
-			
-			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-				ship::accelerate(ship, direction);
-
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			{
-				for (int i = 0; i < bullet::maxBullets; i++)
-				{
-					if (!bullets[i].isActive)
-					{
-						bullet::create(bullets[i], ship.shape.position, direction);
-						break;
-					}
-				}
-			}
-
-				ship::move(ship);
-			returnFromOtherSide(ship.shape);
-		}
-
-		for (int i = 0; i < bullet::maxBullets; i++)
-		{
-			if (bullets[i].isActive)
-			{
-				bullet::move(bullets[i]);
-				returnFromOtherSide(bullets[i].shape);
-				for (int j = 0; j < asteroid::maxAsteroids; j++)
-				{
-					if (asteroids[j].isActive)
-					{
-						if (coll::circleCircle(bullets[i].shape, asteroids[j].shape))
-						{
-							bullet::destroy(bullets[i]);
-							asteroid::destroy(asteroids[j]);
-						}
-					}
-				}
-
-				if (GetTime() - bullets[i].activeTimer > bullet::activeCooldown)
-					bullet::destroy(bullets[i]);
-
-			}
-		}
-
-		for (int i = 0; i < asteroid::maxAsteroids; i++)
-		{
-			if (asteroids[i].isActive)
-			{
-				asteroid::move(asteroids[i]);
-				returnFromOtherSide(asteroids[i].shape);
-				if (coll::circleCircle(ship.shape, asteroids[i].shape) && 
-					GetTime() - ship.immunityTimer > ship::immunityCooldown &&
-					ship.isAlive)
-				{
-					ship::die(ship);
-					asteroid::destroy(asteroids[i]);
-				}
-			}	
-		}
-
-		if (!ship.isAlive && GetTime() - ship.deathTimer > ship::deathCooldown)
-			ship::spawn(ship);
+		updateShip();
+		updateBullets();
+		updateAsteroids();
 	}
 
 	void draw()
@@ -139,6 +79,84 @@ namespace game
 		ship::unload(ship);
 	}
 
+	static void updateShip()
+	{
+		Vector2 direction = getShipDirection();
+
+		if (ship.isAlive)
+		{
+			ship.rotation = getShipRotation(direction);
+
+			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+				ship::accelerate(ship, direction);
+
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			{
+				for (int i = 0; i < bullet::maxBullets; i++)
+				{
+					if (!bullets[i].isActive)
+					{
+						bullet::create(bullets[i], ship.shape.position, direction);
+						break;
+					}
+				}
+			}
+
+			ship::move(ship);
+			returnFromOtherSide(ship.shape);
+		}
+		else if (GetTime() - ship.deathTimer > ship::deathCooldown)
+			ship::spawn(ship);
+	}
+
+	static void updateBullets()
+	{
+		for (int i = 0; i < bullet::maxBullets; i++)
+		{
+			if (bullets[i].isActive)
+			{
+				bullet::move(bullets[i]);
+				returnFromOtherSide(bullets[i].shape);
+
+				for (int j = 0; j < asteroid::maxAsteroids; j++)
+				{
+					if (asteroids[j].isActive)
+					{
+						if (coll::circleCircle(bullets[i].shape, asteroids[j].shape))
+						{
+							bullet::destroy(bullets[i]);
+							asteroid::destroy(asteroids[j]);
+						}
+					}
+				}
+
+				if (GetTime() - bullets[i].activeTimer > bullet::activeCooldown)
+					bullet::destroy(bullets[i]);
+			}
+		}
+	}
+
+	static void updateAsteroids()
+	{
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (asteroids[i].isActive)
+			{
+				asteroid::move(asteroids[i]);
+				returnFromOtherSide(asteroids[i].shape);
+
+				if (coll::circleCircle(ship.shape, asteroids[i].shape) &&
+					GetTime() - ship.immunityTimer > ship::immunityCooldown &&
+					ship.isAlive)
+				{
+					ship::die(ship);
+					asteroid::destroy(asteroids[i]);
+				}
+			}
+		}
+	}
+
+
 	static Vector2 getShipDirection()
 	{
 		Vector2 direction;
@@ -156,6 +174,7 @@ namespace game
 
 		return direction;
 	}
+
 	static float getShipRotation(Vector2 direction)
 	{
 		float rotation = atan(direction.y / direction.x) * (180 / PI);

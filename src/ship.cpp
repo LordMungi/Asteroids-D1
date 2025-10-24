@@ -8,6 +8,7 @@ namespace ship
 	{
 		Ship ship;
 
+		ship.isAlive = true;
 		ship.sprite = LoadTexture("resources/ship.png");
 		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
 		ship.shape.radius = 2;
