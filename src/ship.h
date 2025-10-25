@@ -3,13 +3,22 @@
 
 namespace ship
 {
+	enum class State
+	{
+		Moving,
+		Accelerating,
+		Shooting,
+		Dead,
+	};
+
 	struct Ship
 	{
+
 		shape::Circle shape;
 		Texture2D sprite;
 		Vector2 velocity;
 		float rotation;
-		bool isAlive;
+		State state;
 
 		double immunityTimer;
 		double deathTimer;

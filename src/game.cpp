@@ -84,8 +84,11 @@ namespace game
 	{
 		Vector2 direction = getShipDirection();
 
-		if (ship.isAlive)
+		if (ship.state != ship::State::Dead)
 		{
+			ship::move(ship);
+			returnFromOtherSide(ship.shape);
+
 			ship.rotation = getShipRotation(direction);
 
 			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
@@ -101,10 +104,7 @@ namespace game
 						break;
 					}
 				}
-			}
-
-			ship::move(ship);
-			returnFromOtherSide(ship.shape);
+			}	
 		}
 		else if (GetTime() - ship.deathTimer > ship::deathCooldown)
 			ship::spawn(ship);
@@ -151,7 +151,7 @@ namespace game
 
 				if (coll::circleCircle(ship.shape, asteroids[i].shape) &&
 					GetTime() - ship.immunityTimer > ship::immunityCooldown &&
-					ship.isAlive)
+					ship.state != ship::State::Dead)
 				{
 					ship::die(ship);
 					asteroid::destroy(asteroids[i]);
