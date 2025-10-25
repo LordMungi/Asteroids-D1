@@ -8,12 +8,19 @@ namespace ship
 	{
 		Ship ship;
 
-		ship.state = State::Moving;
 		ship.sprite = LoadTexture("resources/ship.png");
 		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
 		ship.shape.radius = 2;
+
 		ship.velocity = { 0, 0 };
 		ship.rotation = 0;
+		ship.state = State::Moving;
+
+		for (int i = 0; i < bullet::maxBullets; i++)
+		{
+			ship.bullets[i] = bullet::init();
+		}
+
 		ship.immunityTimer = 0;
 		ship.deathTimer = 0;
 		
@@ -39,6 +46,19 @@ namespace ship
 		ship.shape.position.y += ship.velocity.y * GetFrameTime();
 	}
 
+	void shoot(Ship& ship)
+	{
+		ship.state = State::Shooting;
+		for (int i = 0; i < bullet::maxBullets; i++)
+		{
+			if (!ship.bullets[i].isActive)
+			{
+				bullet::create(ship.bullets[i], ship.shape.position, getDirection(ship));
+				break;
+			}
+		}
+	}
+
 	void spawn(Ship& ship)
 	{
 		ship.state = State::Moving;
@@ -54,6 +74,24 @@ namespace ship
 		ship.deathTimer = GetTime();
 	}
 	
+	Vector2 getDirection(Ship& ship)
+	{
+		Vector2 direction;
+
+		Vector2 mousePosition = GetMousePosition();
+		Vector2 resPosition = render::getResPointFromGamespace(ship.shape.position);
+
+		direction.x = mousePosition.x - resPosition.x;
+		direction.y = mousePosition.y - resPosition.y;
+
+		float mag = sqrt((direction.x * direction.x) + (direction.y * direction.y));
+
+		direction.x /= mag;
+		direction.y /= mag;
+
+		return direction;
+	}
+
 	void draw(Ship ship)
 	{
 		switch (ship.state)

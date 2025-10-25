@@ -6,7 +6,6 @@
 
 #include "config.h"
 #include "ship.h"
-#include "bullet.h"
 #include "asteroid.h"
 #include "collision.h"
 #include "random.h"
@@ -15,7 +14,6 @@ namespace game
 {
 	
 	ship::Ship ship;
-	bullet::Bullet bullets[bullet::maxBullets];
 	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 
 	static void updateShip();
@@ -23,19 +21,13 @@ namespace game
 	static void updateAsteroids();
 
 	static void divideAsteroid(asteroid::Asteroid& asteroid);
-	static Vector2 getShipDirection();
-	static float getShipRotation(Vector2 direction);
+	static float getRotation(Vector2 direction);
 	static Vector2 getAsteroidStartPos();
 	static void returnFromOtherSide(shape::Circle& circle);
 
 	void init()
 	{
 		ship = ship::init();
-
-		for (int i = 0; i < bullet::maxBullets; i++)
-		{
-			bullets[i] = bullet::init();
-		}
 
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
@@ -62,8 +54,8 @@ namespace game
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
-			if (bullets[i].isActive)
-				bullet::draw(bullets[i]);
+			if (ship.bullets[i].isActive)
+				bullet::draw(ship.bullets[i]);
 		}
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
@@ -82,28 +74,21 @@ namespace game
 
 	static void updateShip()
 	{
-		Vector2 direction = getShipDirection();
+		Vector2 direction = ship::getDirection(ship);
 
 		if (ship.state != ship::State::Dead)
 		{
 			ship::move(ship);
 			returnFromOtherSide(ship.shape);
 
-			ship.rotation = getShipRotation(direction);
+			ship.rotation = getRotation(direction);
 
 			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 				ship::accelerate(ship, direction);
 
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
-				for (int i = 0; i < bullet::maxBullets; i++)
-				{
-					if (!bullets[i].isActive)
-					{
-						bullet::create(bullets[i], ship.shape.position, direction);
-						break;
-					}
-				}
+				ship::shoot(ship);
 			}	
 		}
 		else if (GetTime() - ship.deathTimer > ship::deathCooldown)
@@ -114,18 +99,18 @@ namespace game
 	{
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
-			if (bullets[i].isActive)
+			if (ship.bullets[i].isActive)
 			{
-				bullet::move(bullets[i]);
-				returnFromOtherSide(bullets[i].shape);
+				bullet::move(ship.bullets[i]);
+				returnFromOtherSide(ship.bullets[i].shape);
 
 				for (int j = 0; j < asteroid::maxAsteroids; j++)
 				{
 					if (asteroids[j].isActive)
 					{
-						if (coll::circleCircle(bullets[i].shape, asteroids[j].shape))
+						if (coll::circleCircle(ship.bullets[i].shape, asteroids[j].shape))
 						{
-							bullet::destroy(bullets[i]);
+							bullet::destroy(ship.bullets[i]);
 							if (asteroids[j].shape.radius != static_cast<int>(asteroid::Size::Small))
 								divideAsteroid(asteroids[j]);
 							else
@@ -134,8 +119,8 @@ namespace game
 					}
 				}
 
-				if (GetTime() - bullets[i].activeTimer > bullet::activeCooldown)
-					bullet::destroy(bullets[i]);
+				if (GetTime() - ship.bullets[i].activeTimer > bullet::activeCooldown)
+					bullet::destroy(ship.bullets[i]);
 			}
 		}
 	}
@@ -189,25 +174,7 @@ namespace game
 		asteroid::destroy(asteroid);
 	}
 
-	static Vector2 getShipDirection()
-	{
-		Vector2 direction;
-
-		Vector2 mousePosition = GetMousePosition();
-		Vector2 resPosition = render::getResPointFromGamespace(ship.shape.position);
-
-		direction.x = mousePosition.x - resPosition.x;
-		direction.y = mousePosition.y - resPosition.y;
-
-		float mag = sqrt((direction.x * direction.x) + (direction.y * direction.y));
-
-		direction.x /= mag;
-		direction.y /= mag;
-
-		return direction;
-	}
-
-	static float getShipRotation(Vector2 direction)
+	float getRotation(Vector2 direction)
 	{
 		float rotation = atan(direction.y / direction.x) * (180 / PI);
 
@@ -255,4 +222,5 @@ namespace game
 		if (circle.position.y + circle.radius < 0)
 			circle.position.y = config::gamespace.y + circle.radius;
 	}
+
 }

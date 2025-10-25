@@ -1,5 +1,6 @@
 #pragma once
 #include "render.h"
+#include "bullet.h"
 
 namespace ship
 {
@@ -13,12 +14,14 @@ namespace ship
 
 	struct Ship
 	{
-
-		shape::Circle shape;
 		Texture2D sprite;
+		shape::Circle shape;
+				
 		Vector2 velocity;
 		float rotation;
 		State state;
+
+		bullet::Bullet bullets[bullet::maxBullets];
 
 		double immunityTimer;
 		double deathTimer;
@@ -35,8 +38,12 @@ namespace ship
 
 	void accelerate(Ship& ship, Vector2 direction);
 	void move(Ship& ship);
+	void shoot(Ship& ship);
+
 	void spawn(Ship& ship);
 	void die(Ship& ship);
+
+	Vector2 getDirection(Ship& ship);
 
 	void draw(Ship ship);
 }
