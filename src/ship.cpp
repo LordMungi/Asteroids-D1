@@ -32,13 +32,13 @@ namespace ship
 		UnloadTexture(ship.sprite);
 	}
 
-	void accelerate(Ship& ship, Vector2 direction)
+	void accelerate(Ship& ship)
 	{
 		ship.state = State::Accelerating;
-		if (abs(ship.velocity.x + direction.x * acceleration * GetFrameTime()) < maxSpeed)
-			ship.velocity.x = ship.velocity.x + direction.x * acceleration * GetFrameTime();
-		if (abs(ship.velocity.y + direction.y * acceleration * GetFrameTime()) < maxSpeed)
-			ship.velocity.y = ship.velocity.y + direction.y * acceleration * GetFrameTime();
+		if (abs(ship.velocity.x + ship.direction.x * acceleration * GetFrameTime()) < maxSpeed)
+			ship.velocity.x = ship.velocity.x + ship.direction.x * acceleration * GetFrameTime();
+		if (abs(ship.velocity.y + ship.direction.y * acceleration * GetFrameTime()) < maxSpeed)
+			ship.velocity.y = ship.velocity.y + ship.direction.y * acceleration * GetFrameTime();
 	}
 
 	void move(Ship& ship)
@@ -55,7 +55,7 @@ namespace ship
 		{
 			if (!ship.bullets[i].isActive)
 			{
-				bullet::create(ship.bullets[i], ship.shape.position, getDirection(ship));
+				bullet::create(ship.bullets[i], ship.shape.position, ship.direction);
 				break;
 			}
 		}

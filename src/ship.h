@@ -17,6 +17,7 @@ namespace ship
 		Texture2D sprite;
 		shape::Circle shape;
 				
+		Vector2 direction;
 		Vector2 velocity;
 		float rotation;
 		State state;
@@ -28,7 +29,7 @@ namespace ship
 	};
 
 	const int acceleration = 60;
-	const int maxSpeed = 200;
+	const int maxSpeed = 100;
 
 	const int immunityCooldown = 2;
 	const int deathCooldown = 2;
@@ -36,7 +37,7 @@ namespace ship
 	Ship init();
 	void unload(Ship& ship);
 
-	void accelerate(Ship& ship, Vector2 direction);
+	void accelerate(Ship& ship);
 	void move(Ship& ship);
 	void shoot(Ship& ship);
 

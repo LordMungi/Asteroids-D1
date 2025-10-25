@@ -74,17 +74,17 @@ namespace game
 
 	static void updateShip()
 	{
-		Vector2 direction = ship::getDirection(ship);
+		ship.direction = ship::getDirection(ship);
 
 		if (ship.state != ship::State::Dead)
 		{
 			ship::move(ship);
 			returnFromOtherSide(ship.shape);
 
-			ship.rotation = getRotation(direction);
+			ship.rotation = getRotation(ship.direction);
 
 			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-				ship::accelerate(ship, direction);
+				ship::accelerate(ship);
 
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
