@@ -35,8 +35,10 @@ namespace ship
 	void accelerate(Ship& ship, Vector2 direction)
 	{
 		ship.state = State::Accelerating;
-		ship.velocity.x = static_cast<float>(std::fmin(ship.velocity.x + direction.x * acceleration * GetFrameTime(), maxSpeed));
-		ship.velocity.y = static_cast<float>(std::fmin(ship.velocity.y + direction.y * acceleration * GetFrameTime(), maxSpeed));
+		if (abs(ship.velocity.x + direction.x * acceleration * GetFrameTime()) < maxSpeed)
+			ship.velocity.x = ship.velocity.x + direction.x * acceleration * GetFrameTime();
+		if (abs(ship.velocity.y + direction.y * acceleration * GetFrameTime()) < maxSpeed)
+			ship.velocity.y = ship.velocity.y + direction.y * acceleration * GetFrameTime();
 	}
 
 	void move(Ship& ship)
