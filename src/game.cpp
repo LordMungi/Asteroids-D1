@@ -12,14 +12,24 @@
 
 namespace game
 {
+	enum class State
+	{
+		Playing,
+		Won,
+		Lost,
+		Paused
+	};
 	
+	State gamestate;
 	ship::Ship ship;
 	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 
 	static void updateShip();
 	static void updateBullets();
 	static void updateAsteroids();
+	static void updateGameState();
 
+	static int asteroidsLeft();
 	static void divideAsteroid(asteroid::Asteroid& asteroid);
 	static float getRotation(Vector2 direction);
 	static Vector2 getAsteroidStartPos();
@@ -42,9 +52,13 @@ namespace game
 
 	void update()
 	{
-		updateShip();
-		updateBullets();
-		updateAsteroids();
+		if (gamestate != State::Paused)
+		{
+			updateShip();
+			updateBullets();
+			updateAsteroids();
+		}
+		updateGameState();
 	}
 
 	void draw()
@@ -91,7 +105,7 @@ namespace game
 				ship::shoot(ship);
 			}	
 		}
-		else if (GetTime() - ship.deathTimer > ship::deathCooldown)
+		else if (GetTime() - ship.deathTimer > ship::deathCooldown && ship.lives >= 0)
 			ship::spawn(ship);
 	}
 
@@ -143,6 +157,27 @@ namespace game
 				}
 			}
 		}
+	}
+
+	static void updateGameState()
+	{
+		if (asteroidsLeft() == 0)
+			gamestate = State::Won;
+		else if (ship.lives < 0)
+			gamestate = State::Lost;
+		else
+			gamestate = State::Playing;
+	}
+
+	static int asteroidsLeft()
+	{
+		int count = 0;
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (asteroids[i].isActive)
+				count++;
+		}
+		return count;
 	}
 
 	static void divideAsteroid(asteroid::Asteroid& asteroid)

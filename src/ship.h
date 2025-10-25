@@ -17,6 +17,7 @@ namespace ship
 		Texture2D sprite;
 		shape::Circle shape;
 				
+		int lives;
 		Vector2 direction;
 		Vector2 velocity;
 		float rotation;

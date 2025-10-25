@@ -7,11 +7,12 @@ namespace ship
 	Ship init()
 	{
 		Ship ship;
-
+		
 		ship.sprite = LoadTexture("resources/ship.png");
 		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
 		ship.shape.radius = 2;
 
+		ship.lives = 3;
 		ship.velocity = { 0, 0 };
 		ship.rotation = 0;
 		ship.state = State::Moving;
@@ -71,6 +72,7 @@ namespace ship
 
 	void die(Ship& ship)
 	{
+		ship.lives--;
 		ship.state = State::Dead;
 		ship.velocity = { 0, 0 };
 		ship.deathTimer = GetTime();
