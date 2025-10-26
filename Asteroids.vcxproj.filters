@@ -58,6 +58,9 @@
     <Filter Include="Program\Utilities\Random\Animation">
       <UniqueIdentifier>{a7153271-1272-4225-83a4-96a9ba062fb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Utilities\Math">
+      <UniqueIdentifier>{035502a7-db05-45bf-8f3c-9506fb1d8749}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -98,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="src\animation.cpp">
       <Filter>Program\Utilities\Random\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math.cpp">
+      <Filter>Program\Utilities\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="src\animation.h">
       <Filter>Program\Utilities\Random\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math.h">
+      <Filter>Program\Utilities\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

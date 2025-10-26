@@ -26,6 +26,7 @@
     <ClCompile Include="src\collision.cpp" />
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\math.cpp" />
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\random.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\collision.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\math.h" />
     <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\program.h" />
     <ClInclude Include="src\random.h" />

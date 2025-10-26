@@ -36,7 +36,7 @@ namespace ship
 	const int acceleration = 60;
 	const int maxSpeed = 100;
 
-	const int immunityCooldown = 2;
+	const int immunityCooldown = 3;
 	const int deathCooldown = 2;
 
 	Ship init();

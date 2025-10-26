@@ -1,6 +1,7 @@
 #include "ship.h"
 #include <cmath>
 #include "config.h"
+#include "math.h"
 
 namespace ship
 {
@@ -48,6 +49,11 @@ namespace ship
 		anim::unload(ship.idleAnimation);
 		anim::unload(ship.accelAnimation);
 		UnloadTexture(ship.deathSprite);
+
+		for (int i = 0; i < bullet::maxBullets; i++)
+		{
+			bullet::unload(ship.bullets[i]);
+		}
 	}
 
 	void accelerate(Ship& ship)
@@ -62,6 +68,7 @@ namespace ship
 	void move(Ship& ship)
 	{
 		ship.state = State::Moving;
+		ship.rotation = math::getRotation(ship.direction);
 		ship.collision.position.x += ship.velocity.x * GetFrameTime();
 		ship.collision.position.y += ship.velocity.y * GetFrameTime();
 		ship.shape.position = ship.collision.position;

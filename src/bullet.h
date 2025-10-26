@@ -5,13 +5,19 @@ namespace bullet
 {
 	struct Bullet
 	{
-		shape::Circle shape;
+		Texture2D sprite;
+		shape::Rectangle shape;
+		
+		shape::Circle collision;
+		
 		Vector2 velocity;
+		float rotation;
+
 		bool isActive;
 		double activeTimer;
 	};
 
-	const int maxBullets = 100;
+	const int maxBullets = 20;
 	const int speed = 120;
 	const int activeCooldown = 1;
 
@@ -22,4 +28,6 @@ namespace bullet
 
 	void move(Bullet& bullet);
 	void draw(Bullet bullet);
+
+	void unload(Bullet& bullet);
 }

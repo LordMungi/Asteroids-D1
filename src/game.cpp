@@ -32,7 +32,6 @@ namespace game
 
 	static int asteroidsLeft();
 	static void divideAsteroid(asteroid::Asteroid& asteroid);
-	static float getRotation(Vector2 direction);
 	static Vector2 getAsteroidStartPos();
 	static void returnFromOtherSide(shape::Circle& circle);
 
@@ -104,8 +103,6 @@ namespace game
 			ship::move(ship);
 			returnFromOtherSide(ship.collision);
 
-			ship.rotation = getRotation(ship.direction);
-
 			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 				ship::accelerate(ship);
 
@@ -125,13 +122,13 @@ namespace game
 			if (ship.bullets[i].isActive)
 			{
 				bullet::move(ship.bullets[i]);
-				returnFromOtherSide(ship.bullets[i].shape);
+				returnFromOtherSide(ship.bullets[i].collision);
 
 				for (int j = 0; j < asteroid::maxAsteroids; j++)
 				{
 					if (asteroids[j].isActive)
 					{
-						if (coll::circleCircle(ship.bullets[i].shape, asteroids[j].shape))
+						if (coll::circleCircle(ship.bullets[i].collision, asteroids[j].shape))
 						{
 							bullet::destroy(ship.bullets[i]);
 							if (asteroids[j].shape.radius != static_cast<int>(asteroid::Size::Small))
@@ -216,16 +213,6 @@ namespace game
 		}
 
 		asteroid::destroy(asteroid);
-	}
-
-	float getRotation(Vector2 direction)
-	{
-		float rotation = atan(direction.y / direction.x) * (180 / PI);
-
-		if (direction.x < 0) rotation += 180;
-		else if (direction.y < 0) rotation += 360;
-
-		return rotation;
 	}
 		
 	static Vector2 getAsteroidStartPos()
