@@ -102,7 +102,7 @@ namespace game
 		if (ship.state != ship::State::Dead)
 		{
 			ship::move(ship);
-			returnFromOtherSide(ship.shape);
+			returnFromOtherSide(ship.collision);
 
 			ship.rotation = getRotation(ship.direction);
 
@@ -157,7 +157,7 @@ namespace game
 				asteroid::move(asteroids[i]);
 				returnFromOtherSide(asteroids[i].shape);
 
-				if (coll::circleCircle(ship.shape, asteroids[i].shape) &&
+				if (coll::circleCircle(ship.collision, asteroids[i].shape) &&
 					GetTime() - ship.immunityTimer > ship::immunityCooldown &&
 					ship.state != ship::State::Dead)
 				{
@@ -241,7 +241,7 @@ namespace game
 			newAsteroid.position.x = static_cast<float>(random::intRange(0, static_cast<int>(config::gamespace.x)));
 			newAsteroid.position.y = static_cast<float>(random::intRange(0, static_cast<int>(config::gamespace.y)));
 			
-			if (coll::circleCircle(newAsteroid, ship.shape))
+			if (coll::circleCircle(newAsteroid, ship.collision))
 				isColliding = true;
 			
 			

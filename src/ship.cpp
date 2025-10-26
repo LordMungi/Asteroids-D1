@@ -8,14 +8,24 @@ namespace ship
 	{
 		Ship ship;
 		
+		ship.collision.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		ship.collision.radius = 4;
+
+		ship.shape.position = ship.collision.position;
+		ship.shape.size = { 15, 15 };
+
 		ship.idleAnimation = anim::init(3);
 		ship.idleAnimation.frames[0] = LoadTexture("resources/sprites/ship/idle/idle1.png");
 		ship.idleAnimation.frames[1] = LoadTexture("resources/sprites/ship/idle/idle2.png");
 		ship.idleAnimation.frames[2] = LoadTexture("resources/sprites/ship/idle/idle3.png");
 
-		ship.sprite = LoadTexture("resources/x.png");
-		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
-		ship.shape.radius = 10;
+		ship.accelAnimation = anim::init(3);
+		ship.accelAnimation.frames[0] = LoadTexture("resources/sprites/ship/acceleration/squash.png");
+		ship.accelAnimation.frames[1] = LoadTexture("resources/sprites/ship/acceleration/stretch1.png");
+		ship.accelAnimation.frames[2] = LoadTexture("resources/sprites/ship/acceleration/stretch2.png");
+
+		ship.deathSprite = LoadTexture("resources/sprites/ship/death/death.png");
+
 
 		ship.lives = 3;
 		ship.velocity = { 0, 0 };
@@ -35,8 +45,9 @@ namespace ship
 
 	void unload(Ship& ship)
 	{
-		UnloadTexture(ship.sprite);
 		anim::unload(ship.idleAnimation);
+		anim::unload(ship.accelAnimation);
+		UnloadTexture(ship.deathSprite);
 	}
 
 	void accelerate(Ship& ship)
@@ -51,8 +62,9 @@ namespace ship
 	void move(Ship& ship)
 	{
 		ship.state = State::Moving;
-		ship.shape.position.x += ship.velocity.x * GetFrameTime();
-		ship.shape.position.y += ship.velocity.y * GetFrameTime();
+		ship.collision.position.x += ship.velocity.x * GetFrameTime();
+		ship.collision.position.y += ship.velocity.y * GetFrameTime();
+		ship.shape.position = ship.collision.position;
 	}
 
 	void shoot(Ship& ship)
@@ -62,7 +74,7 @@ namespace ship
 		{
 			if (!ship.bullets[i].isActive)
 			{
-				bullet::create(ship.bullets[i], ship.shape.position, ship.direction);
+				bullet::create(ship.bullets[i], ship.collision.position, ship.direction);
 				break;
 			}
 		}
@@ -71,7 +83,7 @@ namespace ship
 	void spawn(Ship& ship)
 	{
 		ship.state = State::Moving;
-		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		ship.collision.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
 		ship.velocity = { 0, 0 };
 		ship.immunityTimer = GetTime();
 	}
@@ -89,7 +101,7 @@ namespace ship
 		Vector2 direction;
 
 		Vector2 mousePosition = GetMousePosition();
-		Vector2 resPosition = render::getResPointFromGamespace(ship.shape.position);
+		Vector2 resPosition = render::getResPointFromGamespace(ship.collision.position);
 
 		direction.x = mousePosition.x - resPosition.x;
 		direction.y = mousePosition.y - resPosition.y;
@@ -107,21 +119,22 @@ namespace ship
 		switch (ship.state)
 		{
 		case State::Moving:
-			render::circle(ship.shape, WHITE);
+			render::circle(ship.collision, WHITE);
+			render::animation(ship.idleAnimation, ship.shape, ship.rotation);
 			break;
 		case State::Accelerating:
-			render::circle(ship.shape, GRAY);
+			//render::circle(ship.collision, GRAY);
+			render::animation(ship.accelAnimation, ship.shape, ship.rotation);
 			break;
 		case State::Shooting:
-			render::circle(ship.shape, BLUE);
+			render::circle(ship.collision, BLUE);
 			break;
 		case State::Dead:
-			render::circle(ship.shape, RED);
+			//render::circle(ship.collision, RED);
+			render::sprite(ship.deathSprite, ship.shape, ship.rotation);
 			break;
 		}
 
-		render::sprite(ship.sprite, ship.shape, ship.rotation);
-		render::animation(ship.idleAnimation, ship.shape, ship.rotation);
 	}
 
 }

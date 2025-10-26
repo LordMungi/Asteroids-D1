@@ -15,9 +15,11 @@ namespace ship
 	struct Ship
 	{
 		anim::Animation idleAnimation;
+		anim::Animation accelAnimation;
+		Texture2D deathSprite;
 
-		Texture2D sprite;
-		shape::Circle shape;
+		shape::Circle collision;
+		shape::Rectangle shape;
 				
 		int lives;
 		Vector2 direction;

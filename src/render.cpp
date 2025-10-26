@@ -107,10 +107,10 @@ namespace render
 		DrawText(text.c_str(), static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size), RED);
 	}
 
-	void animation(anim::Animation& animation, shape::Circle circle, float rotation)
+	void animation(anim::Animation& animation, shape::Rectangle rectangle, float rotation)
 	{
 		if(animation.length > 0)
-			sprite(animation.frames[currentFrame % animation.length], circle, rotation);
+			sprite(animation.frames[currentFrame % animation.length], rectangle, rotation);
 		
 	}
 
