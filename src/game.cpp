@@ -59,6 +59,8 @@ namespace game
 
 		if (gamestate != State::Paused)
 		{
+			render::updateFrame();
+
 			updateShip();
 			updateBullets();
 			updateAsteroids();

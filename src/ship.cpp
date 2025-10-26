@@ -8,9 +8,14 @@ namespace ship
 	{
 		Ship ship;
 		
-		ship.sprite = LoadTexture("resources/ship.png");
+		ship.idleAnimation = anim::init(3);
+		ship.idleAnimation.frames[0] = LoadTexture("resources/sprites/ship/idle/idle1.png");
+		ship.idleAnimation.frames[1] = LoadTexture("resources/sprites/ship/idle/idle2.png");
+		ship.idleAnimation.frames[2] = LoadTexture("resources/sprites/ship/idle/idle3.png");
+
+		ship.sprite = LoadTexture("resources/x.png");
 		ship.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
-		ship.shape.radius = 2;
+		ship.shape.radius = 10;
 
 		ship.lives = 3;
 		ship.velocity = { 0, 0 };
@@ -31,6 +36,7 @@ namespace ship
 	void unload(Ship& ship)
 	{
 		UnloadTexture(ship.sprite);
+		anim::unload(ship.idleAnimation);
 	}
 
 	void accelerate(Ship& ship)
@@ -96,7 +102,7 @@ namespace ship
 		return direction;
 	}
 
-	void draw(Ship ship)
+	void draw(Ship& ship)
 	{
 		switch (ship.state)
 		{
@@ -115,6 +121,7 @@ namespace ship
 		}
 
 		render::sprite(ship.sprite, ship.shape, ship.rotation);
+		render::animation(ship.idleAnimation, ship.shape, ship.rotation);
 	}
 
 }

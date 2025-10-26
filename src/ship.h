@@ -14,6 +14,8 @@ namespace ship
 
 	struct Ship
 	{
+		anim::Animation idleAnimation;
+
 		Texture2D sprite;
 		shape::Circle shape;
 				
@@ -47,5 +49,5 @@ namespace ship
 
 	Vector2 getDirection(Ship& ship);
 
-	void draw(Ship ship);
+	void draw(Ship& ship);
 }

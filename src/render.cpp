@@ -1,16 +1,16 @@
 #include "render.h"
+#include <iostream>
 #include "config.h"
 
 namespace render
 {
+	double lastFrameUpdate;
+	float fps = 0.2f;
+	int currentFrame;
+
 	static Vector2 res = { 1024, 768 };
 
 	static void setGamespaceFromRes();
-
-	namespace tex
-	{
-		static Texture2D ship;
-	}
 
 	void startWindow()
 	{
@@ -21,6 +21,16 @@ namespace render
 	void closeWindow()
 	{
 		CloseWindow();
+	}
+
+
+	void updateFrame() 
+	{
+		if (GetTime() - lastFrameUpdate > fps)
+		{
+			currentFrame++;
+			lastFrameUpdate = GetTime();
+		}
 	}
 
 	void rectangle(shape::Rectangle rectangle, Color color)
@@ -63,16 +73,6 @@ namespace render
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 	}
 
-	void text(std::string text, Vector2 position, float size)
-	{
-		position = getResPointFromGamespace(position);
-		size = getResValueFromGamespace(size);
-
-		position.y -= size / 2;
-		position.x -= MeasureText(text.c_str(), static_cast<int>(size)) / 2;
-		DrawText(text.c_str(), static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size), RED);
-	}
-
 	void sprite(Texture2D texture, shape::Circle circle, float rotation)
 	{
 		Vector2 resPos = getResPointFromGamespace(circle.position);
@@ -95,6 +95,23 @@ namespace render
 		origin.y = resRadius;
 
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
+	}
+
+	void text(std::string text, Vector2 position, float size)
+	{
+		position = getResPointFromGamespace(position);
+		size = getResValueFromGamespace(size);
+
+		position.y -= size / 2;
+		position.x -= MeasureText(text.c_str(), static_cast<int>(size)) / 2;
+		DrawText(text.c_str(), static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size), RED);
+	}
+
+	void animation(anim::Animation& animation, shape::Circle circle, float rotation)
+	{
+		if(animation.length > 0)
+			sprite(animation.frames[currentFrame % animation.length], circle, rotation);
+		
 	}
 
 	static void setGamespaceFromRes()

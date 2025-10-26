@@ -55,6 +55,9 @@
     <Filter Include="Program\Screens\Menu\Button">
       <UniqueIdentifier>{a40610c3-c2aa-42fb-98ae-f1e820913a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Utilities\Random\Animation">
+      <UniqueIdentifier>{a7153271-1272-4225-83a4-96a9ba062fb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -92,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="src\button.cpp">
       <Filter>Program\Screens\Menu\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animation.cpp">
+      <Filter>Program\Utilities\Random\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="src\button.h">
       <Filter>Program\Screens\Menu\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation.h">
+      <Filter>Program\Utilities\Random\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
