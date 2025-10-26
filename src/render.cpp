@@ -63,6 +63,16 @@ namespace render
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 	}
 
+	void text(std::string text, Vector2 position, float size)
+	{
+		position = getResPointFromGamespace(position);
+		size = getResValueFromGamespace(size);
+
+		position.y -= size / 2;
+		position.x -= MeasureText(text.c_str(), static_cast<int>(size)) / 2;
+		DrawText(text.c_str(), static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size), RED);
+	}
+
 	void sprite(Texture2D texture, shape::Circle circle, float rotation)
 	{
 		Vector2 resPos = getResPointFromGamespace(circle.position);

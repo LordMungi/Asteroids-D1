@@ -13,35 +13,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Utilities">
-      <UniqueIdentifier>{813ff274-ec72-42ff-b52f-95c841d61477}</UniqueIdentifier>
+    <Filter Include="Program">
+      <UniqueIdentifier>{9620a5b9-58e5-4f7a-ba52-a014c30e13bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Config">
-      <UniqueIdentifier>{37921d4c-1e93-4747-a774-168440061908}</UniqueIdentifier>
+    <Filter Include="Program\Screens">
+      <UniqueIdentifier>{aef0390f-3282-4b00-b1ac-953587581ecf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Render">
-      <UniqueIdentifier>{95db7a45-4497-4826-acd0-2dfda1bdf740}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game">
+    <Filter Include="Program\Screens\Game">
       <UniqueIdentifier>{a880d9b1-035e-404f-b4ae-59fe3f08f1d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Ship">
+    <Filter Include="Program\Screens\Game\Ship">
       <UniqueIdentifier>{b8d469b1-4165-45ea-b231-daade168a174}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Bullet">
+    <Filter Include="Program\Screens\Game\Bullet">
       <UniqueIdentifier>{3eb8248f-4c66-44e1-bfc2-18582d276ffb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Asteroid">
+    <Filter Include="Program\Screens\Game\Asteroid">
       <UniqueIdentifier>{5a71dfc5-5fa2-4f34-8b23-ca97ce6c643e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities\Collision">
+    <Filter Include="Program\Render">
+      <UniqueIdentifier>{95db7a45-4497-4826-acd0-2dfda1bdf740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Utilities">
+      <UniqueIdentifier>{813ff274-ec72-42ff-b52f-95c841d61477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Utilities\Collision">
       <UniqueIdentifier>{fb967052-3d45-4a5e-b0c6-d3dd23d4f400}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities\Shapes">
+    <Filter Include="Program\Utilities\Shapes">
       <UniqueIdentifier>{3f90d510-92d5-42f0-8b5b-6ac61d57276c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities\Random">
+    <Filter Include="Program\Utilities\Random">
       <UniqueIdentifier>{b7e5bd35-69b7-4017-8b1e-6b528e0fea59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Config">
+      <UniqueIdentifier>{37921d4c-1e93-4747-a774-168440061908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Screens\Menu">
+      <UniqueIdentifier>{339d9768-6032-46e5-b0ae-2a3fbe49edfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Screens\Menu\Button">
+      <UniqueIdentifier>{a40610c3-c2aa-42fb-98ae-f1e820913a96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,63 +61,78 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\config.cpp">
-      <Filter>Config</Filter>
+      <Filter>Program\Config</Filter>
     </ClCompile>
     <ClCompile Include="src\render.cpp">
-      <Filter>Render</Filter>
+      <Filter>Program\Render</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
-      <Filter>Game</Filter>
+      <Filter>Program\Screens\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\ship.cpp">
-      <Filter>Game\Ship</Filter>
+      <Filter>Program\Screens\Game\Ship</Filter>
     </ClCompile>
     <ClCompile Include="src\bullet.cpp">
-      <Filter>Game\Bullet</Filter>
+      <Filter>Program\Screens\Game\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="src\asteroid.cpp">
-      <Filter>Game\Asteroid</Filter>
+      <Filter>Program\Screens\Game\Asteroid</Filter>
     </ClCompile>
     <ClCompile Include="src\collision.cpp">
-      <Filter>Utilities\Collision</Filter>
+      <Filter>Program\Utilities\Collision</Filter>
     </ClCompile>
     <ClCompile Include="src\random.cpp">
-      <Filter>Utilities\Random</Filter>
+      <Filter>Program\Utilities\Random</Filter>
     </ClCompile>
     <ClCompile Include="src\program.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu.cpp">
+      <Filter>Program\Screens\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\button.cpp">
+      <Filter>Program\Screens\Menu\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h">
-      <Filter>Config</Filter>
+      <Filter>Program\Config</Filter>
     </ClInclude>
     <ClInclude Include="src\render.h">
-      <Filter>Render</Filter>
+      <Filter>Program\Render</Filter>
     </ClInclude>
     <ClInclude Include="src\game.h">
-      <Filter>Game</Filter>
+      <Filter>Program\Screens\Game</Filter>
     </ClInclude>
     <ClInclude Include="src\ship.h">
-      <Filter>Game\Ship</Filter>
+      <Filter>Program\Screens\Game\Ship</Filter>
     </ClInclude>
     <ClInclude Include="src\bullet.h">
-      <Filter>Game\Bullet</Filter>
+      <Filter>Program\Screens\Game\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="src\asteroid.h">
-      <Filter>Game\Asteroid</Filter>
+      <Filter>Program\Screens\Game\Asteroid</Filter>
     </ClInclude>
     <ClInclude Include="src\collision.h">
-      <Filter>Utilities\Collision</Filter>
+      <Filter>Program\Utilities\Collision</Filter>
     </ClInclude>
     <ClInclude Include="src\shapes.h">
-      <Filter>Utilities\Shapes</Filter>
+      <Filter>Program\Utilities\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="src\random.h">
-      <Filter>Utilities\Random</Filter>
+      <Filter>Program\Utilities\Random</Filter>
     </ClInclude>
     <ClInclude Include="src\program.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu.h">
+      <Filter>Program\Screens\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens.h">
+      <Filter>Program\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\button.h">
+      <Filter>Program\Screens\Menu\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

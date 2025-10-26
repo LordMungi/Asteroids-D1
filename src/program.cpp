@@ -2,19 +2,15 @@
 #include <iostream>
 #include <ctime>
 #include "game.h"
+#include "menu.h"
 #include "render.h"
 
 namespace program
 {
-	enum class Scenes
-	{
-		Menu,
-		Game,
-		Null
-	};
 
-	Scenes currentScene = Scenes::Null;
-	Scenes previousScene = Scenes::Null;
+
+	screen::Type currentScene = screen::Type::Null;
+	screen::Type previousScene = screen::Type::Null;
 
 	static void init();
 	static void update();
@@ -42,17 +38,18 @@ namespace program
 	{
 		srand(static_cast<int>(time(0)));
 		render::startWindow();
-		currentScene = Scenes::Game;
+		currentScene = screen::Type::Menu;
 	}
 
 	static void update()
 	{
 		switch (currentScene)
 		{
-		case program::Scenes::Menu:
+		case screen::Type::Menu:
+			currentScene = menu::update();
 			break;
-		case program::Scenes::Game:
-			game::update();
+		case screen::Type::Game:
+			currentScene = game::update();
 			break;
 		}
 	}
@@ -61,9 +58,10 @@ namespace program
 	{
 		switch (currentScene)
 		{
-		case program::Scenes::Menu:
+		case screen::Type::Menu:
+			menu::draw();
 			break;
-		case program::Scenes::Game:
+		case screen::Type::Game:
 			game::draw();
 			break;
 		}
@@ -73,9 +71,10 @@ namespace program
 	{
 		switch (currentScene)
 		{
-		case program::Scenes::Menu:
+		case screen::Type::Menu:
+			menu::init();
 			break;
-		case program::Scenes::Game:
+		case screen::Type::Game:
 			game::init();
 			break;
 		}

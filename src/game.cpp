@@ -23,6 +23,7 @@ namespace game
 	State gamestate;
 	ship::Ship ship;
 	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
+	screen::Type nextScreen;
 
 	static void updateShip();
 	static void updateBullets();
@@ -48,10 +49,14 @@ namespace game
 		{
 			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
+
+		nextScreen = screen::Type::Game;
 	}
 
-	void update()
+	screen::Type update()
 	{
+		nextScreen = screen::Type::Game;
+
 		if (gamestate != State::Paused)
 		{
 			updateShip();
@@ -59,6 +64,8 @@ namespace game
 			updateAsteroids();
 		}
 		updateGameState();
+
+		return nextScreen;
 	}
 
 	void draw()
