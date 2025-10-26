@@ -32,4 +32,12 @@ namespace coll
 		circle1.position.x = circle2.position.x + (distVector * cos(angle * (PI / 180)));
 		circle1.position.y = circle2.position.y + (distVector * sin(angle * (PI / 180)));
 	}
+
+	bool pointRectangle(Vector2 point, shape::Rectangle rectangle)
+	{
+		return (point.x < rectangle.position.x + rectangle.size.x / 2 &&
+			point.x > rectangle.position.x - rectangle.size.x / 2 &&
+			point.y < rectangle.position.y + rectangle.size.y / 2 &&
+			point.y > rectangle.position.y - rectangle.size.y / 2);
+	}
 }

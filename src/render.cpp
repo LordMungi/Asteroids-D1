@@ -116,4 +116,13 @@ namespace render
 		return value * res.y / config::gamespace.y;
 	}
 
+	Vector2 getGamespacePointFromRes(Vector2 resPoint)
+	{
+		Vector2 gsPoint;
+		gsPoint.x = resPoint.x * config::gamespace.x / res.x;
+		gsPoint.y = resPoint.y * config::gamespace.y / res.y;
+		return gsPoint;
+	}
+
+
 }

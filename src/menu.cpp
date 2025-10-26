@@ -1,14 +1,22 @@
 #include "menu.h"
 #include "button.h"
 #include "config.h"
+#include "collision.h"
+#include "render.h"
 
 namespace menu
 {
 	screen::Type nextScreen;
+	const int maxButtons = 3;
 
-	button::Button play;
-	button::Button credits;
-	button::Button exit;
+	button::Button buttons[maxButtons];
+
+	enum class Options
+	{
+		Play,
+		Credits,
+		Exit
+	};
 	
 	void init()
 	{
@@ -16,13 +24,13 @@ namespace menu
 		Vector2 size = { 40, 7 };
 		float separation = 3;
 
-		play = button::init({ position, size }, "Play");
+		buttons[static_cast<int>(Options::Play)] = button::init({ position, size }, "Play");
 		position.y += size.y + separation;
 		
-		credits = button::init({ position, size }, "Credits");
+		buttons[static_cast<int>(Options::Credits)] = button::init({position, size}, "Credits");
 		position.y += size.y + separation;
 
-		exit = button::init({ position, size }, "Exit");
+		buttons[static_cast<int>(Options::Exit)] = button::init({position, size}, "Exit");
 		position.y += size.y + separation;
 
 	}
@@ -31,8 +39,15 @@ namespace menu
 	{
 		nextScreen = screen::Type::Menu;
 
+		for (int i = 0; i < maxButtons; i++)
+		{
+			buttons[i].isPressed = false;
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+				buttons[i].isPressed = coll::pointRectangle(render::getGamespacePointFromRes(GetMousePosition()), buttons[i].shape);
+		}
 
-
+		if (button::trigger(buttons[static_cast<int>(Options::Play)]))
+			nextScreen = screen::Type::Game;
 
 		return nextScreen;
 	}
@@ -42,9 +57,10 @@ namespace menu
 		BeginDrawing();
 		ClearBackground(BLACK);
 
-		button::draw(play);
-		button::draw(credits);
-		button::draw(exit);
+		for (int i = 0; i < maxButtons; i++)
+		{
+			button::draw(buttons[i]);
+		}
 
 		EndDrawing();
 	}

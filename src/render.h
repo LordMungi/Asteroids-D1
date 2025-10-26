@@ -15,4 +15,5 @@ namespace render
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint);
 	float getResValueFromGamespace(float value);
+	Vector2 getGamespacePointFromRes(Vector2 resPoint);
 }
