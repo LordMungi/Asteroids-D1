@@ -9,18 +9,12 @@
 #include "asteroid.h"
 #include "collision.h"
 #include "random.h"
+#include "hud.h"
+
 
 namespace game
-{
-	enum class State
-	{
-		Playing,
-		Won,
-		Lost,
-		Paused
-	};
-	
-	State gamestate;
+{	
+	Stats stats;
 	ship::Ship ship;
 	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 	screen::Type nextScreen;
@@ -56,7 +50,7 @@ namespace game
 	{
 		nextScreen = screen::Type::Game;
 
-		if (gamestate != State::Paused)
+		if (stats.gamestate != State::Paused)
 		{
 			render::updateFrame();
 
@@ -85,6 +79,7 @@ namespace game
 				asteroid::draw(asteroids[i]);
 		}
 		ship::draw(ship);
+		hud::draw(stats);
 
 		EndDrawing();
 	}
@@ -113,6 +108,8 @@ namespace game
 		}
 		else if (GetTime() - ship.deathTimer > ship::deathCooldown && ship.lives >= 0)
 			ship::spawn(ship);
+
+		stats.lives = ship.lives;
 	}
 
 	static void updateBullets()
@@ -168,11 +165,11 @@ namespace game
 	static void updateGameState()
 	{
 		if (asteroidsLeft() == 0)
-			gamestate = State::Won;
+			stats.gamestate = State::Won;
 		else if (ship.lives < 0)
-			gamestate = State::Lost;
+			stats.gamestate = State::Lost;
 		else
-			gamestate = State::Playing;
+			stats.gamestate = State::Playing;
 	}
 
 	static int asteroidsLeft()
