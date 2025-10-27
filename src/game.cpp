@@ -87,6 +87,11 @@ namespace game
 	void unload()
 	{
 		ship::unload(ship);
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (asteroids[i].isActive)
+				asteroid::destroy(asteroids[i]);
+		}
 	}
 
 	static void updateShip()
@@ -125,10 +130,10 @@ namespace game
 				{
 					if (asteroids[j].isActive)
 					{
-						if (coll::circleCircle(ship.bullets[i].collision, asteroids[j].shape))
+						if (coll::circleCircle(ship.bullets[i].collision, asteroids[j].collision))
 						{
 							bullet::destroy(ship.bullets[i]);
-							if (asteroids[j].shape.radius != static_cast<int>(asteroid::Size::Small))
+							if (asteroids[j].collision.radius != static_cast<int>(asteroid::Size::Small))
 								divideAsteroid(asteroids[j]);
 							else
 								asteroid::destroy(asteroids[j]);
@@ -149,9 +154,9 @@ namespace game
 			if (asteroids[i].isActive)
 			{
 				asteroid::move(asteroids[i]);
-				returnFromOtherSide(asteroids[i].shape);
+				returnFromOtherSide(asteroids[i].collision);
 
-				if (coll::circleCircle(ship.collision, asteroids[i].shape) &&
+				if (coll::circleCircle(ship.collision, asteroids[i].collision) &&
 					GetTime() - ship.immunityTimer > ship::immunityCooldown &&
 					ship.state != ship::State::Dead)
 				{
@@ -190,7 +195,7 @@ namespace game
 
 		asteroid::Size newSize = asteroid::Size::Small;
 
-		switch (static_cast<int>(asteroid.shape.radius))
+		switch (static_cast<int>(asteroid.collision.radius))
 		{
 		case static_cast<int>(asteroid::Size::Medium):
 			newSize = asteroid::Size::Small;
@@ -204,7 +209,7 @@ namespace game
 		{
 			if (!asteroids[i].isActive && asteroidsCreated < maxNewAsteroids)
 			{
-				asteroid::create(asteroids[i], asteroid.shape.position, newSize);
+				asteroid::create(asteroids[i], asteroid.collision.position, newSize);
 				asteroidsCreated++;
 			}
 		}
@@ -231,7 +236,7 @@ namespace game
 			
 			for (int i = 0; i < asteroid::maxAsteroids; i++)
 			{
-				if (asteroids[i].isActive && coll::circleCircle(newAsteroid, asteroids[i].shape))
+				if (asteroids[i].isActive && coll::circleCircle(newAsteroid, asteroids[i].collision))
 					isColliding = true;
 			}
 			

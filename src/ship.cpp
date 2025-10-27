@@ -126,7 +126,7 @@ namespace ship
 		switch (ship.state)
 		{
 		case State::Moving:
-			render::circle(ship.collision, WHITE);
+			//render::circle(ship.collision, WHITE);
 			render::animation(ship.idleAnimation, ship.shape, ship.rotation);
 			break;
 		case State::Accelerating:
@@ -134,7 +134,7 @@ namespace ship
 			render::animation(ship.accelAnimation, ship.shape, ship.rotation);
 			break;
 		case State::Shooting:
-			render::circle(ship.collision, BLUE);
+			//render::circle(ship.collision, BLUE);
 			break;
 		case State::Dead:
 			//render::circle(ship.collision, RED);

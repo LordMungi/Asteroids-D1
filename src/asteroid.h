@@ -12,7 +12,11 @@ namespace asteroid
 
 	struct Asteroid
 	{
-		shape::Circle shape;
+		Texture2D sprite;
+		anim::Animation destroyAnim;
+		shape::Rectangle shape;
+
+		shape::Circle collision;
 		Vector2 velocity;
 		int speed;
 		bool isActive;
