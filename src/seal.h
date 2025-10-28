@@ -20,6 +20,7 @@ namespace seal
 	Seal init();
 	void create(Seal& seal);
 	void move(Seal& seal, Vector2 direction);
+	void damage(Seal& seal);
 	void draw(Seal seal);
 
 	void destroy(Seal& seal);

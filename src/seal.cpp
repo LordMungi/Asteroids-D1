@@ -4,6 +4,9 @@
 
 namespace seal
 {
+	double hitTimer;
+	double hitCooldown = 0.1;
+
 	Seal init()
 	{
 		Seal seal;
@@ -41,10 +44,25 @@ namespace seal
 		seal.rotation = math::getRotation(direction);
 	}
 
+	void damage(Seal& seal)
+	{
+		if (GetTime() - hitTimer > hitCooldown)
+			seal.health -= 8;
+
+		hitTimer = GetTime();
+		if (seal.health <= 0)
+			destroy(seal);
+
+	}
+
 	void draw(Seal seal)
 	{
-		render::animation(seal.animation, seal.shape, seal.rotation);
-		//render::circle(seal.collision, RED);
+		if (seal.isActive)
+		{
+			if (GetTime() - hitTimer > hitCooldown)
+				render::animation(seal.animation, seal.shape, seal.rotation);
+			//render::circle(seal.collision, RED);
+		}
 	}
 
 	void destroy(Seal& seal)

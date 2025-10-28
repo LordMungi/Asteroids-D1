@@ -159,6 +159,9 @@ namespace game
 				}
 			}
 		}
+
+		if (coll::circleCircle(ship.boomerang.collision, seal.collision))
+			seal::damage(seal);
 	}
 
 	static void updateBullets()
@@ -187,6 +190,12 @@ namespace game
 					}
 				}
 
+				if (coll::circleCircle(ship.bullets[i].collision, seal.collision))
+				{
+					bullet::destroy(ship.bullets[i]);
+					seal::damage(seal);
+				}
+
 				if (GetTime() - ship.bullets[i].activeTimer > bullet::activeCooldown)
 					bullet::destroy(ship.bullets[i]);
 			}
@@ -195,7 +204,7 @@ namespace game
 
 	static void updateSeal()
 	{
-		if (ship.state != ship::State::Dead)
+		if (ship.state != ship::State::Dead && seal.isActive)
 		{
 			seal::move(seal, math::getDirection(seal.collision.position, ship.collision.position));
 			if (coll::circleCircle(ship.collision, seal.collision) &&
