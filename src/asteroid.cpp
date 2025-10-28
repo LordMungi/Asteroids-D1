@@ -6,20 +6,17 @@ namespace asteroid
 {
 	// Large
 	Texture2D largeMoving;
-	Texture2D largeBrake1;
-	Texture2D largeBrake2;
+	anim::Animation largeDestroy;
 
 	// Medium
 	Texture2D mediumMoving;
-	Texture2D mediumBrake1;
-	Texture2D mediumBrake2;
+	anim::Animation mediumDestroy;
 
 	// Small
 	Texture2D smallMoving;
-	Texture2D smallBrake1;
-	Texture2D smallBrake2;
+	anim::Animation smallDestroy;
 
-
+	static void setSprites(Asteroid& asteroid);
 
 	Asteroid init()
 	{
@@ -28,7 +25,7 @@ namespace asteroid
 		asteroid.collision.position = { 0, 0 };
 		asteroid.collision.radius = static_cast<float>(Size::Small);
 		asteroid.velocity = { 0, 0 };
-		asteroid.isActive = false;
+		asteroid.state = State::Inactive;
 
 		return asteroid;
 	}
@@ -46,24 +43,20 @@ namespace asteroid
 		{
 		case 1:
 			asteroid.collision.radius = static_cast<float>(Size::Small);
-			asteroid.sprite = smallMoving;
-			asteroid.shape.size = { asteroid.collision.radius * 5, asteroid.collision.radius * 5 };
 			break;
 		case 2:
 			asteroid.collision.radius = static_cast<float>(Size::Medium);
-			asteroid.sprite = mediumMoving;
-			asteroid.shape.size = { asteroid.collision.radius * 3, asteroid.collision.radius * 3 };
 			break;
 		case 3:
 			asteroid.collision.radius = static_cast<float>(Size::Large);
-			asteroid.sprite = largeMoving;
-			asteroid.shape.size = { asteroid.collision.radius * 2, asteroid.collision.radius * 2 };
 			break;
 		}
+
+		setSprites(asteroid);
 		asteroid.shape.position = asteroid.collision.position;
 
 		asteroid.speed = random::intRange(minSpeed, maxSpeed);
-		asteroid.isActive = true;
+		asteroid.state = State::Active;
 	}
 
 	void create(Asteroid& asteroid, Vector2 position, Size size)
@@ -76,25 +69,11 @@ namespace asteroid
 		if (random::coinFlip())
 			asteroid.velocity.y *= -1;
 
-		switch (size)
-		{
-		case Size::Small:
-			asteroid.sprite = smallMoving;
-			asteroid.shape.size = { asteroid.collision.radius * 5, asteroid.collision.radius * 5 };
-			break;
-		case Size::Medium:
-			asteroid.sprite = mediumMoving;
-			asteroid.shape.size = { asteroid.collision.radius * 3, asteroid.collision.radius * 3 };
-			break;
-		case Size::Large:
-			asteroid.sprite = largeMoving;
-			asteroid.shape.size = { asteroid.collision.radius * 2, asteroid.collision.radius * 2 };
-			break;
-		}
+		setSprites(asteroid);
 		asteroid.shape.position = asteroid.collision.position;
 
 		asteroid.speed = random::intRange(minSpeed, maxSpeed);
-		asteroid.isActive = true;
+		asteroid.state = State::Active;
 	}
 
 	void destroy(Asteroid& asteroid)
@@ -103,7 +82,13 @@ namespace asteroid
 		asteroid.collision.radius = static_cast<float>(Size::Small);
 		asteroid.velocity = { 0, 0 };
 		asteroid.speed = 0;
-		asteroid.isActive = false;
+		asteroid.state = State::Destroying;
+		asteroid.destroyTimer = GetTime();
+	}
+
+	void inhabilitate(Asteroid& asteroid)
+	{
+		asteroid.state = State::Inactive;
 	}
 
 	void move(Asteroid& asteroid)
@@ -116,37 +101,71 @@ namespace asteroid
 	void draw(Asteroid asteroid)
 	{
 		//render::circle(asteroid.collision, WHITE);
-		render::sprite(asteroid.sprite, asteroid.shape, 0);
+		switch (asteroid.state)
+		{
+		case State::Active:
+			render::sprite(asteroid.sprite, asteroid.shape, 0);
+			break;
+		case State::Destroying:
+			render::animation(asteroid.destroyAnim, asteroid.shape, 0);
+			break;
+		}
+
 	}
 
 	void loadSprites()
 	{
 		// Large
 		largeMoving = LoadTexture("resources/sprites/enemies/asteroid-large/moving/snowball_B.png");
-		largeBrake1 = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken.png");
-		largeBrake2 = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken2.png");
+		largeDestroy = anim::init(2);
+		largeDestroy.frames[0] = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken.png");
+		largeDestroy.frames[1] = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken2.png");
 
 		// Medium
 		mediumMoving = LoadTexture("resources/sprites/enemies/asteroid-medium/moving/snowball_M.png");
-		mediumBrake1 = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken.png");
-		mediumBrake2 = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken2.png");
+		mediumDestroy = anim::init(2);
+		mediumDestroy.frames[0] = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken.png");
+		mediumDestroy.frames[1] = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken2.png");
 
 		// Small
 		smallMoving = LoadTexture("resources/sprites/enemies/asteroid-small/moving/snowball_S.png");
-		smallBrake1 = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken.png");
-		smallBrake2 = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken2.png");
+		smallDestroy = anim::init(2);
+		smallDestroy.frames[0] = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken.png");
+		smallDestroy.frames[1] = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken2.png");
 	}
 
 	void unloadSprites()
 	{
 		UnloadTexture(largeMoving);
-		UnloadTexture(largeBrake1);
-		UnloadTexture(largeBrake2);
+		for (int i = 0; i < largeDestroy.length; i++)
+			UnloadTexture(largeDestroy.frames[i]);
 		UnloadTexture(mediumMoving);
-		UnloadTexture(mediumBrake1);
-		UnloadTexture(mediumBrake2);
+		for (int i = 0; i < mediumDestroy.length; i++)
+			UnloadTexture(mediumDestroy.frames[i]);
 		UnloadTexture(smallMoving);
-		UnloadTexture(smallBrake1);
-		UnloadTexture(smallBrake2);
+		for (int i = 0; i < smallDestroy.length; i++)
+			UnloadTexture(smallDestroy.frames[i]);
+	}
+
+	static void setSprites(Asteroid& asteroid)
+	{
+		switch (static_cast<int>(asteroid.collision.radius))
+		{
+		case static_cast<int>(Size::Small):
+			asteroid.sprite = smallMoving;
+			asteroid.destroyAnim = smallDestroy;
+			asteroid.shape.size = { asteroid.collision.radius * 5, asteroid.collision.radius * 5 };
+			break;
+		case static_cast<int>(Size::Medium):
+			asteroid.sprite = mediumMoving;
+			asteroid.destroyAnim = mediumDestroy;
+			asteroid.shape.size = { asteroid.collision.radius * 3, asteroid.collision.radius * 3 };
+			break;
+		case static_cast<int>(Size::Large):
+			asteroid.sprite = largeMoving;
+			asteroid.destroyAnim = largeDestroy;
+			asteroid.shape.size = { asteroid.collision.radius * 2, asteroid.collision.radius * 2 };
+			break;
+		}
 	}
 }

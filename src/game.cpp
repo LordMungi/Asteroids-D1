@@ -77,8 +77,7 @@ namespace game
 		}
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			if (asteroids[i].isActive)
-				asteroid::draw(asteroids[i]);
+			asteroid::draw(asteroids[i]);
 		}
 		ship::draw(ship);
 		hud::draw(stats);
@@ -126,7 +125,7 @@ namespace game
 
 				for (int j = 0; j < asteroid::maxAsteroids; j++)
 				{
-					if (asteroids[j].isActive)
+					if (asteroids[j].state == asteroid::State::Active)
 					{
 						if (coll::circleCircle(ship.bullets[i].collision, asteroids[j].collision))
 						{
@@ -149,7 +148,7 @@ namespace game
 	{
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			if (asteroids[i].isActive)
+			if (asteroids[i].state == asteroid::State::Active)
 			{
 				asteroid::move(asteroids[i]);
 				returnFromOtherSide(asteroids[i].collision);
@@ -162,6 +161,9 @@ namespace game
 					asteroid::destroy(asteroids[i]);
 				}
 			}
+
+			if (asteroids[i].state == asteroid::State::Destroying && GetTime() - asteroids[i].destroyTimer > asteroid::destroyTime)
+				asteroid::inhabilitate(asteroids[i]);
 		}
 	}
 
@@ -180,7 +182,7 @@ namespace game
 		int count = 0;
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			if (asteroids[i].isActive)
+			if (asteroids[i].state == asteroid::State::Active)
 				count++;
 		}
 		return count;
@@ -205,7 +207,7 @@ namespace game
 
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
-			if (!asteroids[i].isActive && asteroidsCreated < maxNewAsteroids)
+			if (asteroids[i].state == asteroid::State::Inactive && asteroidsCreated < maxNewAsteroids)
 			{
 				asteroid::create(asteroids[i], asteroid.collision.position, newSize);
 				asteroidsCreated++;
@@ -234,7 +236,7 @@ namespace game
 			
 			for (int i = 0; i < asteroid::maxAsteroids; i++)
 			{
-				if (asteroids[i].isActive && coll::circleCircle(newAsteroid, asteroids[i].collision))
+				if (asteroids[i].state == asteroid::State::Active && coll::circleCircle(newAsteroid, asteroids[i].collision))
 					isColliding = true;
 			}
 			

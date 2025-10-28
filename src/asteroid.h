@@ -10,6 +10,13 @@ namespace asteroid
 		Large = 6
 	};
 
+	enum class State
+	{
+		Active,
+		Destroying,
+		Inactive
+	};
+
 	struct Asteroid
 	{
 		Texture2D sprite;
@@ -19,8 +26,12 @@ namespace asteroid
 		shape::Circle collision;
 		Vector2 velocity;
 		int speed;
-		bool isActive;
+
+		State state;
+		double destroyTimer;
 	};
+
+	const double destroyTime = 0.2;
 
 	const int maxAsteroids = 30;
 	const int minSpeed = 10;
@@ -31,6 +42,8 @@ namespace asteroid
 	void create(Asteroid& asteroid, Vector2 position);
 	void create(Asteroid& asteroid, Vector2 position, Size size);
 	void destroy(Asteroid& asteroid);
+	void inhabilitate(Asteroid& asteroid);
+	
 
 	void move(Asteroid& asteroid);
 	void draw(Asteroid asteroid);
