@@ -5,8 +5,9 @@
 namespace render
 {
 	double lastFrameUpdate;
-	float fps = 0.2f;
+	double fps = 0.08;
 	int currentFrame;
+	bool updatedThisFrame;
 
 	static Vector2 res = { 1024, 768 };
 
@@ -26,9 +27,11 @@ namespace render
 
 	void updateFrame() 
 	{
+		updatedThisFrame = false;
 		if (GetTime() - lastFrameUpdate > fps)
 		{
 			currentFrame++;
+			updatedThisFrame = true;
 			lastFrameUpdate = GetTime();
 		}
 	}
@@ -113,6 +116,17 @@ namespace render
 			sprite(animation.frames[currentFrame % animation.length], rectangle, rotation);
 		
 	}
+
+	void oneshot(anim::Animation& animation, shape::Rectangle rectangle, float rotation)
+	{
+		if (animation.currentFrame < animation.length)
+		{
+			sprite(animation.frames[animation.currentFrame], rectangle, rotation);
+			if (updatedThisFrame)
+				animation.currentFrame++;
+		}
+	}
+
 
 	static void setGamespaceFromRes()
 	{

@@ -163,7 +163,7 @@ namespace game
 			}
 
 			if (asteroids[i].state == asteroid::State::Destroying && GetTime() - asteroids[i].destroyTimer > asteroid::destroyTime)
-				asteroid::inhabilitate(asteroids[i]);
+				asteroid::disable(asteroids[i]);
 		}
 	}
 

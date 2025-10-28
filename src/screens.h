@@ -6,6 +6,7 @@ namespace screen
 	{
 		Menu,
 		Game,
+		Settings,
 		Null
 	};
 }

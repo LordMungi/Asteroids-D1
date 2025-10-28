@@ -86,7 +86,7 @@ namespace asteroid
 		asteroid.destroyTimer = GetTime();
 	}
 
-	void inhabilitate(Asteroid& asteroid)
+	void disable(Asteroid& asteroid)
 	{
 		asteroid.state = State::Inactive;
 	}
@@ -98,7 +98,7 @@ namespace asteroid
 		asteroid.shape.position = asteroid.collision.position;
 	}
 
-	void draw(Asteroid asteroid)
+	void draw(Asteroid& asteroid)
 	{
 		//render::circle(asteroid.collision, WHITE);
 		switch (asteroid.state)
@@ -107,7 +107,7 @@ namespace asteroid
 			render::sprite(asteroid.sprite, asteroid.shape, 0);
 			break;
 		case State::Destroying:
-			render::animation(asteroid.destroyAnim, asteroid.shape, 0);
+			render::oneshot(asteroid.destroyAnim, asteroid.shape, 0);
 			break;
 		}
 
@@ -117,21 +117,27 @@ namespace asteroid
 	{
 		// Large
 		largeMoving = LoadTexture("resources/sprites/enemies/asteroid-large/moving/snowball_B.png");
-		largeDestroy = anim::init(2);
+		largeDestroy = anim::init(4);
 		largeDestroy.frames[0] = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken.png");
-		largeDestroy.frames[1] = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken2.png");
+		largeDestroy.frames[1] = largeDestroy.frames[0];
+		largeDestroy.frames[2] = LoadTexture("resources/sprites/enemies/asteroid-large/break/snowball_B_broken2.png");
+		largeDestroy.frames[3] = largeDestroy.frames[2];
 
 		// Medium
 		mediumMoving = LoadTexture("resources/sprites/enemies/asteroid-medium/moving/snowball_M.png");
-		mediumDestroy = anim::init(2);
+		mediumDestroy = anim::init(4);
 		mediumDestroy.frames[0] = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken.png");
-		mediumDestroy.frames[1] = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken2.png");
+		mediumDestroy.frames[1] = mediumDestroy.frames[0];
+		mediumDestroy.frames[2] = LoadTexture("resources/sprites/enemies/asteroid-medium/break/snowball_M_broken2.png");
+		mediumDestroy.frames[3] = mediumDestroy.frames[2];
 
 		// Small
 		smallMoving = LoadTexture("resources/sprites/enemies/asteroid-small/moving/snowball_S.png");
-		smallDestroy = anim::init(2);
+		smallDestroy = anim::init(4);
 		smallDestroy.frames[0] = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken.png");
-		smallDestroy.frames[1] = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken2.png");
+		smallDestroy.frames[1] = smallDestroy.frames[0];
+		smallDestroy.frames[2] = LoadTexture("resources/sprites/enemies/asteroid-small/break/snowball_S_broken2.png");
+		smallDestroy.frames[3] = smallDestroy.frames[2];
 	}
 
 	void unloadSprites()

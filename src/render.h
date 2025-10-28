@@ -16,6 +16,7 @@ namespace render
 	void sprite(Texture2D texture, shape::Circle circle, float rotation);
 	void text(std::string text, Vector2 position, float size);
 	void animation(anim::Animation& animation, shape::Rectangle rectangle, float rotation);
+	void oneshot(anim::Animation& animation, shape::Rectangle rectangle, float rotation);
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint);
 	float getResValueFromGamespace(float value);

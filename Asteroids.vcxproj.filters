@@ -52,9 +52,6 @@
     <Filter Include="Program\Screens\Menu">
       <UniqueIdentifier>{339d9768-6032-46e5-b0ae-2a3fbe49edfd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Program\Screens\Menu\Button">
-      <UniqueIdentifier>{a40610c3-c2aa-42fb-98ae-f1e820913a96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Program\Utilities\Random\Animation">
       <UniqueIdentifier>{a7153271-1272-4225-83a4-96a9ba062fb9}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,15 @@
     </Filter>
     <Filter Include="Program\Screens\Game\HUD">
       <UniqueIdentifier>{4b85226b-a3fa-48d3-b288-8087e12a90fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Elements">
+      <UniqueIdentifier>{3b658173-a396-4a1a-af37-05360fe3c9b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Elements\Button">
+      <UniqueIdentifier>{a40610c3-c2aa-42fb-98ae-f1e820913a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Screens\Settings">
+      <UniqueIdentifier>{0d0dcd6d-29e9-484b-af17-118d2f98f80c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +106,7 @@
       <Filter>Program\Screens\Menu</Filter>
     </ClCompile>
     <ClCompile Include="src\button.cpp">
-      <Filter>Program\Screens\Menu\Button</Filter>
+      <Filter>Program\Elements\Button</Filter>
     </ClCompile>
     <ClCompile Include="src\animation.cpp">
       <Filter>Program\Utilities\Random\Animation</Filter>
@@ -110,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="src\hud.cpp">
       <Filter>Program\Screens\Game\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="src\settings.cpp">
+      <Filter>Program\Screens\Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +159,7 @@
       <Filter>Program\Screens</Filter>
     </ClInclude>
     <ClInclude Include="src\button.h">
-      <Filter>Program\Screens\Menu\Button</Filter>
+      <Filter>Program\Elements\Button</Filter>
     </ClInclude>
     <ClInclude Include="src\animation.h">
       <Filter>Program\Utilities\Random\Animation</Filter>
@@ -160,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="src\hud.h">
       <Filter>Program\Screens\Game\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="src\settings.h">
+      <Filter>Program\Screens\Settings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

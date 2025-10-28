@@ -33,6 +33,7 @@
     <ClCompile Include="src\random.cpp" />
     <ClCompile Include="src\render.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\ship.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="src\random.h" />
     <ClInclude Include="src\render.h" />
     <ClInclude Include="src\screens.h" />
+    <ClInclude Include="src\settings.h" />
     <ClInclude Include="src\shapes.h" />
     <ClInclude Include="src\ship.h" />
   </ItemGroup>
