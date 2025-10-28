@@ -38,6 +38,7 @@ namespace asteroid
 		asteroid.velocity.y = sqrt(1 - asteroid.velocity.x * asteroid.velocity.x);
 		if (random::coinFlip())
 			asteroid.velocity.y *= -1;
+		asteroid.rotation = math::getRotation(asteroid.velocity);
 
 		asteroid.collision.position = position;
 		switch (random::intRange(1, 3))
