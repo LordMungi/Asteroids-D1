@@ -5,8 +5,13 @@
 
 namespace ship
 {
+	double blinkTimer;
+	double blinkCooldown = 0.1;
+	bool shouldDraw;
+
 	Ship init()
 	{
+
 		Ship ship;
 		
 		ship.collision.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
@@ -112,23 +117,37 @@ namespace ship
 	
 	void draw(Ship& ship)
 	{
-		switch (ship.state)
+		if (GetTime() - ship.immunityTimer < immunityCooldown)
 		{
-		case State::Moving:
-			//render::circle(ship.collision, WHITE);
-			render::animation(ship.idleAnimation, ship.shape, ship.rotation);
-			break;
-		case State::Accelerating:
-			//render::circle(ship.collision, GRAY);
-			render::animation(ship.accelAnimation, ship.shape, ship.rotation);
-			break;
-		case State::Shooting:
-			//render::circle(ship.collision, BLUE);
-			break;
-		case State::Dead:
-			//render::circle(ship.collision, RED);
-			render::sprite(ship.deathSprite, ship.shape, ship.rotation);
-			break;
+			if (GetTime() - blinkTimer > blinkCooldown)
+			{
+				shouldDraw = !shouldDraw;
+				blinkTimer = GetTime();
+			}
+		}
+		else
+			shouldDraw = true;
+
+		if (shouldDraw)
+		{
+			switch (ship.state)
+			{
+			case State::Moving:
+				//render::circle(ship.collision, WHITE);
+				render::animation(ship.idleAnimation, ship.shape, ship.rotation);
+				break;
+			case State::Accelerating:
+				//render::circle(ship.collision, GRAY);
+				render::animation(ship.accelAnimation, ship.shape, ship.rotation);
+				break;
+			case State::Shooting:
+				//render::circle(ship.collision, BLUE);
+				break;
+			case State::Dead:
+				//render::circle(ship.collision, RED);
+				render::sprite(ship.deathSprite, ship.shape, ship.rotation);
+				break;
+			}
 		}
 
 	}
