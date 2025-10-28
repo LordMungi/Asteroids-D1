@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\animation.cpp" />
     <ClCompile Include="src\asteroid.cpp" />
+    <ClCompile Include="src\boomerang.cpp" />
     <ClCompile Include="src\bullet.cpp" />
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\checkbox.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\asteroid.h" />
     <ClInclude Include="src\background.h" />
+    <ClInclude Include="src\boomerang.h" />
     <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\button.h" />
     <ClInclude Include="src\checkbox.h" />

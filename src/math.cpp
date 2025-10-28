@@ -14,6 +14,20 @@ namespace math
 		return rotation;
 	}
 
+	Vector2 getDirection(Vector2 from, Vector2 to)
+	{
+		Vector2 direction;
+
+		direction.x = to.x - from.x;
+		direction.y = to.y - from.y;
+
+		float mag = static_cast<float>(sqrt((direction.x * direction.x) + (direction.y * direction.y)));
+
+		direction.x /= mag;
+		direction.y /= mag;
+
+		return direction;
+	}
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint)
 	{

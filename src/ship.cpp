@@ -101,24 +101,6 @@ namespace ship
 		ship.deathTimer = GetTime();
 	}
 	
-	Vector2 getDirection(Ship& ship)
-	{
-		Vector2 direction;
-
-		Vector2 mousePosition = GetMousePosition();
-		Vector2 resPosition = math::getResPointFromGamespace(ship.collision.position);
-
-		direction.x = mousePosition.x - resPosition.x;
-		direction.y = mousePosition.y - resPosition.y;
-
-		float mag = sqrt((direction.x * direction.x) + (direction.y * direction.y));
-
-		direction.x /= mag;
-		direction.y /= mag;
-
-		return direction;
-	}
-
 	void draw(Ship& ship)
 	{
 		switch (ship.state)

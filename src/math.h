@@ -4,6 +4,7 @@
 namespace math
 {
 	float getRotation(Vector2 direction);
+	Vector2 getDirection(Vector2 from, Vector2 to);
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint);
 	float getResValueFromGamespace(float value);

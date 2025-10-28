@@ -11,6 +11,7 @@
 #include "random.h"
 #include "hud.h"
 #include "background.h"
+#include "math.h"
 
 
 namespace game
@@ -101,7 +102,7 @@ namespace game
 
 	static void updateShip()
 	{
-		ship.direction = ship::getDirection(ship);
+		ship.direction = math::getDirection(ship.collision.position, math::getGamespacePointFromRes(GetMousePosition()));
 
 		if (ship.state != ship::State::Dead)
 		{

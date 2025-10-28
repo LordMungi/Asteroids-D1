@@ -49,7 +49,5 @@ namespace ship
 	void spawn(Ship& ship);
 	void die(Ship& ship);
 
-	Vector2 getDirection(Ship& ship);
-
 	void draw(Ship& ship);
 }
