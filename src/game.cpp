@@ -7,6 +7,7 @@
 #include "config.h"
 #include "ship.h"
 #include "asteroid.h"
+#include "seal.h"
 #include "collision.h"
 #include "random.h"
 #include "hud.h"
@@ -18,6 +19,7 @@ namespace game
 {	
 	Stats stats;
 	ship::Ship ship;
+	seal::Seal seal;
 	asteroid::Asteroid asteroids[asteroid::maxAsteroids];
 	screen::Type nextScreen;
 
@@ -25,6 +27,7 @@ namespace game
 	static void updateBoomerang();
 	static void updateBullets();
 	static void updateAsteroids();
+	static void updateSeal();
 	static void updateGameState();
 
 	background::Background bg;
@@ -39,6 +42,9 @@ namespace game
 		ship = ship::init();
 
 		asteroid::loadSprites();
+
+		seal = seal::init();
+
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
 			asteroids[i] = asteroid::init();
@@ -53,7 +59,7 @@ namespace game
 			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
 
-
+		seal::create(seal);
 		nextScreen = screen::Type::Game;
 	}
 
@@ -69,6 +75,7 @@ namespace game
 			updateBoomerang();
 			updateBullets();
 			updateAsteroids();
+			updateSeal();
 		}
 		updateGameState();
 
@@ -81,6 +88,10 @@ namespace game
 		ClearBackground(BLACK);
 
 		render::sprite(bg.picture, bg.shape, 0);
+
+		ship::draw(ship);
+
+		seal::draw(seal);
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
 			if (ship.bullets[i].isActive)
@@ -90,7 +101,6 @@ namespace game
 		{
 			asteroid::draw(asteroids[i]);
 		}
-		ship::draw(ship);
 		boomerang::draw(ship.boomerang);
 		hud::draw(stats);
 
@@ -101,6 +111,7 @@ namespace game
 	{
 		ship::unload(ship);
 		asteroid::unloadSprites();
+		seal::unload(seal);
 	}
 
 	static void updateShip()
@@ -179,6 +190,17 @@ namespace game
 				if (GetTime() - ship.bullets[i].activeTimer > bullet::activeCooldown)
 					bullet::destroy(ship.bullets[i]);
 			}
+		}
+	}
+
+	static void updateSeal()
+	{
+		if (ship.state != ship::State::Dead)
+		{
+			seal::move(seal, math::getDirection(seal.collision.position, ship.collision.position));
+			if (coll::circleCircle(ship.collision, seal.collision) &&
+				GetTime() - ship.immunityTimer > ship::immunityCooldown)
+				ship::die(ship);
 		}
 	}
 
