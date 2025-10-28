@@ -1,6 +1,6 @@
 #include "button.h"
 #include "render.h"
-
+#include "collision.h"
 namespace button
 {
 	Button init(shape::Rectangle shape, std::string label)
@@ -11,11 +11,27 @@ namespace button
 		button.shape = shape;
 		button.isPressed = false;
 		button.wasPressed = false;
+		button.isSelected = false;
 
 		return button;
 	}
 
-	bool trigger(Button& button)
+	static bool trigger(Button& button);
+
+	bool update(Button& button)
+	{
+		bool shouldTrigger = false;
+		button.isSelected = coll::pointRectangle(render::getGamespacePointFromRes(GetMousePosition()), button.shape);
+
+		if (button.isSelected)
+		{			
+			button.isPressed = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+			shouldTrigger = trigger(button);
+		}
+		return shouldTrigger;
+	}
+
+	static bool trigger(Button& button)
 	{
 		bool shouldTrigger;
 
@@ -31,10 +47,11 @@ namespace button
 	void draw(Button button)
 	{
 		if (button.isPressed)
+			render::rectangle(button.shape, RED);
+		else if (button.isSelected)
 			render::rectangle(button.shape, GRAY);
 		else
 			render::rectangle(button.shape, WHITE);
-
 		render::text(button.label, button.shape.position, button.shape.size.y);
 	}
 }

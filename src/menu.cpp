@@ -39,14 +39,7 @@ namespace menu
 	{
 		nextScreen = screen::Type::Menu;
 
-		for (int i = 0; i < maxButtons; i++)
-		{
-			buttons[i].isPressed = false;
-			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-				buttons[i].isPressed = coll::pointRectangle(render::getGamespacePointFromRes(GetMousePosition()), buttons[i].shape);
-		}
-
-		if (button::trigger(buttons[static_cast<int>(Options::Play)]))
+		if (button::update(buttons[static_cast<int>(Options::Play)]))
 			nextScreen = screen::Type::Game;
 
 		return nextScreen;
