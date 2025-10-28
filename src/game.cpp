@@ -22,7 +22,7 @@ namespace game
 	screen::Type nextScreen;
 
 	static void updateShip();
-	static void updateBullets();
+	static void updateProjectiles();
 	static void updateAsteroids();
 	static void updateGameState();
 
@@ -65,7 +65,7 @@ namespace game
 			render::updateFrame();
 
 			updateShip();
-			updateBullets();
+			updateProjectiles();
 			updateAsteroids();
 		}
 		updateGameState();
@@ -89,6 +89,7 @@ namespace game
 			asteroid::draw(asteroids[i]);
 		}
 		ship::draw(ship);
+		boomerang::draw(ship.boomerang);
 		hud::draw(stats);
 
 		EndDrawing();
@@ -112,10 +113,11 @@ namespace game
 			if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 				ship::accelerate(ship);
 
+			if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE))
+				ship::throwBoomerang(ship);
+
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			{
 				ship::shoot(ship);
-			}	
 		}
 		else if (GetTime() - ship.deathTimer > ship::deathCooldown && ship.lives >= 0)
 			ship::spawn(ship);
@@ -123,8 +125,11 @@ namespace game
 		stats.lives = ship.lives;
 	}
 
-	static void updateBullets()
+	static void updateProjectiles()
 	{
+		boomerang::move(ship.boomerang, ship.collision.position);
+		returnFromOtherSide(ship.boomerang.collision);
+
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
 			if (ship.bullets[i].isActive)

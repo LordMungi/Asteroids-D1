@@ -21,13 +21,20 @@ namespace math
 		direction.x = to.x - from.x;
 		direction.y = to.y - from.y;
 
-		float mag = static_cast<float>(sqrt((direction.x * direction.x) + (direction.y * direction.y)));
-
-		direction.x /= mag;
-		direction.y /= mag;
-
-		return direction;
+		return normalizeVector(direction);
 	}
+
+	Vector2 normalizeVector(Vector2 vector)
+	{
+		float mag = static_cast<float>(sqrt((vector.x * vector.x) + (vector.y * vector.y)));
+
+		vector.x /= mag;
+		vector.y /= mag;
+
+		return vector;
+	}
+
+
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint)
 	{

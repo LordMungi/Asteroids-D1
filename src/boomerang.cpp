@@ -1,7 +1,9 @@
 #include "boomerang.h"
 #include <cmath>
+#include <iostream>
 #include "random.h"
 #include "math.h"
+#include "render.h"
 
 namespace boomerang
 {
@@ -15,6 +17,7 @@ namespace boomerang
 		boomerang.shape = { collision.position, collision.radius * 2, collision.radius * 2 };
 		boomerang.velocity = { 0, 0 };
 		boomerang.rotation = static_cast<float>(random::intRange(1, 360));
+		boomerang.state = State::Carried;
 
 		return boomerang;
 	}
@@ -34,7 +37,7 @@ namespace boomerang
 			boomerang.rotation += rotationSpeedStationary * GetFrameTime();
 			break;
 		case State::Carried:
-			boomerang.shape.position = origin;
+			boomerang.collision.position = origin;
 			boomerang.rotation += rotationSpeedStationary * GetFrameTime();
 			break;
 		case State::Flying:
@@ -47,7 +50,8 @@ namespace boomerang
 			boomerang.rotation += rotationSpeedMoving * GetFrameTime();
 			break;
 		case State::Returning:
-			returnTo(boomerang, origin);
+			returnTo(boomerang, origin);			
+			std::cout << "<\n";
 			boomerang.collision.position.x += boomerang.velocity.x * speed * GetFrameTime();
 			boomerang.collision.position.y += boomerang.velocity.y * speed * GetFrameTime();
 			boomerang.rotation += rotationSpeedMoving * GetFrameTime();
@@ -60,13 +64,15 @@ namespace boomerang
 
 	static void decelerate(Boomerang& boomerang)
 	{
-		if (abs(boomerang.velocity.x -= acceleration * GetFrameTime()) > 0)
-			boomerang.velocity.x -= acceleration * GetFrameTime();
+		Vector2 direction = math::normalizeVector(boomerang.velocity);
+
+		if (fabsf(boomerang.velocity.x) - acceleration * GetFrameTime() > 0)
+			boomerang.velocity.x += (direction.x * -1) * acceleration * GetFrameTime();
 		else
 			boomerang.velocity.x = 0;
 
-		if (abs(boomerang.velocity.y -= acceleration * GetFrameTime()) > 0)
-			boomerang.velocity.y -= acceleration * GetFrameTime();
+		if (fabsf(boomerang.velocity.y) - acceleration * GetFrameTime() > 0)
+			boomerang.velocity.y += (direction.y * -1) * acceleration * GetFrameTime();
 		else
 			boomerang.velocity.y = 0;
 	}
@@ -74,7 +80,14 @@ namespace boomerang
 	static void returnTo(Boomerang& boomerang, Vector2 origin)
 	{
 		Vector2 direction = math::getDirection(boomerang.collision.position, origin);
-		boomerang.velocity.x += direction.x * acceleration * static_cast<float>(GetTime());
-		boomerang.velocity.y += direction.y * acceleration * static_cast<float>(GetTime());
+		if (abs(boomerang.velocity.x + direction.x * acceleration * GetFrameTime()) < maxSpeed)
+			boomerang.velocity.x += direction.x * acceleration * GetFrameTime();
+		if (abs(boomerang.velocity.y + direction.y * acceleration * GetFrameTime()) < maxSpeed)
+			boomerang.velocity.y += direction.y * acceleration * GetFrameTime();
+	}
+
+	void draw(Boomerang boomerang)
+	{
+		render::circle(boomerang.collision, BLUE);
 	}
 }

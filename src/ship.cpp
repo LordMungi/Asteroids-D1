@@ -39,6 +39,8 @@ namespace ship
 		}
 		bullet::loadSprite();
 
+		ship.boomerang = boomerang::create({ ship.collision.position, 2 });
+
 		ship.immunityTimer = 0;
 		ship.deathTimer = 0;
 		
@@ -58,9 +60,9 @@ namespace ship
 	{
 		ship.state = State::Accelerating;
 		if (abs(ship.velocity.x + ship.direction.x * acceleration * GetFrameTime()) < maxSpeed)
-			ship.velocity.x = ship.velocity.x + ship.direction.x * acceleration * GetFrameTime();
+			ship.velocity.x += ship.direction.x * acceleration * GetFrameTime();
 		if (abs(ship.velocity.y + ship.direction.y * acceleration * GetFrameTime()) < maxSpeed)
-			ship.velocity.y = ship.velocity.y + ship.direction.y * acceleration * GetFrameTime();
+			ship.velocity.y += ship.direction.y * acceleration * GetFrameTime();
 	}
 
 	void move(Ship& ship)
@@ -70,6 +72,11 @@ namespace ship
 		ship.collision.position.x += ship.velocity.x * GetFrameTime();
 		ship.collision.position.y += ship.velocity.y * GetFrameTime();
 		ship.shape.position = ship.collision.position;
+	}
+
+	void throwBoomerang(Ship& ship)
+	{
+		boomerang::throwTo(ship.boomerang, ship.direction);
 	}
 
 	void shoot(Ship& ship)

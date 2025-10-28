@@ -1,6 +1,7 @@
 #pragma once
 #include "render.h"
 #include "bullet.h"
+#include "boomerang.h"
 
 namespace ship
 {
@@ -28,6 +29,7 @@ namespace ship
 		State state;
 
 		bullet::Bullet bullets[bullet::maxBullets];
+		boomerang::Boomerang boomerang;
 
 		double immunityTimer;
 		double deathTimer;
@@ -44,6 +46,7 @@ namespace ship
 
 	void accelerate(Ship& ship);
 	void move(Ship& ship);
+	void throwBoomerang(Ship& ship);
 	void shoot(Ship& ship);
 
 	void spawn(Ship& ship);
