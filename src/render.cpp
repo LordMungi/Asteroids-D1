@@ -9,13 +9,12 @@ namespace render
 	int currentFrame;
 	bool updatedThisFrame;
 
-	Vector2 res = { 1024, 768 };
 
 	static void setGamespaceFromRes();
 
 	void startWindow()
 	{
-		InitWindow(static_cast<int>(res.x), static_cast<int>(res.y), "Asteroids");
+		InitWindow(static_cast<int>(config::res.x), static_cast<int>(config::res.y), "Asteroids");
 		setGamespaceFromRes();
 	}
 
@@ -154,27 +153,27 @@ namespace render
 	static void setGamespaceFromRes()
 	{
 		config::gamespace.y = 100;
-		config::gamespace.x = res.x * config::gamespace.y / res.y;
+		config::gamespace.x = config::res.x * config::gamespace.y / config::res.y;
 	}
 
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint)
 	{
 		Vector2 resPoint;
-		resPoint.x = gsPoint.x * res.x / config::gamespace.x;
-		resPoint.y = gsPoint.y * res.y / config::gamespace.y;
+		resPoint.x = gsPoint.x * config::res.x / config::gamespace.x;
+		resPoint.y = gsPoint.y * config::res.y / config::gamespace.y;
 		return resPoint;
 	}
 	float getResValueFromGamespace(float value)
 	{
-		return value * res.y / config::gamespace.y;
+		return value * config::res.y / config::gamespace.y;
 	}
 
 	Vector2 getGamespacePointFromRes(Vector2 resPoint)
 	{
 		Vector2 gsPoint;
-		gsPoint.x = resPoint.x * config::gamespace.x / res.x;
-		gsPoint.y = resPoint.y * config::gamespace.y / res.y;
+		gsPoint.x = resPoint.x * config::gamespace.x / config::res.x;
+		gsPoint.y = resPoint.y * config::gamespace.y / config::res.y;
 		return gsPoint;
 	}
 

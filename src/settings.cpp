@@ -5,6 +5,20 @@
 
 namespace settings
 {
+	const int maxResolutions = 7;
+	Vector2 resolutions[maxResolutions] =
+	{
+		{ 640, 480 },
+		{ 1024, 768 },
+		{ 1280, 720 },
+		{ 1600, 900 },
+		{ 1920, 1080 },
+		{ 2560, 1440 },
+		{ 3840, 2160 }
+	};
+
+
+
 	enum class Buttons
 	{
 		ResolutionLeft,
@@ -29,11 +43,13 @@ namespace settings
 	button::Button buttons[maxButtons];
 	label::Label labels[maxLabels];
 
-	Vector2 newRes;
+	int newRes;
+
+	static void applySettings();
 
 	void init()
 	{
-		newRes = render::res;
+		newRes = 1;
 
 		Vector2 position = { 10,10 };
 		Vector2 position2 = position;
@@ -53,7 +69,7 @@ namespace settings
 		position2 = { 50, position.y };
 		buttons[static_cast<int>(Buttons::ResolutionLeft)] = button::init({ position2, size }, "<");
 		position2 = { 75, position.y };
-		labels[static_cast<int>(Labels::ResValue)] = label::init(std::to_string(static_cast<int>(newRes.x)) + "x" + std::to_string(static_cast<int>(newRes.y)), { position2, size }, render::TextAlign::Center, WHITE);
+		labels[static_cast<int>(Labels::ResValue)] = label::init(std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)), { position2, size }, render::TextAlign::Center, WHITE);
 		position2 = { 100, position.y };
 		buttons[static_cast<int>(Buttons::ResolutionRight)] = button::init({ position2, size }, ">");
 
@@ -78,6 +94,25 @@ namespace settings
 
 	screen::Type update()
 	{
+		if (button::update(buttons[static_cast<int>(Buttons::ResolutionLeft)]))
+		{
+			newRes--;
+			if (newRes < 0)
+				newRes = maxResolutions - 1;
+		}
+		if (button::update(buttons[static_cast<int>(Buttons::ResolutionRight)]))
+		{
+			newRes++;
+			if (newRes >= maxResolutions)
+				newRes = 0;
+		}
+		label::updateText(labels[static_cast<int>(Labels::ResValue)], std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)));
+
+
+		if (button::update(buttons[static_cast<int>(Buttons::Apply)]))
+			applySettings();
+
+
 		return screen::Type::Settings;
 	}
 
@@ -96,5 +131,12 @@ namespace settings
 		}
 
 		EndDrawing();
+	}
+
+	static void applySettings()
+	{
+		config::res = resolutions[newRes];
+		render::closeWindow();
+		render::startWindow();
 	}
 }

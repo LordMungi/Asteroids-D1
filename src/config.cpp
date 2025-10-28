@@ -3,4 +3,5 @@
 namespace config
 {
 	Vector2 gamespace;
+	Vector2 res = { 1024, 768 };
 }

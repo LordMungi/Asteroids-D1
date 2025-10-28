@@ -12,9 +12,6 @@ namespace render
 		Center
 	};
 
-	extern Vector2 res;
-
-
 	void startWindow();
 	void closeWindow();
 

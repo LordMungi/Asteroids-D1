@@ -4,4 +4,5 @@
 namespace config
 {
 	extern Vector2 gamespace;
+	extern Vector2 res;
 }
