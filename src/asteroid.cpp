@@ -98,6 +98,7 @@ namespace asteroid
 		asteroid.collision.position.x += asteroid.velocity.x * asteroid.speed * GetFrameTime();
 		asteroid.collision.position.y += asteroid.velocity.y * asteroid.speed * GetFrameTime();
 		asteroid.shape.position = asteroid.collision.position;
+		asteroid.rotation -= asteroid.speed * 4 * GetFrameTime();
 	}
 
 	void draw(Asteroid& asteroid)
