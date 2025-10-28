@@ -40,16 +40,17 @@ namespace settings
 	};
 	const int maxLabels = 6;
 
+	screen::Type nextScreen;
+	
 	button::Button buttons[maxButtons];
 	label::Label labels[maxLabels];
 
-	int newRes;
+	int newRes = 1;
 
 	static void applySettings();
 
 	void init()
 	{
-		newRes = 1;
 
 		Vector2 position = { 10,10 };
 		Vector2 position2 = position;
@@ -94,6 +95,8 @@ namespace settings
 
 	screen::Type update()
 	{
+		nextScreen = screen::Type::Settings;
+
 		// Resolution
 		if (button::update(buttons[static_cast<int>(Buttons::ResolutionLeft)]))
 		{
@@ -112,18 +115,16 @@ namespace settings
 			if (newRes >= maxResolutions)
 				newRes = 0;
 		}
+		label::updateText(labels[static_cast<int>(Labels::ResValue)], std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)));
 		
 
-
-
-		label::updateText(labels[static_cast<int>(Labels::ResValue)], std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)));
-
-		// Apply
 		if (button::update(buttons[static_cast<int>(Buttons::Apply)]))
 			applySettings();
 
+		if (button::update(buttons[static_cast<int>(Buttons::Exit)]))
+			nextScreen = screen::Type::Menu;
 
-		return screen::Type::Settings;
+		return nextScreen;
 	}
 
 	void draw()
@@ -148,5 +149,6 @@ namespace settings
 		config::res = resolutions[newRes];
 		render::closeWindow();
 		render::startWindow();
+		init();
 	}
 }
