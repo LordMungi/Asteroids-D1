@@ -134,6 +134,20 @@ namespace game
 
 		if (coll::circleCircle(ship.boomerang.collision, ship.collision) && (ship.boomerang.state == boomerang::State::Stationary || ship.boomerang.state == boomerang::State::Returning))
 			ship.boomerang.state = boomerang::State::Carried;
+
+		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		{
+			if (asteroids[i].state == asteroid::State::Active)
+			{
+				if (coll::circleCircle(ship.boomerang.collision, asteroids[i].collision))
+				{
+					if (asteroids[i].collision.radius != static_cast<int>(asteroid::Size::Small))
+						divideAsteroid(asteroids[i]);
+					else
+						asteroid::destroy(asteroids[i]);
+				}
+			}
+		}
 	}
 
 	static void updateBullets()

@@ -53,6 +53,7 @@ namespace ship
 		anim::unload(ship.accelAnimation);
 		UnloadTexture(ship.deathSprite);
 
+		boomerang::unload(ship.boomerang);
 		bullet::unloadSprite();
 	}
 
