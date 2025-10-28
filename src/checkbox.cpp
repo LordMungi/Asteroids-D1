@@ -25,10 +25,11 @@ namespace checkbox
 
 	void draw(Checkbox& checkbox)
 	{
+		Color color = checkbox.isSelected ? GRAY : WHITE;
 		render::rectangle(checkbox.shape, WHITE);
 		render::rectangle({checkbox.shape.position, {checkbox.shape.size.x - 1, checkbox.shape.size.y - 1}}, BLACK);
 		if (checkbox.isChecked)
-			render::rectangle({ checkbox.shape.position, {checkbox.shape.size.x - 2, checkbox.shape.size.y - 2} }, WHITE);
+			render::rectangle({ checkbox.shape.position, {checkbox.shape.size.x - 2, checkbox.shape.size.y - 2} }, color);
 
 	}
 }

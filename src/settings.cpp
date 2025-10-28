@@ -2,6 +2,7 @@
 #include "button.h"
 #include "label.h"
 #include "checkbox.h"
+#include "slider.h"
 #include "config.h"
 
 namespace settings
@@ -49,6 +50,8 @@ namespace settings
 	const int maxCheckboxes = 2;
 	checkbox::Checkbox checkboxes[maxCheckboxes];
 
+	slider::Slider volumeSlider;
+
 	screen::Type nextScreen;
 
 	int newRes = 1;
@@ -90,6 +93,8 @@ namespace settings
 		position.y += size.y + separation;
 
 		labels[static_cast<int>(Labels::Volume)] = label::init("Volume", { position, size }, render::TextAlign::Left, WHITE);
+		position2 = { 72, position.y };
+		volumeSlider = slider::init({ position2, {50, 3} }, config::volume);
 		position.y += size.y + separation;
 
 		labels[static_cast<int>(Labels::Music)] = label::init("Music", { position, size }, render::TextAlign::Left, WHITE);
@@ -132,6 +137,7 @@ namespace settings
 		shouldFullscreen = checkbox::update(checkboxes[static_cast<int>(Checkboxes::Fullscreen)]);
 		shouldMusic = checkbox::update(checkboxes[static_cast<int>(Checkboxes::Music)]);
 
+		slider::update(volumeSlider);
 
 		if (button::update(buttons[static_cast<int>(Buttons::Apply)]))
 			applySettings();
@@ -162,6 +168,7 @@ namespace settings
 		{
 			checkbox::draw(checkboxes[i]);
 		}
+		slider::draw(volumeSlider);
 
 		EndDrawing();
 	}
@@ -176,6 +183,8 @@ namespace settings
 		if (shouldFullscreen != IsWindowFullscreen())
 			ToggleFullscreen();
 
+		config::volume = volumeSlider.value;
+
 		render::closeWindow();
 		render::startWindow();
 
@@ -184,9 +193,10 @@ namespace settings
 
 	static void defaultSettings()
 	{
-		shouldFullscreen = false;
 		newRes = 1;
+		shouldFullscreen = false;
 		shouldMusic = true;
+		volumeSlider.value = 50;
 		applySettings();
 	}
 }

@@ -40,4 +40,16 @@ namespace coll
 			point.y < rectangle.position.y + rectangle.size.y / 2 &&
 			point.y > rectangle.position.y - rectangle.size.y / 2);
 	}
+
+	bool pointCircle(Vector2 point, shape::Circle circle)
+	{
+		Vector2 distance;
+
+		distance.x = point.x - circle.position.x;
+		distance.y = point.y - circle.position.y;
+
+		float distVector = (distance.x * distance.x) + (distance.y * distance.y);
+
+		return distVector <= circle.radius * circle.radius;
+	}
 }

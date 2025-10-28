@@ -37,6 +37,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\ship.cpp" />
+    <ClCompile Include="src\slider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\animation.h" />
@@ -59,6 +60,7 @@
     <ClInclude Include="src\settings.h" />
     <ClInclude Include="src\shapes.h" />
     <ClInclude Include="src\ship.h" />
+    <ClInclude Include="src\slider.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
