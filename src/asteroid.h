@@ -26,6 +26,7 @@ namespace asteroid
 		shape::Circle collision;
 		Vector2 velocity;
 		int speed;
+		float rotation;
 
 		State state;
 		double destroyTimer;
