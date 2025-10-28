@@ -39,6 +39,7 @@
   <ItemGroup>
     <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\asteroid.h" />
+    <ClInclude Include="src\background.h" />
     <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\button.h" />
     <ClInclude Include="src\collision.h" />

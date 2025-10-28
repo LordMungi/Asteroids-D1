@@ -10,6 +10,7 @@
 #include "collision.h"
 #include "random.h"
 #include "hud.h"
+#include "background.h"
 
 
 namespace game
@@ -23,6 +24,8 @@ namespace game
 	static void updateBullets();
 	static void updateAsteroids();
 	static void updateGameState();
+
+	background::Background bg;
 
 	static int asteroidsLeft();
 	static void divideAsteroid(asteroid::Asteroid& asteroid);
@@ -38,6 +41,10 @@ namespace game
 		{
 			asteroids[i] = asteroid::init();
 		}
+		bg.picture = LoadTexture("resources/bg/game.jpg");
+		bg.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		bg.shape.size = { (21 * config::gamespace.y / 9), config::gamespace.y };
+
 
 		for (int i = 0; i < 10; i++)
 		{
@@ -70,6 +77,7 @@ namespace game
 		BeginDrawing();
 		ClearBackground(BLACK);
 
+		render::sprite(bg.picture, bg.shape, 0);
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
 			if (ship.bullets[i].isActive)

@@ -70,6 +70,9 @@
     <Filter Include="Program\Screens\Settings">
       <UniqueIdentifier>{0d0dcd6d-29e9-484b-af17-118d2f98f80c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Elements\Background">
+      <UniqueIdentifier>{d47505d8-bd01-488b-bf1f-b646e8758e69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="src\settings.h">
       <Filter>Program\Screens\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="src\background.h">
+      <Filter>Program\Elements\Background</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
