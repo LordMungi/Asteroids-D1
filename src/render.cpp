@@ -100,14 +100,37 @@ namespace render
 		DrawTexturePro(texture, source, dest, origin, rotation, WHITE);
 	}
 
-	void text(std::string text, Vector2 position, float size)
+	void text(std::string text, Vector2 position, float size, Color color)
 	{
 		position = getResPointFromGamespace(position);
 		size = getResValueFromGamespace(size);
 
 		position.y -= size / 2;
 		position.x -= MeasureText(text.c_str(), static_cast<int>(size)) / 2;
-		DrawText(text.c_str(), static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size), RED);
+		DrawText(text.c_str(), static_cast<int>(position.x), static_cast<int>(position.y), static_cast<int>(size), color);
+	}
+	void text(std::string text, Vector2 position, Vector2 size, Color color, TextAlign align)
+	{
+		position = getResPointFromGamespace(position);
+		size = getResPointFromGamespace(size);
+
+		Vector2 textPosition = position;
+
+		switch (align)
+		{
+		case render::TextAlign::Left:
+			textPosition.x = position.x - size.x / 2;
+			break;
+		case render::TextAlign::Right:
+			textPosition.x = position.x + size.x / 2 - MeasureText(text.c_str(), static_cast<int>(size.y));
+			break;
+		case render::TextAlign::Center:
+			textPosition.x -= MeasureText(text.c_str(), static_cast<int>(size.y)) / 2;
+			break;
+		}
+		textPosition.y -= size.y / 2;
+
+		DrawText(text.c_str(), static_cast<int>(textPosition.x), static_cast<int>(textPosition.y), static_cast<int>(size.y), color);
 	}
 
 	void animation(anim::Animation& animation, shape::Rectangle rectangle, float rotation)

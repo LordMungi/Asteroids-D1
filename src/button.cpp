@@ -52,6 +52,6 @@ namespace button
 			render::rectangle(button.shape, GRAY);
 		else
 			render::rectangle(button.shape, WHITE);
-		render::text(button.label, button.shape.position, button.shape.size.y);
+		render::text(button.label, button.shape.position, button.shape.size.y, BLACK);
 	}
 }

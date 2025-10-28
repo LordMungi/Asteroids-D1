@@ -5,6 +5,13 @@
 
 namespace render
 {
+	enum class TextAlign
+	{
+		Left,
+		Right,
+		Center
+	};
+
 	void startWindow();
 	void closeWindow();
 
@@ -14,9 +21,10 @@ namespace render
 	void circle(shape::Circle circle, Color color);
 	void sprite(Texture2D texture, shape::Rectangle rectangle, float rotation);
 	void sprite(Texture2D texture, shape::Circle circle, float rotation);
-	void text(std::string text, Vector2 position, float size);
 	void animation(anim::Animation& animation, shape::Rectangle rectangle, float rotation);
 	void oneshot(anim::Animation& animation, shape::Rectangle rectangle, float rotation);
+	void text(std::string text, Vector2 position, float size, Color color);
+	void text(std::string text, Vector2 position, Vector2 size, Color color, TextAlign align);
 
 	Vector2 getResPointFromGamespace(Vector2 gsPoint);
 	float getResValueFromGamespace(float value);

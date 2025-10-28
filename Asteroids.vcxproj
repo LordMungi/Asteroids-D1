@@ -27,6 +27,7 @@
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\hud.cpp" />
+    <ClCompile Include="src\label.cpp" />
     <ClCompile Include="src\math.cpp" />
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\program.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\hud.h" />
+    <ClInclude Include="src\label.h" />
     <ClInclude Include="src\math.h" />
     <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\program.h" />

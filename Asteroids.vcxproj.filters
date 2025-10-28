@@ -73,6 +73,9 @@
     <Filter Include="Program\Elements\Background">
       <UniqueIdentifier>{d47505d8-bd01-488b-bf1f-b646e8758e69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Elements\Label">
+      <UniqueIdentifier>{fee2eb83-cde6-48d8-8e54-b6787a927346}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="src\settings.cpp">
       <Filter>Program\Screens\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="src\label.cpp">
+      <Filter>Program\Elements\Label</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="src\background.h">
       <Filter>Program\Elements\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="src\label.h">
+      <Filter>Program\Elements\Label</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

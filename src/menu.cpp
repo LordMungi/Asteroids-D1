@@ -3,6 +3,7 @@
 #include "config.h"
 #include "collision.h"
 #include "render.h"
+#include "label.h"
 
 namespace menu
 {
@@ -10,6 +11,7 @@ namespace menu
 	const int maxButtons = 3;
 
 	button::Button buttons[maxButtons];
+	label::Label title;
 
 	enum class Options
 	{
@@ -33,6 +35,8 @@ namespace menu
 		buttons[static_cast<int>(Options::Exit)] = button::init({position, size}, "Exit");
 		position.y += size.y + separation;
 
+		title = label::init("Penguin Revenge", { {position.x, 20}, size }, render::TextAlign::Center, WHITE);
+
 	}
 
 	screen::Type update()
@@ -54,6 +58,7 @@ namespace menu
 		{
 			button::draw(buttons[i]);
 		}
+		label::draw(title);
 
 		EndDrawing();
 	}
