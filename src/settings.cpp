@@ -94,21 +94,31 @@ namespace settings
 
 	screen::Type update()
 	{
+		// Resolution
 		if (button::update(buttons[static_cast<int>(Buttons::ResolutionLeft)]))
 		{
 			newRes--;
 			if (newRes < 0)
 				newRes = maxResolutions - 1;
+			while (resolutions[newRes].y > GetMonitorHeight(GetCurrentMonitor()))
+				newRes--;
 		}
 		if (button::update(buttons[static_cast<int>(Buttons::ResolutionRight)]))
 		{
 			newRes++;
+			while (resolutions[newRes].y > GetMonitorHeight(GetCurrentMonitor()))
+				newRes++;
+			
 			if (newRes >= maxResolutions)
 				newRes = 0;
 		}
+		
+
+
+
 		label::updateText(labels[static_cast<int>(Labels::ResValue)], std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)));
 
-
+		// Apply
 		if (button::update(buttons[static_cast<int>(Buttons::Apply)]))
 			applySettings();
 
