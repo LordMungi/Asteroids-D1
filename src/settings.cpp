@@ -47,14 +47,16 @@ namespace settings
 		Music
 	};
 	const int maxCheckboxes = 2;
-	checkbox::Checkbox checkboxes[maxCheckboxes];	
+	checkbox::Checkbox checkboxes[maxCheckboxes];
 
 	screen::Type nextScreen;
-	
+
 	int newRes = 1;
 	bool shouldFullscreen = false;
+	bool shouldMusic = config::music;
 
 	static void applySettings();
+	static void defaultSettings();
 
 	void init()
 	{
@@ -64,7 +66,7 @@ namespace settings
 		Vector2 size = { 10,10 };
 		float separation = 5;
 		float margin = 5;
-		
+
 		labels[static_cast<int>(Labels::Title)] = label::init("Settings", { position, size }, render::TextAlign::Left, WHITE);
 		position2 = { config::gamespace.x - size.x - margin, position.y };
 		buttons[static_cast<int>(Buttons::Exit)] = button::init({ position2, size }, "X");
@@ -91,6 +93,8 @@ namespace settings
 		position.y += size.y + separation;
 
 		labels[static_cast<int>(Labels::Music)] = label::init("Music", { position, size }, render::TextAlign::Left, WHITE);
+		position2 = { 50, position.y };
+		checkboxes[static_cast<int>(Checkboxes::Music)] = checkbox::init({ position2, size }, shouldFullscreen);
 		position.y += size.y + separation;
 
 		size = { 30, 8 };
@@ -119,17 +123,21 @@ namespace settings
 			newRes++;
 			while (resolutions[newRes].y > GetMonitorHeight(GetCurrentMonitor()))
 				newRes++;
-			
+
 			if (newRes >= maxResolutions)
 				newRes = 0;
 		}
 		label::updateText(labels[static_cast<int>(Labels::ResValue)], std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)));
-		
+
 		shouldFullscreen = checkbox::update(checkboxes[static_cast<int>(Checkboxes::Fullscreen)]);
+		shouldMusic = checkbox::update(checkboxes[static_cast<int>(Checkboxes::Music)]);
 
 
 		if (button::update(buttons[static_cast<int>(Buttons::Apply)]))
 			applySettings();
+
+		if (button::update(buttons[static_cast<int>(Buttons::Default)]))
+			defaultSettings();
 
 		if (button::update(buttons[static_cast<int>(Buttons::Exit)]))
 			nextScreen = screen::Type::Menu;
@@ -172,5 +180,13 @@ namespace settings
 		render::startWindow();
 
 		init();
+	}
+
+	static void defaultSettings()
+	{
+		shouldFullscreen = false;
+		newRes = 1;
+		shouldMusic = true;
+		applySettings();
 	}
 }

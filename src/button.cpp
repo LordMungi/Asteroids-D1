@@ -30,6 +30,11 @@ namespace button
 			button.isPressed = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
 			shouldTrigger = trigger(button);
 		}
+		else
+		{
+			button.isPressed = false;
+			button.wasPressed = false;
+		}
 		return shouldTrigger;
 	}
 
