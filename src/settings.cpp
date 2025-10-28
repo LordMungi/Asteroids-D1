@@ -17,8 +17,6 @@ namespace settings
 		{ 3840, 2160 }
 	};
 
-
-
 	enum class Buttons
 	{
 		ResolutionLeft,

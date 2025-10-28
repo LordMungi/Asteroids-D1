@@ -25,8 +25,4 @@ namespace render
 	void oneshot(anim::Animation& animation, shape::Rectangle rectangle, float rotation);
 	void text(std::string text, Vector2 position, float size, Color color);
 	void text(std::string text, Vector2 position, Vector2 size, Color color, TextAlign align);
-
-	Vector2 getResPointFromGamespace(Vector2 gsPoint);
-	float getResValueFromGamespace(float value);
-	Vector2 getGamespacePointFromRes(Vector2 resPoint);
 }

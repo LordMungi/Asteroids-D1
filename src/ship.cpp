@@ -106,7 +106,7 @@ namespace ship
 		Vector2 direction;
 
 		Vector2 mousePosition = GetMousePosition();
-		Vector2 resPosition = render::getResPointFromGamespace(ship.collision.position);
+		Vector2 resPosition = math::getResPointFromGamespace(ship.collision.position);
 
 		direction.x = mousePosition.x - resPosition.x;
 		direction.y = mousePosition.y - resPosition.y;

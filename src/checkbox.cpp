@@ -1,6 +1,7 @@
 #include "checkbox.h"
 #include "collision.h"
 #include "render.h"
+#include "math.h"
 
 namespace checkbox
 {
@@ -15,10 +16,15 @@ namespace checkbox
 
 	bool update(Checkbox& checkbox)
 	{
-		checkbox.isSelected = coll::pointRectangle(render::getGamespacePointFromRes(GetMousePosition()), checkbox.shape);
+		checkbox.isSelected = coll::pointRectangle(math::getGamespacePointFromRes(GetMousePosition()), checkbox.shape);
 
 		if (checkbox.isSelected && IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 			checkbox.isChecked = !checkbox.isChecked;
 		return checkbox.isChecked;
+	}
+
+	void draw(Checkbox& checkbox)
+	{
+		render::rectangle(checkbox.shape, WHITE);
 	}
 }

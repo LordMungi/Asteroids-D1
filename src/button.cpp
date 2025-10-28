@@ -1,6 +1,8 @@
 #include "button.h"
 #include "render.h"
+#include "math.h"
 #include "collision.h"
+
 namespace button
 {
 	Button init(shape::Rectangle shape, std::string label)
@@ -21,7 +23,7 @@ namespace button
 	bool update(Button& button)
 	{
 		bool shouldTrigger = false;
-		button.isSelected = coll::pointRectangle(render::getGamespacePointFromRes(GetMousePosition()), button.shape);
+		button.isSelected = coll::pointRectangle(math::getGamespacePointFromRes(GetMousePosition()), button.shape);
 
 		if (button.isSelected)
 		{			

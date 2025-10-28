@@ -1,6 +1,7 @@
 #include "render.h"
 #include <iostream>
 #include "config.h"
+#include "math.h"
 
 namespace render
 {
@@ -37,24 +38,24 @@ namespace render
 
 	void rectangle(shape::Rectangle rectangle, Color color)
 	{
-		Vector2 resPos = getResPointFromGamespace(rectangle.position);
-		Vector2 resSize = getResPointFromGamespace(rectangle.size);
+		Vector2 resPos = math::getResPointFromGamespace(rectangle.position);
+		Vector2 resSize = math::getResPointFromGamespace(rectangle.size);
 
 		DrawRectangle(static_cast<int>(resPos.x - resSize.x / 2), static_cast<int>(resPos.y - resSize.y / 2), static_cast<int>(resSize.x), static_cast<int>(resSize.y), color);
 	}
 
 	void circle(shape::Circle circle, Color color)
 	{
-		Vector2 resPos = getResPointFromGamespace(circle.position);
-		float resRadius = getResValueFromGamespace(circle.radius);
+		Vector2 resPos = math::getResPointFromGamespace(circle.position);
+		float resRadius = math::getResValueFromGamespace(circle.radius);
 
 		DrawCircle(static_cast<int>(resPos.x), static_cast<int>(resPos.y), resRadius, color);
 	}
 
 	void sprite(Texture2D texture, shape::Rectangle rectangle, float rotation)
 	{
-		Vector2 resPos = getResPointFromGamespace(rectangle.position);
-		Vector2 resSize = getResPointFromGamespace(rectangle.size);
+		Vector2 resPos = math::getResPointFromGamespace(rectangle.position);
+		Vector2 resSize = math::getResPointFromGamespace(rectangle.size);
 
 		Rectangle source;
 		source.x = 0;
@@ -77,8 +78,8 @@ namespace render
 
 	void sprite(Texture2D texture, shape::Circle circle, float rotation)
 	{
-		Vector2 resPos = getResPointFromGamespace(circle.position);
-		float resRadius = getResValueFromGamespace(circle.radius);
+		Vector2 resPos = math::getResPointFromGamespace(circle.position);
+		float resRadius = math::getResValueFromGamespace(circle.radius);
 
 		Rectangle source;
 		source.x = 0;
@@ -101,8 +102,8 @@ namespace render
 
 	void text(std::string text, Vector2 position, float size, Color color)
 	{
-		position = getResPointFromGamespace(position);
-		size = getResValueFromGamespace(size);
+		position = math::getResPointFromGamespace(position);
+		size = math::getResValueFromGamespace(size);
 
 		position.y -= size / 2;
 		position.x -= MeasureText(text.c_str(), static_cast<int>(size)) / 2;
@@ -110,8 +111,8 @@ namespace render
 	}
 	void text(std::string text, Vector2 position, Vector2 size, Color color, TextAlign align)
 	{
-		position = getResPointFromGamespace(position);
-		size = getResPointFromGamespace(size);
+		position = math::getResPointFromGamespace(position);
+		size = math::getResPointFromGamespace(size);
 
 		Vector2 textPosition = position;
 
@@ -149,33 +150,9 @@ namespace render
 		}
 	}
 
-
 	static void setGamespaceFromRes()
 	{
 		config::gamespace.y = 100;
 		config::gamespace.x = config::res.x * config::gamespace.y / config::res.y;
 	}
-
-
-	Vector2 getResPointFromGamespace(Vector2 gsPoint)
-	{
-		Vector2 resPoint;
-		resPoint.x = gsPoint.x * config::res.x / config::gamespace.x;
-		resPoint.y = gsPoint.y * config::res.y / config::gamespace.y;
-		return resPoint;
-	}
-	float getResValueFromGamespace(float value)
-	{
-		return value * config::res.y / config::gamespace.y;
-	}
-
-	Vector2 getGamespacePointFromRes(Vector2 resPoint)
-	{
-		Vector2 gsPoint;
-		gsPoint.x = resPoint.x * config::gamespace.x / config::res.x;
-		gsPoint.y = resPoint.y * config::gamespace.y / config::res.y;
-		return gsPoint;
-	}
-
-
 }
