@@ -8,18 +8,19 @@
 namespace menu
 {
 	screen::Type nextScreen;
-	const int maxButtons = 3;
-
-	button::Button buttons[maxButtons];
-	label::Label title;
 
 	enum class Options
 	{
 		Play,
+		Settings,
 		Credits,
 		Exit
 	};
+	const int maxButtons = 4;
 	
+	button::Button buttons[maxButtons];
+	label::Label title;
+
 	void init()
 	{
 		Vector2 position = { config::gamespace.x / 2, 50 };
@@ -29,6 +30,9 @@ namespace menu
 		buttons[static_cast<int>(Options::Play)] = button::init({ position, size }, "Play");
 		position.y += size.y + separation;
 		
+		buttons[static_cast<int>(Options::Settings)] = button::init({ position, size }, "Settings");
+		position.y += size.y + separation;
+
 		buttons[static_cast<int>(Options::Credits)] = button::init({position, size}, "Credits");
 		position.y += size.y + separation;
 
@@ -45,6 +49,8 @@ namespace menu
 
 		if (button::update(buttons[static_cast<int>(Options::Play)]))
 			nextScreen = screen::Type::Game;
+		if (button::update(buttons[static_cast<int>(Options::Settings)]))
+			nextScreen = screen::Type::Settings;
 
 		return nextScreen;
 	}

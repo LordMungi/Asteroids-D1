@@ -4,6 +4,7 @@
 #include "game.h"
 #include "menu.h"
 #include "render.h"
+#include "settings.h"
 
 namespace program
 {
@@ -51,6 +52,9 @@ namespace program
 		case screen::Type::Game:
 			currentScene = game::update();
 			break;
+		case screen::Type::Settings:
+			currentScene = settings::update();
+			break;
 		}
 	}
 
@@ -64,6 +68,9 @@ namespace program
 		case screen::Type::Game:
 			game::draw();
 			break;
+		case screen::Type::Settings:
+			settings::draw();
+			break;
 		}
 	}
 	
@@ -76,6 +83,9 @@ namespace program
 			break;
 		case screen::Type::Game:
 			game::init();
+			break;
+		case screen::Type::Settings:
+			settings::init();
 			break;
 		}
 

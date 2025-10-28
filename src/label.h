@@ -15,5 +15,6 @@ namespace label
 	};
 
 	Label init(std::string text, shape::Rectangle shape, render::TextAlign align, Color color);
+	void updateText(Label& label, std::string text);
 	void draw(Label label);
 }

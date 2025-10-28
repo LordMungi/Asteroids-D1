@@ -9,7 +9,7 @@ namespace render
 	int currentFrame;
 	bool updatedThisFrame;
 
-	static Vector2 res = { 1024, 768 };
+	Vector2 res = { 1024, 768 };
 
 	static void setGamespaceFromRes();
 

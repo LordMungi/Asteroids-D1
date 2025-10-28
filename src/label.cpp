@@ -12,6 +12,11 @@ namespace label
 		return label;
 	}
 
+	void updateText(Label& label, std::string text)
+	{
+		label.text = text;
+	}
+
 	void draw(Label label)
 	{
 		render::rectangle(label.shape, { 255, 255, 255, 100 });
