@@ -76,7 +76,8 @@ namespace ship
 
 	void throwBoomerang(Ship& ship)
 	{
-		boomerang::throwTo(ship.boomerang, ship.direction);
+		if (ship.boomerang.state == boomerang::State::Carried)
+			boomerang::throwTo(ship.boomerang, ship.direction);
 	}
 
 	void shoot(Ship& ship)

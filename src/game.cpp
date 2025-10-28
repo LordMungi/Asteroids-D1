@@ -22,7 +22,8 @@ namespace game
 	screen::Type nextScreen;
 
 	static void updateShip();
-	static void updateProjectiles();
+	static void updateBoomerang();
+	static void updateBullets();
 	static void updateAsteroids();
 	static void updateGameState();
 
@@ -65,7 +66,8 @@ namespace game
 			render::updateFrame();
 
 			updateShip();
-			updateProjectiles();
+			updateBoomerang();
+			updateBullets();
 			updateAsteroids();
 		}
 		updateGameState();
@@ -125,10 +127,18 @@ namespace game
 		stats.lives = ship.lives;
 	}
 
-	static void updateProjectiles()
+	static void updateBoomerang()
 	{
 		boomerang::move(ship.boomerang, ship.collision.position);
 		returnFromOtherSide(ship.boomerang.collision);
+
+		if (coll::circleCircle(ship.boomerang.collision, ship.collision) && (ship.boomerang.state == boomerang::State::Stationary || ship.boomerang.state == boomerang::State::Returning))
+			ship.boomerang.state = boomerang::State::Carried;
+	}
+
+	static void updateBullets()
+	{
+
 
 		for (int i = 0; i < bullet::maxBullets; i++)
 		{
