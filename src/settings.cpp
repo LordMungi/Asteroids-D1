@@ -94,7 +94,7 @@ namespace settings
 
 		labels[static_cast<int>(Labels::Music)] = label::init("Music", { position, size }, render::TextAlign::Left, WHITE);
 		position2 = { 50, position.y };
-		checkboxes[static_cast<int>(Checkboxes::Music)] = checkbox::init({ position2, size }, shouldFullscreen);
+		checkboxes[static_cast<int>(Checkboxes::Music)] = checkbox::init({ position2, size }, shouldMusic);
 		position.y += size.y + separation;
 
 		size = { 30, 8 };
