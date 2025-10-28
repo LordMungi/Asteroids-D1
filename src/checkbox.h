@@ -10,7 +10,7 @@ namespace checkbox
 		bool isChecked;
 	};
 
-	Checkbox init(shape::Rectangle shape);
+	Checkbox init(shape::Rectangle shape, bool isChecked);
 	bool update(Checkbox& checkbox);
 	void draw(Checkbox& checkbox);
 }

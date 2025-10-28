@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "button.h"
 #include "label.h"
+#include "checkbox.h"
 #include "config.h"
 
 namespace settings
@@ -26,6 +27,7 @@ namespace settings
 		Exit,
 	};
 	const int maxButtons = 5;
+	button::Button buttons[maxButtons];
 
 	enum class Labels
 	{
@@ -37,13 +39,20 @@ namespace settings
 		Music
 	};
 	const int maxLabels = 6;
+	label::Label labels[maxLabels];
+
+	enum class Checkboxes
+	{
+		Fullscreen,
+		Music
+	};
+	const int maxCheckboxes = 2;
+	checkbox::Checkbox checkboxes[maxCheckboxes];	
 
 	screen::Type nextScreen;
 	
-	button::Button buttons[maxButtons];
-	label::Label labels[maxLabels];
-
 	int newRes = 1;
+	bool shouldFullscreen = false;
 
 	static void applySettings();
 
@@ -73,8 +82,9 @@ namespace settings
 		buttons[static_cast<int>(Buttons::ResolutionRight)] = button::init({ position2, size }, ">");
 
 		position.y += size.y + separation;
-
 		labels[static_cast<int>(Labels::Fullscreen)] = label::init("Fullscreen", { position, size }, render::TextAlign::Left, WHITE);
+		position2 = { 50, position.y };
+		checkboxes[static_cast<int>(Checkboxes::Fullscreen)] = checkbox::init({ position2, size }, shouldFullscreen);
 		position.y += size.y + separation;
 
 		labels[static_cast<int>(Labels::Volume)] = label::init("Volume", { position, size }, render::TextAlign::Left, WHITE);
@@ -115,6 +125,8 @@ namespace settings
 		}
 		label::updateText(labels[static_cast<int>(Labels::ResValue)], std::to_string(static_cast<int>(resolutions[newRes].x)) + "x" + std::to_string(static_cast<int>(resolutions[newRes].y)));
 		
+		shouldFullscreen = checkbox::update(checkboxes[static_cast<int>(Checkboxes::Fullscreen)]);
+
 
 		if (button::update(buttons[static_cast<int>(Buttons::Apply)]))
 			applySettings();
@@ -138,15 +150,27 @@ namespace settings
 		{
 			label::draw(labels[i]);
 		}
+		for (int i = 0; i < maxCheckboxes; i++)
+		{
+			checkbox::draw(checkboxes[i]);
+		}
 
 		EndDrawing();
 	}
 
 	static void applySettings()
 	{
-		config::res = resolutions[newRes];
+		if (shouldFullscreen)
+			config::res = { static_cast<float>(GetMonitorWidth(GetCurrentMonitor())), static_cast<float>(GetMonitorHeight(GetCurrentMonitor())) };
+		else
+			config::res = resolutions[newRes];
+
+		if (shouldFullscreen != IsWindowFullscreen())
+			ToggleFullscreen();
+
 		render::closeWindow();
 		render::startWindow();
+
 		init();
 	}
 }

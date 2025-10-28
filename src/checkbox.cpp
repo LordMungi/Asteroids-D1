@@ -5,12 +5,12 @@
 
 namespace checkbox
 {
-	Checkbox init(shape::Rectangle shape)
+	Checkbox init(shape::Rectangle shape, bool isChecked)
 	{
 		Checkbox checkbox;
 		checkbox.shape = shape;
 		checkbox.isSelected = false;
-		checkbox.isChecked = false;
+		checkbox.isChecked = isChecked;
 		return checkbox;
 	}
 
@@ -26,5 +26,9 @@ namespace checkbox
 	void draw(Checkbox& checkbox)
 	{
 		render::rectangle(checkbox.shape, WHITE);
+		render::rectangle({checkbox.shape.position, {checkbox.shape.size.x - 1, checkbox.shape.size.y - 1}}, BLACK);
+		if (checkbox.isChecked)
+			render::rectangle({ checkbox.shape.position, {checkbox.shape.size.x - 2, checkbox.shape.size.y - 2} }, WHITE);
+
 	}
 }
