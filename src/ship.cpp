@@ -37,6 +37,7 @@ namespace ship
 		{
 			ship.bullets[i] = bullet::init();
 		}
+		bullet::loadSprite();
 
 		ship.immunityTimer = 0;
 		ship.deathTimer = 0;
@@ -50,10 +51,7 @@ namespace ship
 		anim::unload(ship.accelAnimation);
 		UnloadTexture(ship.deathSprite);
 
-		for (int i = 0; i < bullet::maxBullets; i++)
-		{
-			bullet::unload(ship.bullets[i]);
-		}
+		bullet::unloadSprite();
 	}
 
 	void accelerate(Ship& ship)

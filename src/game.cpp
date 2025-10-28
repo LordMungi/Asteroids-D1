@@ -33,6 +33,7 @@ namespace game
 	{
 		ship = ship::init();
 
+		asteroid::loadSprites();
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
 			asteroids[i] = asteroid::init();
@@ -42,6 +43,7 @@ namespace game
 		{
 			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
+
 
 		nextScreen = screen::Type::Game;
 	}
@@ -87,11 +89,7 @@ namespace game
 	void unload()
 	{
 		ship::unload(ship);
-		for (int i = 0; i < asteroid::maxAsteroids; i++)
-		{
-			if (asteroids[i].isActive)
-				asteroid::destroy(asteroids[i]);
-		}
+		asteroid::unloadSprites();
 	}
 
 	static void updateShip()

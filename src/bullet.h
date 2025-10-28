@@ -5,9 +5,7 @@ namespace bullet
 {
 	struct Bullet
 	{
-		Texture2D sprite;
 		shape::Rectangle shape;
-		
 		shape::Circle collision;
 		
 		Vector2 velocity;
@@ -29,5 +27,6 @@ namespace bullet
 	void move(Bullet& bullet);
 	void draw(Bullet bullet);
 
-	void unload(Bullet& bullet);
+	void loadSprite();
+	void unloadSprite();
 }

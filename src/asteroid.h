@@ -34,4 +34,7 @@ namespace asteroid
 
 	void move(Asteroid& asteroid);
 	void draw(Asteroid asteroid);
+
+	void loadSprites();
+	void unloadSprites();
 }

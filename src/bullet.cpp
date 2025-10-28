@@ -3,6 +3,8 @@
 
 namespace bullet
 {
+	Texture2D sprite;
+
 	Bullet init()
 	{
 		Bullet bullet;
@@ -10,7 +12,6 @@ namespace bullet
 		bullet.collision.position = { 0, 0 };
 		bullet.collision.radius = 0.5f;
 
-		bullet.sprite = LoadTexture("resources/sprites/bullet/egg.png");
 		bullet.shape.position = bullet.collision.position;
 		bullet.shape.size = { 5, 5 };
 
@@ -45,11 +46,15 @@ namespace bullet
 	void draw(Bullet bullet)
 	{
 		render::circle(bullet.collision, WHITE);
-		render::sprite(bullet.sprite, bullet.shape, bullet.rotation);
+		render::sprite(sprite, bullet.shape, bullet.rotation);
 	}
 
-	void unload(Bullet& bullet)
+	void loadSprite()
 	{
-		UnloadTexture(bullet.sprite);
+		sprite = LoadTexture("resources/sprites/bullet/egg.png");
+	}
+	void unloadSprite()
+	{
+		UnloadTexture(sprite);
 	}
 }
