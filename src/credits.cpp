@@ -37,7 +37,7 @@ namespace credits
 		size = { 7, 7 };
 		labels[static_cast<int>(Labels::Programmer)] = label::init("Programming - Santino Verrua", { position, size }, render::TextAlign::Left, BLACK);
 		position.y += size.y + separation;
-		labels[static_cast<int>(Labels::Artist)] = label::init("Art - Matilde Braumstein", { position, size }, render::TextAlign::Left, BLACK);
+		labels[static_cast<int>(Labels::Artist)] = label::init("Art - Matilde Braunstein", { position, size }, render::TextAlign::Left, BLACK);
 		position.y += size.y + separation;
 
 		bg.picture = LoadTexture("resources/bg/game.jpg");
