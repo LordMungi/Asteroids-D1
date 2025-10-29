@@ -17,6 +17,9 @@
 
 namespace game
 {	
+	double sealTimer;
+	double sealCooldown = 10;
+
 	Stats stats;
 	ship::Ship ship;
 	seal::Seal seal;
@@ -59,7 +62,7 @@ namespace game
 			asteroid::create(asteroids[i], getAsteroidStartPos());
 		}
 
-		seal::create(seal);
+		sealTimer = GetTime();
 		nextScreen = screen::Type::Game;
 	}
 
@@ -211,6 +214,9 @@ namespace game
 
 	static void updateSeal()
 	{
+		if (!seal.isActive && GetTime() - sealTimer > sealCooldown)
+			seal::create(seal);
+
 		if (ship.state != ship::State::Dead && seal.isActive)
 		{
 			seal::move(seal, math::getDirection(seal.collision.position, ship.collision.position));

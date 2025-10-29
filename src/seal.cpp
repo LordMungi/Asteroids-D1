@@ -1,6 +1,7 @@
 #include "seal.h"
 #include "render.h"
 #include "math.h"
+#include "config.h"
 
 namespace seal
 {
@@ -32,6 +33,7 @@ namespace seal
 
 	void create(Seal& seal)
 	{
+		seal.collision.position = { config::gamespace.x / 2, 0 - seal.shape.size.y };
 		seal.isActive = true;
 	}
 
