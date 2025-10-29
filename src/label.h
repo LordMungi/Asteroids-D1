@@ -8,10 +8,10 @@ namespace label
 	
 	struct Label
 	{
-		std::string text;
-		shape::Rectangle shape;
-		render::TextAlign align;
-		Color color;
+		std::string text = "";
+		shape::Rectangle shape = { {} };
+		render::TextAlign align = render::TextAlign::Center;
+		Color color = WHITE;
 	};
 
 	Label init(std::string text, shape::Rectangle shape, render::TextAlign align, Color color);

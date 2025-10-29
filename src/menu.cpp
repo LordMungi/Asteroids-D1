@@ -14,9 +14,10 @@ namespace menu
 		Play,
 		Settings,
 		Credits,
+		HowToPlay,
 		Exit
 	};
-	const int maxButtons = 4;
+	const int maxButtons = 5;
 	
 	button::Button buttons[maxButtons];
 	label::Label title;
@@ -24,7 +25,7 @@ namespace menu
 	void init()
 	{
 		Vector2 position = { config::gamespace.x / 2, 50 };
-		Vector2 size = { 40, 7 };
+		Vector2 size = { 50, 7 };
 		float separation = 3;
 
 		buttons[static_cast<int>(Options::Play)] = button::init({ position, size }, "Play");
@@ -33,7 +34,10 @@ namespace menu
 		buttons[static_cast<int>(Options::Settings)] = button::init({ position, size }, "Settings");
 		position.y += size.y + separation;
 
-		buttons[static_cast<int>(Options::Credits)] = button::init({position, size}, "Credits");
+		buttons[static_cast<int>(Options::Credits)] = button::init({ position, size }, "Credits");
+		position.y += size.y + separation;
+
+		buttons[static_cast<int>(Options::HowToPlay)] = button::init({position, size}, "How to play");
 		position.y += size.y + separation;
 
 		buttons[static_cast<int>(Options::Exit)] = button::init({position, size}, "Exit");
