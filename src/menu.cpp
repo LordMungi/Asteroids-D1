@@ -51,6 +51,8 @@ namespace menu
 			nextScreen = screen::Type::Game;
 		if (button::update(buttons[static_cast<int>(Options::Settings)]))
 			nextScreen = screen::Type::Settings;
+		if (button::update(buttons[static_cast<int>(Options::Exit)]))
+			nextScreen = screen::Type::Null;
 
 		return nextScreen;
 	}

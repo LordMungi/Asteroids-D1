@@ -32,6 +32,7 @@
     <ClCompile Include="src\label.cpp" />
     <ClCompile Include="src\math.cpp" />
     <ClCompile Include="src\menu.cpp" />
+    <ClCompile Include="src\pause.cpp" />
     <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\random.cpp" />
     <ClCompile Include="src\render.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="src\label.h" />
     <ClInclude Include="src\math.h" />
     <ClInclude Include="src\menu.h" />
+    <ClInclude Include="src\pause.h" />
     <ClInclude Include="src\program.h" />
     <ClInclude Include="src\random.h" />
     <ClInclude Include="src\render.h" />

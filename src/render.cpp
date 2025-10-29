@@ -16,6 +16,7 @@ namespace render
 	void startWindow()
 	{
 		InitWindow(static_cast<int>(config::res.x), static_cast<int>(config::res.y), "Asteroids");
+		SetExitKey(KEY_NULL);
 		setGamespaceFromRes();
 	}
 

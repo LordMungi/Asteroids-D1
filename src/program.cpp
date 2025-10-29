@@ -87,6 +87,9 @@ namespace program
 		case screen::Type::Settings:
 			settings::init();
 			break;
+		case screen::Type::Null:
+			close();
+			break;
 		}
 
 		previousScene = currentScene;

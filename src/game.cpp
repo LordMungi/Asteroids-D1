@@ -13,6 +13,7 @@
 #include "hud.h"
 #include "background.h"
 #include "math.h"
+#include "pause.h"
 
 
 namespace game
@@ -47,24 +48,23 @@ namespace game
 	void init()
 	{
 		ship = ship::init();
-
-		asteroid::loadSprites();
-
 		seal = seal::init();
 
+		asteroid::loadSprites();
 		for (int i = 0; i < asteroid::maxAsteroids; i++)
 		{
 			asteroids[i] = asteroid::init();
 		}
+		createAsteroids();
+
 		bg.picture = LoadTexture("resources/bg/game.jpg");
 		bg.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
 		bg.shape.size = { (21 * config::gamespace.y / 9), config::gamespace.y };
 
-
-		createAsteroids();
-
+		pause::init();
 		sealTimer = GetTime();
 		hasBeenSeal = false;
+		stats.gamestate = State::Playing;
 		nextScreen = screen::Type::Game;
 	}
 
@@ -72,10 +72,14 @@ namespace game
 	{
 		nextScreen = screen::Type::Game;
 
+		if (IsKeyPressed(KEY_ESCAPE) && stats.gamestate != State::Paused)
+			stats.gamestate = State::Paused;
+		else if (IsKeyPressed(KEY_ESCAPE) && stats.gamestate == State::Paused)
+			stats.gamestate = State::Playing;
+
 		if (stats.gamestate != State::Paused)
 		{
 			render::updateFrame();
-
 			updateShip();
 			updateBoomerang();
 			updateBullets();
@@ -83,6 +87,17 @@ namespace game
 			updateSeal();
 		}
 		updateGameState();
+
+		if (stats.gamestate == State::Paused)
+			switch (pause::update())
+			{
+			case pause::DoNext::Resume:
+				stats.gamestate = State::Playing;
+				break;
+			case pause::DoNext::Exit:
+				nextScreen = screen::Type::Menu;
+				break;
+			}
 
 		return nextScreen;
 	}
@@ -108,6 +123,9 @@ namespace game
 		}
 		boomerang::draw(ship.boomerang);
 		hud::draw(stats);
+
+		if (stats.gamestate == State::Paused)
+			pause::draw();
 
 		EndDrawing();
 	}
@@ -202,7 +220,7 @@ namespace game
 					}
 				}
 
-				if (coll::circleCircle(ship.bullets[i].collision, seal.collision))
+				if (coll::circleCircle(ship.bullets[i].collision, seal.collision) && seal.isActive)
 				{
 					bullet::destroy(ship.bullets[i]);
 					seal::damage(seal);
@@ -261,8 +279,6 @@ namespace game
 			resetGame();
 		else if (ship.lives < 0)
 			stats.gamestate = State::Lost;
-		else
-			stats.gamestate = State::Playing;
 	}
 
 	static int asteroidsLeft()
