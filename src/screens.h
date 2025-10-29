@@ -7,6 +7,7 @@ namespace screen
 		Menu,
 		Game,
 		Settings,
+		Credits,
 		Null
 	};
 }

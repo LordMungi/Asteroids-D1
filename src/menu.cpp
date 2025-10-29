@@ -4,10 +4,12 @@
 #include "collision.h"
 #include "render.h"
 #include "label.h"
+#include "background.h"
 
 namespace menu
 {
 	screen::Type nextScreen;
+
 
 	enum class Options
 	{
@@ -21,10 +23,11 @@ namespace menu
 	
 	button::Button buttons[maxButtons];
 	label::Label title;
+	background::Background bg;
 
 	void init()
 	{
-		Vector2 position = { config::gamespace.x / 2, 50 };
+		Vector2 position = { 30 , 50 };
 		Vector2 size = { 50, 7 };
 		float separation = 3;
 
@@ -37,13 +40,17 @@ namespace menu
 		buttons[static_cast<int>(Options::Credits)] = button::init({ position, size }, "Credits");
 		position.y += size.y + separation;
 
-		buttons[static_cast<int>(Options::HowToPlay)] = button::init({position, size}, "How to play");
-		position.y += size.y + separation;
+		//buttons[static_cast<int>(Options::HowToPlay)] = button::init({position, size}, "How to play");
+		//position.y += size.y + separation;
 
 		buttons[static_cast<int>(Options::Exit)] = button::init({position, size}, "Exit");
 		position.y += size.y + separation;
 
-		title = label::init("Penguin Revenge", { {position.x, 20}, size }, render::TextAlign::Center, WHITE);
+		title = label::init("Sail & Snow", { { 35, 20}, { size.x, 15} }, render::TextAlign::Left, BLACK);
+
+		bg.picture = LoadTexture("resources/bg/illus.jpg");
+		bg.shape.size = { (16 * config::gamespace.y / 9), config::gamespace.y };
+		bg.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
 
 	}
 
@@ -55,6 +62,8 @@ namespace menu
 			nextScreen = screen::Type::Game;
 		if (button::update(buttons[static_cast<int>(Options::Settings)]))
 			nextScreen = screen::Type::Settings;
+		if (button::update(buttons[static_cast<int>(Options::Credits)]))
+			nextScreen = screen::Type::Credits;
 		if (button::update(buttons[static_cast<int>(Options::Exit)]))
 			nextScreen = screen::Type::Null;
 
@@ -65,6 +74,7 @@ namespace menu
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
+		render::sprite(bg.picture, bg.shape, 0);
 
 		for (int i = 0; i < maxButtons; i++)
 		{

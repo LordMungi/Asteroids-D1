@@ -19,7 +19,7 @@ namespace label
 
 	void draw(Label label)
 	{
-		render::rectangle(label.shape, { 255, 255, 255, 100 });
+		//render::rectangle(label.shape, { 255, 255, 255, 100 });
 		render::text(label.text, label.shape.position, label.shape.size, label.color, label.align);
 	}
 }

@@ -4,9 +4,12 @@
 #include "checkbox.h"
 #include "slider.h"
 #include "config.h"
+#include "background.h"
 
 namespace settings
 {
+	background::Background bg;
+
 	const int maxResolutions = 7;
 	Vector2 resolutions[maxResolutions] =
 	{
@@ -70,14 +73,14 @@ namespace settings
 		float separation = 5;
 		float margin = 5;
 
-		labels[static_cast<int>(Labels::Title)] = label::init("Settings", { position, size }, render::TextAlign::Left, WHITE);
+		labels[static_cast<int>(Labels::Title)] = label::init("Settings", { position, size }, render::TextAlign::Left, BLACK);
 		position2 = { config::gamespace.x - size.x - margin, position.y };
 		buttons[static_cast<int>(Buttons::Exit)] = button::init({ position2, size }, "X");
 		position.y += size.y + separation;
 
 
 		size = { 7, 7 };
-		labels[static_cast<int>(Labels::Resolution)] = label::init("Resolution", { position, size }, render::TextAlign::Left, WHITE);
+		labels[static_cast<int>(Labels::Resolution)] = label::init("Resolution", { position, size }, render::TextAlign::Left, BLACK);
 
 		position2 = { 50, position.y };
 		buttons[static_cast<int>(Buttons::ResolutionLeft)] = button::init({ position2, size }, "<");
@@ -87,17 +90,17 @@ namespace settings
 		buttons[static_cast<int>(Buttons::ResolutionRight)] = button::init({ position2, size }, ">");
 
 		position.y += size.y + separation;
-		labels[static_cast<int>(Labels::Fullscreen)] = label::init("Fullscreen", { position, size }, render::TextAlign::Left, WHITE);
+		labels[static_cast<int>(Labels::Fullscreen)] = label::init("Fullscreen", { position, size }, render::TextAlign::Left, BLACK);
 		position2 = { 50, position.y };
 		checkboxes[static_cast<int>(Checkboxes::Fullscreen)] = checkbox::init({ position2, size }, shouldFullscreen);
 		position.y += size.y + separation;
 
-		labels[static_cast<int>(Labels::Volume)] = label::init("Volume", { position, size }, render::TextAlign::Left, WHITE);
+		labels[static_cast<int>(Labels::Volume)] = label::init("Volume", { position, size }, render::TextAlign::Left, BLACK);
 		position2 = { 72, position.y };
 		volumeSlider = slider::init({ position2, {50, 3} }, config::volume);
 		position.y += size.y + separation;
 
-		labels[static_cast<int>(Labels::Music)] = label::init("Music", { position, size }, render::TextAlign::Left, WHITE);
+		labels[static_cast<int>(Labels::Music)] = label::init("Music", { position, size }, render::TextAlign::Left, BLACK);
 		position2 = { 50, position.y };
 		checkboxes[static_cast<int>(Checkboxes::Music)] = checkbox::init({ position2, size }, shouldMusic);
 		position.y += size.y + separation;
@@ -108,6 +111,9 @@ namespace settings
 		position2.x -= size.x + separation;
 		buttons[static_cast<int>(Buttons::Default)] = button::init({ position2, size }, "Default");
 
+		bg.picture = LoadTexture("resources/bg/game.jpg");
+		bg.shape.position = { config::gamespace.x / 2, config::gamespace.y / 2 };
+		bg.shape.size = { (21 * config::gamespace.y / 9), config::gamespace.y };
 	}
 
 	screen::Type update()
@@ -155,6 +161,7 @@ namespace settings
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
+		render::sprite(bg.picture, bg.shape, 0);
 
 		for (int i = 0; i < maxButtons; i++)
 		{

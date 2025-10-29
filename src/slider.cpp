@@ -43,7 +43,7 @@ namespace slider
 	void draw(Slider slider)
 	{
 		render::rectangle(slider.shape, WHITE);
-		render::circle(slider.ball, RED);
-		render::text(std::to_string(slider.value), slider.shape.position, slider.shape.size.y, BLUE);
+		render::circle(slider.ball, WHITE);
+		//render::text(std::to_string(slider.value), slider.shape.position, slider.shape.size.y, BLUE);
 	}
 }
