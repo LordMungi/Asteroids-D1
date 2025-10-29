@@ -10,18 +10,25 @@ namespace boomerang
 	static void decelerate(Boomerang& boomerang);
 	static void returnTo(Boomerang& boomerang, Vector2 origin);
 
-	Boomerang create(shape::Circle collision)
+	Boomerang init()
 	{
 		Boomerang boomerang;
 
 		boomerang.sprite = LoadTexture("resources/sprites/boomerang/boomerang.png");
-		boomerang.collision = collision;
-		boomerang.shape = { collision.position, collision.radius * 5, collision.radius * 5 };
+		boomerang.collision = { {0, 0}, 2 };
+		boomerang.shape = { boomerang.collision.position, boomerang.collision.radius * 5, boomerang.collision.radius * 5 };
 		boomerang.velocity = { 0, 0 };
 		boomerang.rotation = static_cast<float>(random::intRange(1, 360));
-		boomerang.state = State::Carried;
+		boomerang.state = State::Inactive;
 
 		return boomerang;
+	}
+
+	void create(Boomerang& boomerang, Vector2 position)
+	{
+		boomerang.collision.position = position;
+		boomerang.shape.position = position;
+		boomerang.state = State::Stationary;
 	}
 
 	void throwTo(Boomerang& boomerang, Vector2 direction)
@@ -91,7 +98,8 @@ namespace boomerang
 	void draw(Boomerang boomerang)
 	{
 		//render::circle(boomerang.collision, BLUE);
-		render::sprite(boomerang.sprite, boomerang.shape, boomerang.rotation);
+		if (boomerang.state != State::Inactive)
+			render::sprite(boomerang.sprite, boomerang.shape, boomerang.rotation);
 	}
 
 	void unload(Boomerang& boomerang)

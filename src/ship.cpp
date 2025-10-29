@@ -44,7 +44,7 @@ namespace ship
 		}
 		bullet::loadSprite();
 
-		ship.boomerang = boomerang::create({ ship.collision.position, 2 });
+		ship.boomerang = boomerang::init();
 
 		ship.immunityTimer = 0;
 		ship.deathTimer = 0;

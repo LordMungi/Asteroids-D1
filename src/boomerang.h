@@ -5,6 +5,7 @@ namespace boomerang
 {
 	enum class State
 	{
+		Inactive,
 		Stationary,
 		Carried,
 		Flying,
@@ -30,7 +31,8 @@ namespace boomerang
 	const int acceleration = 10;
 	const int throwStrength = 10;
 
-	Boomerang create(shape::Circle collision);
+	Boomerang init();
+	void create(Boomerang& boomerang, Vector2 position);
 
 	void throwTo(Boomerang& boomerang, Vector2 direction);
 	void move(Boomerang& boomerang, Vector2 origin);

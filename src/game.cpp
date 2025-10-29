@@ -146,16 +146,19 @@ namespace game
 		if (coll::circleCircle(ship.boomerang.collision, ship.collision) && (ship.boomerang.state == boomerang::State::Stationary || ship.boomerang.state == boomerang::State::Returning))
 			ship.boomerang.state = boomerang::State::Carried;
 
-		for (int i = 0; i < asteroid::maxAsteroids; i++)
+		if (ship.boomerang.state == boomerang::State::Flying || ship.boomerang.state == boomerang::State::Returning)
 		{
-			if (asteroids[i].state == asteroid::State::Active)
+			for (int i = 0; i < asteroid::maxAsteroids; i++)
 			{
-				if (coll::circleCircle(ship.boomerang.collision, asteroids[i].collision))
+				if (asteroids[i].state == asteroid::State::Active)
 				{
-					if (asteroids[i].collision.radius != static_cast<int>(asteroid::Size::Small))
-						divideAsteroid(asteroids[i]);
-					else
-						asteroid::destroy(asteroids[i]);
+					if (coll::circleCircle(ship.boomerang.collision, asteroids[i].collision))
+					{
+						if (asteroids[i].collision.radius != static_cast<int>(asteroid::Size::Small))
+							divideAsteroid(asteroids[i]);
+						else
+							asteroid::destroy(asteroids[i]);
+					}
 				}
 			}
 		}
@@ -182,6 +185,10 @@ namespace game
 						if (coll::circleCircle(ship.bullets[i].collision, asteroids[j].collision))
 						{
 							bullet::destroy(ship.bullets[i]);
+
+							if(random::intRange(1, 100) < 10 && ship.boomerang.state == boomerang::State::Inactive)
+								boomerang::create(ship.boomerang, asteroids[j].collision.position);
+
 							if (asteroids[j].collision.radius != static_cast<int>(asteroid::Size::Small))
 								divideAsteroid(asteroids[j]);
 							else
