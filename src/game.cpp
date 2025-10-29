@@ -18,7 +18,9 @@
 namespace game
 {	
 	double sealTimer;
-	double sealCooldown = 10;
+	double sealCooldown = 15;
+	bool hasBeenSeal;
+	const int asteroidCount = 10;
 
 	Stats stats;
 	ship::Ship ship;
@@ -35,6 +37,8 @@ namespace game
 
 	background::Background bg;
 
+	static void resetGame();
+	static void createAsteroids();
 	static int asteroidsLeft();
 	static void divideAsteroid(asteroid::Asteroid& asteroid);
 	static Vector2 getAsteroidStartPos();
@@ -57,12 +61,10 @@ namespace game
 		bg.shape.size = { (21 * config::gamespace.y / 9), config::gamespace.y };
 
 
-		for (int i = 0; i < 10; i++)
-		{
-			asteroid::create(asteroids[i], getAsteroidStartPos());
-		}
+		createAsteroids();
 
 		sealTimer = GetTime();
+		hasBeenSeal = false;
 		nextScreen = screen::Type::Game;
 	}
 
@@ -214,8 +216,12 @@ namespace game
 
 	static void updateSeal()
 	{
-		if (!seal.isActive && GetTime() - sealTimer > sealCooldown)
+		if (!seal.isActive && GetTime() - sealTimer > sealCooldown && !hasBeenSeal)
+		{
+			hasBeenSeal = true;
+			sealTimer = GetTime();
 			seal::create(seal);
+		}
 
 		if (ship.state != ship::State::Dead && seal.isActive)
 		{
@@ -252,7 +258,7 @@ namespace game
 	static void updateGameState()
 	{
 		if (asteroidsLeft() == 0)
-			stats.gamestate = State::Won;
+			resetGame();
 		else if (ship.lives < 0)
 			stats.gamestate = State::Lost;
 		else
@@ -272,7 +278,7 @@ namespace game
 
 	static void divideAsteroid(asteroid::Asteroid& asteroid)
 	{
-		const int maxNewAsteroids = 3;
+		const int maxNewAsteroids = 2;
 		int asteroidsCreated = 0;
 
 		asteroid::Size newSize = asteroid::Size::Small;
@@ -297,6 +303,22 @@ namespace game
 		}
 
 		asteroid::destroy(asteroid);
+	}
+
+	static void resetGame()
+	{
+		sealTimer = GetTime();
+		hasBeenSeal = false;
+		ship.immunityTimer = GetTime();
+		createAsteroids();
+	}
+
+	static void createAsteroids()
+	{
+		for (int i = 0; i < asteroidCount; i++)
+		{
+			asteroid::create(asteroids[i], getAsteroidStartPos());
+		}
 	}
 		
 	static Vector2 getAsteroidStartPos()

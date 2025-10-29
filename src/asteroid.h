@@ -34,7 +34,7 @@ namespace asteroid
 
 	const double destroyTime = 0.5;
 
-	const int maxAsteroids = 30;
+	const int maxAsteroids = 50;
 	const int minSpeed = 10;
 	const int maxSpeed = 30;
 

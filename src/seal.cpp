@@ -33,6 +33,7 @@ namespace seal
 
 	void create(Seal& seal)
 	{
+		seal.health = 100;
 		seal.collision.position = { config::gamespace.x / 2, 0 - seal.shape.size.y };
 		seal.isActive = true;
 	}
