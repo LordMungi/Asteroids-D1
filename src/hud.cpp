@@ -11,17 +11,17 @@ namespace hud
 		{
 		case game::State::Playing:
 		{
-			render::text(std::to_string(gameStats.lives), { 5, 5 }, 5, RED);
+			render::text("Lives " + std::to_string(gameStats.lives), {10, 5}, 5, BLACK);
 			break;
 		}
 		case game::State::Won:
 		{
-			render::text("Winner!", {config::gamespace.x / 2, config::gamespace.y / 2 }, 10, RED);
+			render::text("Winner!", {config::gamespace.x / 2, config::gamespace.y / 2 }, 10, BLACK);
 			break;
 		}
 		case game::State::Lost:
 		{
-			render::text("Game Over", { config::gamespace.x / 2, config::gamespace.y / 2 }, 10, RED);
+			render::text("Game Over", { config::gamespace.x / 2, config::gamespace.y / 2 }, 10, BLACK);
 			break;
 		}
 
