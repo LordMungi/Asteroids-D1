@@ -6,6 +6,7 @@
 #include "render.h"
 #include "settings.h"
 #include "credits.h"
+#include "config.h"
 
 namespace program
 {
@@ -46,6 +47,7 @@ namespace program
 		render::startWindow();
 		currentScene = screen::Type::Menu;
 
+		SetMasterVolume(config::volume / 100.0f);
 		gameBGM = LoadMusicStream("resources/music/DjPengu_loop.wav");
 		menuBGM = LoadMusicStream("resources/music/winter_scenery.mp3");
 	}
@@ -91,10 +93,13 @@ namespace program
 
 	static void bgm()
 	{
-		if (currentScene == screen::Type::Game)
-			UpdateMusicStream(gameBGM);
-		else
-			UpdateMusicStream(menuBGM);
+		if (config::music)
+		{
+			if (currentScene == screen::Type::Game)
+				UpdateMusicStream(gameBGM);
+			else
+				UpdateMusicStream(menuBGM);
+		}
 	}
 	
 	static void changeScene()

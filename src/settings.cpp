@@ -191,6 +191,9 @@ namespace settings
 			ToggleFullscreen();
 
 		config::volume = volumeSlider.value;
+		SetMasterVolume(config::volume / 100.0f);
+
+		config::music = shouldMusic;
 
 		render::closeWindow();
 		render::startWindow();
